@@ -74,8 +74,8 @@ $active_group = 'default';
 $query_builder = TRUE;
 
 $db['default'] = array(
-	'dsn'	=> 'pgsql:host=localhost;dbname=wsb_inz;port=5432',
-	'hostname' => 'localhost',
+	'dsn'	=> 'pgsql:host=ts3-tnt.pl;port=5432;dbname=wsb_inz',
+	'hostname' => 'ts3-tnt.pl',
 	'username' => 'postgres',
 	'password' => 'Ged^2&ezX',
 	'database' => 'wsb_inz',
@@ -92,5 +92,6 @@ $db['default'] = array(
 	'compress' => FALSE,
 	'stricton' => FALSE,
 	'failover' => array(),
-	'save_queries' => TRUE
+	'save_queries' => TRUE,
+    'port' => '5432'
 );
