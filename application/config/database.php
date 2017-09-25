@@ -74,10 +74,10 @@ $active_group = 'default';
 $query_builder = TRUE;
 
 $db['default'] = array(
-	'dsn'	=> 'pgsql:host=localhost;dbname=wsb_inz',
+	'dsn'	=> 'pgsql:host=localhost;dbname=wsb_inz;port=5432',
 	'hostname' => 'localhost',
-	'username' => 'sa',
-	'password' => 'Hed*2sxZc',
+	'username' => 'postgres',
+	'password' => 'Ged^2&ezX',
 	'database' => 'wsb_inz',
 	'dbdriver' => 'pdo',
 	'dbprefix' => '',
