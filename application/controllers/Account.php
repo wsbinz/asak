@@ -7,16 +7,32 @@ class Account extends CI_Controller {
     public function __construct()
     {
         parent::__construct();
-        $this->load->library('session');
-        $this->load->library('twig');
-        $this->load->model('site/Site_model');
+
     }
 
     public function index()
     {
 
-        echo "test";
+
     }
+
+    public function login()
+    {
+
+        if(!empty($_POST)){
+
+            if($this->form_validation->run('site_login') == TRUE)
+            {
+
+            }
+
+
+        }
+
+
+        $this->twig->display('site/account/login');
+    }
+
 
 
 }
