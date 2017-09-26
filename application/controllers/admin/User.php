@@ -37,7 +37,7 @@ class User extends CI_Controller {
                     'email' => $this->input->post('email',true),
                     'password' => password_hash($this->input->post('password',true),PASSWORD_DEFAULT),
                     'create_date' => time(),
-                    'active' => 0
+                    'active' => 1
                 );
                 $user = $this->Admin_model->create('users',$data);
                 $this->session->set_flashdata('alert',"Użytkownik został dodany !");
