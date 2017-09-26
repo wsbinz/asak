@@ -32,7 +32,7 @@ class User extends CI_Controller {
             if($this->form_validation->run('admin_user_create') == TRUE)
             {
                 $data = array(
-                    'ID' => '1',
+                    'ID' => '88',
                     'username' => $this->input->post('username',true),
                     'email' => $this->input->post('email',true),
                     'password' => password_hash($this->input->post('password',true),PASSWORD_DEFAULT),
