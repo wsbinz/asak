@@ -7,21 +7,32 @@ class Account extends CI_Controller {
     public function __construct()
     {
         parent::__construct();
-        $this->load->library('twig');
+
     }
 
     public function index()
     {
-        $this->twig->display('site/login');
+echo "psps";
 
     }
 
     public function login()
     {
-        $data['lal'] = 'sdfd';
 
-        $this->twig->display('site/login');
+        if(!empty($_POST)){
+
+            if($this->form_validation->run('site_login') == TRUE)
+            {
+
+            }
+
+
+        }
+
+
+        $this->twig->display('site/account/login');
     }
+
 
 
 }
