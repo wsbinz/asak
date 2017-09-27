@@ -16,7 +16,7 @@ class User extends CI_Controller {
     {
         parent::__construct();
         $this->load->model('admin/Admin_model');
-        $this->load->helper('My_helpser');
+        $this->load->helper('My_helper');
     }
 
     public function index()
