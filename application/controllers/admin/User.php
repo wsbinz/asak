@@ -16,7 +16,7 @@ class User extends CI_Controller {
     {
         parent::__construct();
         $this->load->model('admin/Admin_model');
-        $this->load->helper('My_helper');
+        $this->load->helper('My');
     }
 
     public function index()
@@ -28,7 +28,7 @@ class User extends CI_Controller {
     public function create_user()
     {
 
-        $random_string = random_string();
+        $activation_code = random_string();
         if(!empty($_POST)){
 
             if($this->form_validation->run('admin_user_create') == TRUE)
@@ -40,23 +40,24 @@ class User extends CI_Controller {
                     'create_date' => time(),
                     'active' => 0
                 );
+
+
+                //Wysyłanie meila do uzytkownika
+                $to      = $data['email'];
+                $subject = 'Aktywacja konta';
+                $message = 'Witaj, <br> Konto w systemie ASAK zostało pomyślnie utworzone ! \n Aby aktywować konto kliknij w poniższy link: \n '.base_url('account/activation/'.$activation_code ).'';
+                $headers = 'From: biuro@asak.com' . "\r\n" .
+                    'X-Mailer: PHP/' . phpversion();
+                mail($to, $subject, $message, $headers);
+
                 $user = $this->Admin_model->create('users',$data);
                 $this->session->set_flashdata('alert',"Użytkownik został dodany !");
-                print_r($user);
             }
             else
                 {
                     $this->session->set_flashdata('alert',validation_errors());
                 }
 
-
-                $to      = $data['email'];
-                $subject = 'Aktywacja konta';
-                $message = "Witaj, <br> Konto w systemie ASAK zostało pomyślnie utworzone ! \n Aby aktywować konto kliknij w poniższy link: \n '.$random_string.'";
-                $headers = 'From: biuro@asak.com' . "\r\n" .
-                    'X-Mailer: PHP/' . phpversion();
-
-                mail($to, $subject, $message, $headers);
 
 
         }
