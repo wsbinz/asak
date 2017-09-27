@@ -22,6 +22,7 @@ class User extends CI_Controller {
     public function index()
     {
 
+
     }
 
     public function create_user()
@@ -32,12 +33,11 @@ class User extends CI_Controller {
             if($this->form_validation->run('admin_user_create') == TRUE)
             {
                 $data = array(
-                    'ID' => '22',
                     'username' => $this->input->post('username',true),
                     'email' => $this->input->post('email',true),
                     'password' => password_hash($this->input->post('password',true),PASSWORD_DEFAULT),
                     'create_date' => time(),
-                    'active' => 1
+                    'active' => 0
                 );
                 $user = $this->Admin_model->create('users',$data);
                 $this->session->set_flashdata('alert',"Użytkownik został dodany !");
