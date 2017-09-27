@@ -25,6 +25,11 @@ class Account extends CI_Controller {
     public function login()
     {
 
+        if($_SESSION['logged_in']==1)
+        {
+            redirect('account');
+        }
+
         if(!empty($_POST)){
 
             if($this->form_validation->run('site_login') == TRUE)
