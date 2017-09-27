@@ -43,6 +43,7 @@ class User extends CI_Controller {
 
 
                 //Wysyłanie meila do uzytkownika
+
                 $to      = $data['email'];
                 $subject = 'Aktywacja konta';
                 $message = 'Witaj, <br> Konto w systemie ASAK zostało pomyślnie utworzone ! \n Aby aktywować konto kliknij w poniższy link: \n '.base_url('account/activation/'.$activation_code ).'';
