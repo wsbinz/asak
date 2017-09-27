@@ -28,6 +28,7 @@ class User extends CI_Controller {
     public function create_user()
     {
 
+        $random_string = random_string();
         if(!empty($_POST)){
 
             if($this->form_validation->run('admin_user_create') == TRUE)
@@ -47,6 +48,17 @@ class User extends CI_Controller {
                 {
                     $this->session->set_flashdata('alert',validation_errors());
                 }
+
+
+                $to      = $data['email'];
+                $subject = 'Aktywacja konta';
+                $message = "Witaj, <br> Konto w systemie ASAK zostało pomyślnie utworzone ! \n Aby aktywować konto kliknij w poniższy link: \n '.$random_string.'";
+                $headers = 'From: biuro@asak.com' . "\r\n" .
+                    'X-Mailer: PHP/' . phpversion();
+
+                mail($to, $subject, $message, $headers);
+
+
         }
 
         $data['validation']= $this->session->flashdata('alert');

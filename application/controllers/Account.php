@@ -12,8 +12,8 @@ class Account extends CI_Controller {
 
     public function index()
     {
-echo "psps";
 
+        $this->twig->display('site/account/login');
     }
 
     public function login()
