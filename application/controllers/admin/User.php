@@ -22,6 +22,7 @@ class User extends CI_Controller {
 
     public function index()
     {
+        //strona główna
 
     }
 
@@ -45,7 +46,7 @@ class User extends CI_Controller {
                 $user = $this->Admin_model->create('users',$data);
 
                 //Wysyłanie meila do uzytkownika
-                $do = $data['email'];
+                $do = (string)$data['email'];
                 $from = "biuro@ts3-tnt.pl <biuro@ts3-tnt.pl>";
                 $mailheaders="From: $from\n";
                 $mailheaders.="Reply-To: $from\n";
@@ -55,7 +56,7 @@ class User extends CI_Controller {
                 $message = '<p>Witaj ' . $data['username'].'. Aby aktytować konto kliknij w poniższy link:'
                     .base_url('account/activation/'.$activation_code ).'</p>';
 
-                $mail = mail("$do", "Aktywacja konta w serwisie ASAK", "$message", "$mailheaders");
+                $mail = mail($do, "Aktywacja konta w serwisie ASAK", "$message", "$mailheaders");
 
                 $this->session->set_flashdata('alert',"Użytkownik został dodany !");
             }
