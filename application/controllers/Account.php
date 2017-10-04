@@ -7,17 +7,28 @@ class Account extends CI_Controller {
     public function __construct()
     {
         parent::__construct();
-
+        $this->load->model('site/Site_model');
     }
 
     public function index()
     {
-
-        $this->twig->display('site/account/login');
+        if($_SESSION['logged_in'] == 1) {
+            echo "Witaj " . $_SESSION['username'] . " Zostałeś pomyślnie zalogowany !";
+            /*$this->twig->display('site/account/login');*/
+        }
+        else
+        {
+            redirect('account/login');
+        }
     }
 
     public function login()
     {
+
+        if($_SESSION['logged_in']==1)
+        {
+            redirect('account');
+        }
 
         if(!empty($_POST)){
 
@@ -25,39 +36,45 @@ class Account extends CI_Controller {
             {
 
                 $where = array('email' => $this->input->post('email',true) );
-                $user = $this->Site_model->get_signle();
+                $user = $this->Site_model->get_single('users',$where);
 
                 $data = array(
                     'email' => $this->input->post('email',true),
-                    'password' => password_hash($this->input->post('password',true),PASSWORD_DEFAULT),
+                    'password' => $this->input->post('password',true),
                 );
 
-                if($user->active == 0)
-                {
-                    $data_login = array(
-                        'id' => $user->id,
-                        'username' => $user->username,
-                        'email' => $user->email,
-                        'logged_in' => 1,
-                    );
-
-                    $this->session->set_flashdata('alert',"Zalogowałeś się pomyślnie !");
+                if(!empty($user)) {
+                    if (password_verify($data['password'], $user->password)) {
+                        if ($user->active == 1) {
+                            $data_login = array(
+                                'id' => $user->id,
+                                'username' => $user->username,
+                                'email' => $user->email,
+                                'logged_in' => 1,
+                            );
+                            $this->session->set_userdata($data_login);
+                            $this->session->set_flashdata('alert', "Zalogowałeś się pomyślnie !");
+                            redirect('account');
+                        } else {
+                            $this->session->set_flashdata('alert', "Musisz aktywować konto !");
+                        }
+                    } else {
+                        $this->session->set_flashdata('alert', "Twoje hasło jest niepoprawne");
+                    }
                 }
-
-
-
                 else
                 {
-                    $this->session->set_flashdata('alert',"Musisz aktywować konto !");
+                    $this->session->set_flashdata('alert', "Podany użytkownik nie istnieje");
                 }
-
             }
-
-
+            else
+            {
+                $this->session->set_flashdata('alert', validation_errors());
+            }
         }
 
-
-        $this->twig->display('site/account/login');
+        $data['validation'] = $this->session->flashdata('alert');
+        $this->twig->display('site/account/login',$data);
     }
 
 

@@ -17,7 +17,7 @@ $config = array(
         array(
             'field' => 'password',
             'label' => 'Hasło',
-            'rules' => 'trim|required'
+            'rules' => 'trim|required|min_length[5]'
         )
     ),
 

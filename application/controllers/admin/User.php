@@ -37,11 +37,26 @@ class User extends CI_Controller {
                     'username' => $this->input->post('username',true),
                     'email' => $this->input->post('email',true),
                     'password' => password_hash($this->input->post('password',true),PASSWORD_DEFAULT),
-                    //'create_date' => time(),
-                    'active' => 0
+                    'create_date' => time(),
+                    'active' => 0,
+                    'activation_code' => $activation_code,
                 );
-
+                //Tworzenie uzytkownika w bazie
                 $user = $this->Admin_model->create('users',$data);
+
+                //Wysyłanie meila do uzytkownika
+                $do = $data['email'];
+                $from = "biuro@ts3-tnt.pl <biuro@ts3-tnt.pl>";
+                $mailheaders="From: $from\n";
+                $mailheaders.="Reply-To: $from\n";
+                $mailheaders.="X-Mailer: PHP\n";
+                $mailheaders.="MIME-version: 1.0\n";
+                $mailheaders.="Content-type: text/html; charset=utf-8";
+                $message = '<p>Witaj ' . $data['username'].'. Aby aktytować konto kliknij w poniższy link:'
+                    .base_url('account/activation/'.$activation_code ).'</p>';
+
+                $mail = mail("$do", "Aktywacja konta w serwisie ASAK", "$message", "$mailheaders");
+
                 $this->session->set_flashdata('alert',"Użytkownik został dodany !");
             }
             else
@@ -49,14 +64,6 @@ class User extends CI_Controller {
                     $this->session->set_flashdata('alert',validation_errors());
                 }
 
-            //Wysyłanie meila do uzytkownika
-
-            $to      = $data['email'];
-            $subject = 'Aktywacja konta';
-            $message = 'Witaj, <br> Konto w systemie ASAK zostało pomyślnie utworzone ! \n Aby aktywować konto kliknij w poniższy link: \n '.base_url('account/activation/'.$activation_code ).'';
-            $headers = 'From: biuro@asak.com' . "\r\n" .
-                'X-Mailer: PHP/' . phpversion();
-            mail($to, $subject, $message, $headers);
 
         }
 

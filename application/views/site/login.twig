@@ -2,6 +2,7 @@
 {% autoescape %}
     {{ validation|raw }}
 {% endautoescape %}
+
 <form class="login_user" action="{{ base_url() }}account/login" method="POST" id="add_user">
     <div class="form-group">
         <label for="email">Adres e-mail</label>
