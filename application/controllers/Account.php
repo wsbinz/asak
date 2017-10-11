@@ -12,9 +12,13 @@ class Account extends CI_Controller {
 
     public function index()
     {
-        if($_SESSION['logged_in'] == 1) {
+        if($_SESSION['logged_in'] == 1)
+        {
             echo "Witaj " . $_SESSION['username'] . " Zostałeś pomyślnie zalogowany !";
             /*$this->twig->display('site/account/login');*/
+            echo "<pre>";
+            var_dump($_SESSION);
+            echo "</pre>";
         }
         else
         {
@@ -25,7 +29,7 @@ class Account extends CI_Controller {
     public function login()
     {
 
-        if($_SESSION['logged_in']==1)
+        if(isset($_SESSION['logged_in']) && $_SESSION['logged_in']==1)
         {
             redirect('account');
         }
