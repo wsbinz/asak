@@ -26,6 +26,12 @@ class Account extends CI_Controller {
         }
     }
 
+    public function test()
+    {
+        $this->twig->display('admin/product/list_product');
+
+    }
+
     public function login()
     {
 
