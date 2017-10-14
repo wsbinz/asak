@@ -25,32 +25,46 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="#Pulpit">Pulpit</a></li>
-                <li><a href="#Produkty">Produkty</a></li>
-                <li><a href="#Magazyn">Magazyn</a></li>
-                <li><a href="#Raporty">Raporty</a></li>
+                <li class="active"><a href="pulpit.html">Pulpit</a></li>
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Produkty <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="#">Action</a></li>
-                        <li><a href="#">Another action</a></li>
-                        <li><a href="#">Something else here</a></li>
-                        <li role="separator" class="divider"></li>
-                        <li class="dropdown-header">Nav header</li>
-                        <li><a href="#">Separated link</a></li>
-                        <li><a href="#">One more separated link</a></li>
+                        <li><a href="#">Dodanie produktu - pusty formularz</a></li>
+                        <li><a href="#">Dodanie produktu - referencja</a></li>
+                        <li><a href="#">Edycja produktu</a></li>
+                        <li><a href="#">Wycofanie produktu</a></li>
+                        <li><a href="#">Wyświetlenie produktu</a></li>
+                        <li><a href="#">Lista produktów</a></li>
                     </ul>
                 </li>
-                <li><a href="#kontakt"> Kontakt </a></li>
-                <li><a href="Zaloguj"> Zaloguj </a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Logistyka<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li class="dropdown-header">Magazyn</li>
+                        <li><a href="#">Geografia magazynu</a></li>
+                        <li class="dropdown-header">Zamówienia</li>
+                        <li><a href="#">Tworzenie</a></li>
+                        <li><a href="#">Edycja</a></li>
+                        <li><a href="#">Podgląd</a></li>
+                        <li class="dropdown-header">WZ</li>
+                        <li><a href="#">Tworzenie</a></li>
+                        <li><a href="#">Edycja</a></li>
+                        <li><a href="#">Podgląd</a></li>
+                    </ul>
+                </li>
+                <li><a href="#Raporty">Raporty</a></li>
+                <li><a href="#kontakt">Kontakt</a></li>
+                <li><a href="#kontakt">FAQ</a></li>
+                <li><a href="Zaloguj">Zaloguj</a></li>
             </ul>
         </div><!--/.nav-collapse -->
     </div>
 </nav>
 
+
 {% block body %}{% endblock %}
 
-{% block jhg %}{% endblock %}
+{% block add %}{% endblock %}
 
 
 
@@ -62,7 +76,7 @@
 <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
 <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
-<script src="bootstrap.min.js"></script>
+<script src="{{ base_url() }}/asset/js/bootstrap.min.js"></script>
 <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 <script src="ie10-viewport-bug-workaround.js"></script>
 </body>

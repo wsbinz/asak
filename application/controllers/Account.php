@@ -28,7 +28,7 @@ class Account extends CI_Controller {
 
     public function test()
     {
-        $this->twig->display('admin/product/list_product');
+        $this->twig->display('site/product/list_product');
 
     }
 
@@ -84,7 +84,7 @@ class Account extends CI_Controller {
         }
 
         $data['validation'] = $this->session->flashdata('alert');
-        $this->twig->display('site/account/login',$data);
+        $this->twig->display('admin/product/add_product',$data);
     }
 
 
