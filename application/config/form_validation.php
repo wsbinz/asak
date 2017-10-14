@@ -43,4 +43,19 @@ $config = array(
             'rules' => 'trim|required|matches[password]'
         ),
     ),
+
+    'admin_group_create'=> array(
+
+        array(
+            'field'=>'group_name',
+            'label' => 'Nazwa_grupy',
+            'rules' => 'trim|required'
+        ),
+        array(
+            'field'=>'alias',
+            'label' => 'Alias',
+            'rules' => 'trim|is_unique[GROUPS.alias]'
+        ),
+    ),
+
 );

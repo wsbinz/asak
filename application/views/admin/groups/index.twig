@@ -1,0 +1,13 @@
+{% extends "admin/include/include.twig" %}
+
+{% block body %}
+
+    {{ validation|raw }}
+
+        {% for group in groups %}
+
+            <p>{{ group.group_name }}</p>
+
+        {% endfor %}
+
+{% endblock %}
