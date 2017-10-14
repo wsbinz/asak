@@ -5,7 +5,7 @@
     <div class="jumbotron">
         <h2>Dodanie produktu</h2>
     </div>
-
+<form>
     <section id="1">
         <!-- Progressbar -->
         <div class="progress">
@@ -15,18 +15,18 @@
         <!-- Nazwa towaru -->
         <div class="form-group">
             <label for="name">Wprowadz nazwę towaru:</label>
-            <input type="text" class="form-control" id="name"> <!-- check z pozycjami mat_nazwk z tabeli NAZW -->
+            <input type="text" class="form-control" id="name" name="mat_nazwk"> <!-- check z pozycjami mat_nazwk z tabeli NAZW -->
         </div>
 
         <!-- Grupa towarowa -->
         <div class="form-group">
             <label for="gr_tow">Wprowadz grupę towarową:</label>
-            <input type="text" class="form-control" id="name"> <!-- wybór z listy prod_hier z tabeli GRTW-->
+            <input type="text" class="form-control" id="name" name="prod_hier"> <!-- wybór z listy prod_hier z tabeli GRTW-->
         </div>
         <!-- Nazwa marketingowa rozwinięta -->
         <div class="form-group">
             <label for="name_mark">Nazwa marketingowa:</label>
-            <textarea class="form-control" rows="5" id="name_mark"></textarea> <!--ladowanie do pola mat_nazwd tabela NAZW -->
+            <textarea class="form-control" rows="5" id="name_mark" name="mat_nazwd"></textarea> <!--ladowanie do pola mat_nazwd tabela NAZW -->
         </div>
         <button type="button" class="btn btn-lg btn-default btn-forw">Dalej</button>
     </section>
@@ -207,13 +207,10 @@
                 </table>
             </div>
         </div>
-
-
-    <button type="button" class="btn btn-lg btn-default btn-back">Wstecz</button>
-    <button type="button" class="btn btn-lg btn-default btn-end">Zakończ</button>
+        <button type="button" class="btn btn-lg btn-default btn-back">Wstecz</button>
+        <button type="button" class="btn btn-lg btn-default btn-end">Zakończ</button>
         <!-- Zakonczenie spowoduje przejscie do podstrony wyswietlania produktu -->
     </section>
-
-</div>
+</form>
 
 {% endblock %}

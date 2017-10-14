@@ -1,16 +1,28 @@
-<h1>Logowanie</h1>
+
 {% autoescape %}
     {{ validation|raw }}
 {% endautoescape %}
-<form class="login_user" action="{{ base_url() }}account/login" method="POST" id="add_user">
+<!-- Bootstrap core CSS -->
+<link rel="stylesheet" href="{{ base_url() }}/asset/css/bootstrap.css" crossorigin="anonymous">
+<!-- nasza nakładka CSS -->
+<link rel="stylesheet" href="{{ base_url() }}/asset/css/theme.css" crossorigin="anonymous">
+
+
+
+<div class ="container">
+<form class="form-signin" action="{{ base_url() }}account/login" method="POST" id="add_user">
+
+    <h2 class="h_middle">ASAK Logowanie</h2>
+
     <div class="form-group">
-        <label for="email">Adres e-mail</label>
+        <label for="email" class="form-signin-heading">Adres e-mail</label>
         <input type="email" class="form-control" id="email" name="email" placeholder="Email">
     </div>
     <div class="form-group">
-        <label for="password">Hasło</label>
+        <label for="password" class="form-signin-heading">Hasło</label>
         <input type="password" class="form-control" id="password" name="password" placeholder="Hasło">
     </div>
+
     <div class="checkbox">
         <label>
             <input type="checkbox" value="1" name="remember_me"> Zapamiętaj mnie
@@ -19,6 +31,7 @@
             <a href="{{ base_url() }}account/forgot-password">Zapomniałem hasła</a>
         </div>
     </div>
-    <button type="submit" class="btn btn-default">Wyślij</button>
-</form>
+    <button type="submit" class="btn btn-lg btn-primary btn-block">Wyślij</button>
 
+</form>
+</div>
