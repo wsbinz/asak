@@ -55,6 +55,7 @@
  */
 	define('ENVIRONMENT', isset($_SERVER['CI_ENV']) ? $_SERVER['CI_ENV'] : 'development');
     date_default_timezone_set('Europe/Warsaw');
+
 /*
  *---------------------------------------------------------------
  * ERROR REPORTING
@@ -314,4 +315,3 @@ switch (ENVIRONMENT)
  */
 require_once 'vendor/autoload.php';
 require_once BASEPATH.'core/CodeIgniter.php';
-

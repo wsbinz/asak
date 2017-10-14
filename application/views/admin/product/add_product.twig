@@ -1,0 +1,219 @@
+{% extends "admin/include/include.twig" %}
+{% block add %}
+    <div class="container theme-showcase" role="main">
+    <!-- Szary Panel -->
+    <div class="jumbotron">
+        <h2>Dodanie produktu</h2>
+    </div>
+
+    <section id="1">
+        <!-- Progressbar -->
+        <div class="progress">
+            <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 20%;"><span class="sr-only">20% Complete</span></div>
+        </div>
+
+        <!-- Nazwa towaru -->
+        <div class="form-group">
+            <label for="name">Wprowadz nazwę towaru:</label>
+            <input type="text" class="form-control" id="name"> <!-- check z pozycjami mat_nazwk z tabeli NAZW -->
+        </div>
+
+        <!-- Grupa towarowa -->
+        <div class="form-group">
+            <label for="gr_tow">Wprowadz grupę towarową:</label>
+            <input type="text" class="form-control" id="name"> <!-- wybór z listy prod_hier z tabeli GRTW-->
+        </div>
+        <!-- Nazwa marketingowa rozwinięta -->
+        <div class="form-group">
+            <label for="name_mark">Nazwa marketingowa:</label>
+            <textarea class="form-control" rows="5" id="name_mark"></textarea> <!--ladowanie do pola mat_nazwd tabela NAZW -->
+        </div>
+        <button type="button" class="btn btn-lg btn-default btn-forw">Dalej</button>
+    </section>
+    </br></br></br></br></br>
+    <section id="2">
+        <!-- Progressbar -->
+        <div class="progress">
+            <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 40%;"><span class="sr-only">40% Complete</span></div>
+        </div>
+        <div class="row">
+            <div class="page-header">
+                <h2>Struktura</h2>
+            </div>
+            <div class="col-md-1">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>Rodzaj:</th>
+                        <th>Ilość:</th>
+                        <th>Waga netto:</th>
+                        <th>Waga brutto:</th>
+                        <th>Jedn. Wag:</th>
+                        <th>Dł:</th>
+                        <th>Wys:</th>
+                        <th>Szer:</th>
+                        <th>Jedn. Wym:</th>
+                        <th>Objętość:</th>
+                        <th>Objętość jedn:</th>
+                        <th>EAN:</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <th>SZT</th>
+                        <th><input type="text" class="form-control" id="name"></th>
+                        <th><input type="text" class="form-control" id="name"></th>
+                        <th><input type="text" class="form-control" id="name"></th>
+                        <th><select class="form-control" id="sel1">
+                                <option>mg</option>
+                                <option>g</option>
+                                <option>kg</option>
+                                <option>t</option>
+                            </select></th>
+                        <th><input type="text" class="form-control" id="name"></th>
+                        <th><input type="text" class="form-control" id="name"></th>
+                        <th><input type="text" class="form-control" id="name"></th>
+                        <th><select class="form-control" id="sel1">
+                                <option>mm</option>
+                                <option>cm</option>
+                                <option>m</option>
+                            </select></th>
+                        <th>wyliczana DxWxS:</th>
+                        <th>cm3</th>
+                        <th><input type="text" class="form-control" id="name"></th>
+                    </tr>
+                                        </tbody>
+                </table>
+            </div>
+        </div>
+        <button type="button" class="btn btn-lg btn-default btn-back">Wstecz</button>
+        <button type="button" class="btn btn-lg btn-default btn-forw">Dalej</button>
+    </section>
+    </br></br></br></br></br>
+    <section id="3">
+        <!-- Progressbar -->
+        <div class="progress">
+            <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;"><span class="sr-only">60% Complete</span></div>
+        </div>
+
+        <!-- Informacje dodatkowe -->
+        <div class="row">
+            <div class="page-header">
+                <h2>Informacja dodatkowe:</h2>
+            </div>
+
+            <div class="col-md-6">
+                <table class="table table-bordered">
+                    <tbody>
+                    <tr>
+                        <td>Grupa załadunkowa w magazynie:</td>
+                        <td>
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="gr_zalad"> <!-- TAB: INDK  gr_zalad select? -->
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Kod PKWIU:</td>
+                        <td>
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="gr_zalad"> <!-- TAB: INDK  kod_pkwiu input ale select z PKWI -->
+                            </div></td>
+                    </tr>
+                    <tr>
+                        <td>Opis PKWIU:</td>
+                        <td>opis kodu</td> <!-- opis zaczytany na bazie selecta pkwui_kod z tab PKWI -->
+                    </tr>
+                    <tr>
+                        <td>Stawka VAT</td>
+                        <td><div class="form-group">
+                                <input type="text" class="form-control" id="gr_zalad"> <!-- TAB: INDK  vat input-->
+                            </div></td>
+                    </tr>
+                    <tr>
+                        <td>Numer hierarchii produktowej:</td>
+                        <td>Numer prod_hier</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <button type="button" class="btn btn-lg btn-default btn-back">Wstecz</button>
+        <button type="button" class="btn btn-lg btn-default btn-forw">Dalej</button>
+    </section>
+        </br></br></br></br></br>
+    <section id="4">
+        <!-- Progressbar -->
+        <div class="progress">
+            <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 80%;"><span class="sr-only">80% Complete</span></div>
+        </div>
+        <!-- Dostawca -->
+        <div class="row">
+            <div class="page-header">
+                <h2>Wprowadź dane o dostawcy:</h2>
+            </div>
+            <div class="col-md-6">
+                <table class="table table-bordered">
+                    <tbody>
+                    <tr>
+                        <td>Nazwa dostawcy</td>
+                        <td><input type="text" class="form-control" id="name"></td>
+                    </tr>
+                    <tr>
+                        <td>Adres dostawcy</td>
+                        <td><input type="text" class="form-control" id="name"> </td>
+                    </tr>
+                    <tr>
+                        <td>Kod pocztowy</td>
+                        <td> <input type="text" class="form-control" id="name"></td>
+                    </tr>
+                    <tr>
+                        <td>Miasto</td>
+                        <td><input type="text" class="form-control" id="name"></td>
+                    </tr>
+                    <tr>
+                        <td>NIP</td>
+                        <td><input type="text" class="form-control" id="name"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- Dostawca zwroty-->
+        <div class="row">
+            <div class="page-header">
+                <h2>Dostawca zwroty:</h2>
+            </div>
+            <div class="col-md-6">
+                <table class="table table-bordered">
+                    <tbody>
+                    <tr>
+                        <td>Nazwa dostawcy</td>
+                        <td><input type="text" class="form-control" id="name"></td>
+                    </tr>
+                    <tr>
+                        <td>Adres dostawcy</td>
+                        <td><input type="text" class="form-control" id="name"> </td>
+                    </tr>
+                    <tr>
+                        <td>Kod pocztowy</td>
+                        <td> <input type="text" class="form-control" id="name"></td>
+                    </tr>
+                    <tr>
+                        <td>Miasto</td>
+                        <td><input type="text" class="form-control" id="name"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+
+    <button type="button" class="btn btn-lg btn-default btn-back">Wstecz</button>
+    <button type="button" class="btn btn-lg btn-default btn-end">Zakończ</button>
+        <!-- Zakonczenie spowoduje przejscie do podstrony wyswietlania produktu -->
+    </section>
+
+</div>
+
+{% endblock %}

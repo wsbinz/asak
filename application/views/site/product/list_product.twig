@@ -1,0 +1,218 @@
+{% extends "admin/include/include.twig" %}
+
+{% block body %}
+
+
+    <div class="container theme-showcase" role="main">
+        <!-- Szary Panel -->
+        <div class="jumbotron">
+            <h2>Wyswietlanie produktu o numerze:  XX</h2> <!--do wladowania numer produktu -->
+        </div>
+        <!-- Alert dla wycofania indeksu -->
+        <div class="alert alert-danger" role="alert">
+            <strong>UWAGA!</strong> PRODUKT WYCOFANY!
+        </div>
+        <!-- Numer produktu towaru -->
+        <div class="row">
+            <h5>nazwa marketingowa</h5>
+        </div>
+        <!-- Nazwa towaru -->
+        <div class="row">
+            <div class="col-md-12">
+                <h2>
+                    Nazwa produktu
+                </h2>
+            </div>
+        </div>
+        <!-- Grupa towarowa -->
+        <div class="row">
+            <h5>grupa towarowa</h5>
+        </div>
+        <!-- Nazwa marketingowa rozwinięta -->
+        <div class="row">
+            <h5>nazwa marketingowa</h5>
+        </div>
+        <!-- Struktura + zdjęcie -->
+        <div class="row">
+            <div class="page-header">
+                <h2>Struktura</h2>
+            </div>
+            <div class="col-md-6">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>Rodzaj</th>
+                        <th>Ilość</th>
+                        <th>Waga</th>
+                        <th>Wymiary(DxWxS)</th>
+                        <th>Objętość</th>
+                        <th>Kod EAN</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>SZT</td>
+                        <td>10</td>
+                        <td>0,5 </td>
+                        <td>10x10x10</td>
+                        <td>100cm3</td>
+                        <td>1234567898</td>
+                    </tr>
+                    <tr>
+                        <td>OPA</td>
+                        <td>100</td>
+                        <td>0,5 </td>
+                        <td>10x20x30</td>
+                        <td>6000cm3</td>
+                        <td>123567</td>
+                    </tr>
+                    <tr>
+                        <td>KAR</td>
+                        <td>500</td>
+                        <td>0,5 </td>
+                        <td>50x50x50</td>
+                        <td>1250cm3</td>
+                        <td> </td>
+                    </tr>
+                    <tr>
+                        <td>PAL</td>
+                        <td>6500</td>
+                        <td>0,5 </td>
+                        <td>120x80x165</td>
+                        <td>12346cm3</td>
+                        <td>  </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-6">
+                <img src="card.jpg" class="img-thumbnail" >
+            </div>
+        </div>
+        <!-- Informacje dodatkowe -->
+        <div class="row">
+            <div class="page-header">
+                <h2>Informacja dodatkowe:</h2>
+            </div>
+
+            <div class="col-md-6">
+                <table class="table table-bordered">
+                    <tbody>
+                    <tr>
+                        <td>Grupa załadunkowa w magazynie:</td>
+                        <td>Opis gr zaladunkowej</td>
+                    </tr>
+                    <tr>
+                        <td>Kod PKWIU:</td>
+                        <td>numer kodu</td>
+                    </tr>
+                    <tr>
+                        <td>Opis PKWIU:</td>
+                        <td>opis kodu</td>
+                    </tr>
+                    <tr>
+                        <td>Stawka VAT</td>
+                        <td>5%</td>
+                    </tr>
+                    <tr>
+                        <td>Numer hierarchii produktowej:</td>
+                        <td>Numer prod_hier</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- Dostawca -->
+        <div class="row">
+            <div class="page-header">
+                <h2>Dostawca:</h2>
+            </div>
+            <div class="col-md-6">
+                <table class="table table-bordered">
+                    <tbody>
+                    <tr>
+                        <td>Nazwa dostawcy</td>
+                        <td>nazwa dosaawcy</td>
+                    </tr>
+                    <tr>
+                        <td>Adres dostawcy</td>
+                        <td>ult kolejowa 15 </td>
+                    </tr>
+                    <tr>
+                        <td>Kod pocztowy</td>
+                        <td>11-111</td>
+                    </tr>
+                    <tr>
+                        <td>Miasto</td>
+                        <td>Poznań</td>
+                    </tr>
+                    <tr>
+                        <td>NIP</td>
+                        <td>123-23-24-213</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- Dostawca zwroty-->
+        <div class="row">
+            <div class="page-header">
+                <h2>Dostawca zwroty:</h2>
+            </div>
+            <div class="col-md-6">
+                <table class="table table-bordered">
+                    <tbody>
+                    <tr>
+                        <td>Nazwa dostawcy</td>
+                        <td>nazwa dosaawcy</td>
+                    </tr>
+                    <tr>
+                        <td>Adres dostawcy</td>
+                        <td>ult kolejowa 15 </td>
+                    </tr>
+                    <tr>
+                        <td>Kod pocztowy</td>
+                        <td>11-111</td>
+                    </tr>
+                    <tr>
+                        <td>Miasto</td>
+                        <td>Poznań</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- Log działań -->
+        <div class="row">
+            <div class="page-header">
+                <h2>Log:</h2>
+            </div>
+            <div class="col-md-6">
+                <table class="table table-bordered">
+                    <tbody>
+                    <tr>
+                        <td>Data utworzenia artykułu:</td>
+                        <td>01-01-1970</td>
+                    </tr>
+                    <tr>
+                        <td>Użytkownik:</td>
+                        <td>POZNAA</td>
+                    </tr>
+                    <tr>
+                        <td>Data ostatniej zmiany</td>
+                        <td>09-09-2017</td>
+                    </tr>
+                    <tr>
+                        <td>Użytownik</td>
+                        <td>POZNAA</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+
+    </div>
+
+{% endblock %}
+

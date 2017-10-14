@@ -1,0 +1,47 @@
+body {
+    padding-top: 70px;
+    padding-bottom: 30px;
+}
+h5{
+    position: absolute;
+    font-size: 15px;
+}
+
+.page-header {
+    padding-bottom: 9px;
+    margin: 40px 0 20px;
+    border-bottom: 1px solid #eee;
+    width: 70%;
+}
+
+.page-header h2{
+    font-size: 25px;
+    width: 7px;
+}
+
+.col-md-6{
+    position:relative;
+    width: 50%;
+    float: left;
+}
+.col-md-6 img{
+    float:right;
+}
+
+.col-lg-4{
+    width: 50%;
+}
+.col-md-1{
+    width: 100%;
+}
+.btn-forw{
+    float: right;
+}
+
+.btn-end{
+    float: right;
+}
+
+.btn-back{
+    float: left;
+}

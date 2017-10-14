@@ -31,12 +31,11 @@ class User extends CI_Controller {
         $activation_code = random_string();
         if(!empty($_POST)){
 
-
             if($this->form_validation->run('admin_user_create') == TRUE)
             {
                 $data = array(
                     'username' => $this->input->post('username',true),
-                    'email' => trim($this->input->post('email',true)),
+                    'email' => $this->input->post('email',true),
                     'password' => password_hash($this->input->post('password',true),PASSWORD_DEFAULT),
                     'create_date' => time(),
                     'active' => 0,
@@ -46,26 +45,24 @@ class User extends CI_Controller {
                 $user = $this->Admin_model->create('users',$data);
 
                 //Wysyłanie meila do uzytkownika
-                $do = $_POST['email'];
+                $do = $data['email'];
                 $from = "biuro@ts3-tnt.pl <biuro@ts3-tnt.pl>";
                 $mailheaders="From: $from\n";
                 $mailheaders.="Reply-To: $from\n";
                 $mailheaders.="X-Mailer: PHP\n";
                 $mailheaders.="MIME-version: 1.0\n";
                 $mailheaders.="Content-type: text/html; charset=utf-8";
-                $message = '<p>Witaj ' . $data['username'].'. Aby aktytowac konto kliknij w poniższy link:'
+                $message = '<p>Witaj ' . $data['username'].'. Aby aktytować konto kliknij w poniższy link:'
                     .base_url('account/activation/'.$activation_code ).'</p>';
-                $subject = "Aktywacja konta w serwisie ASAK";
-                $do = (string)$data['email'];
 
-                $mail = mail($do,$subject, $message, $mailheaders);
+                $mail = mail("$do", "Aktywacja konta w serwisie ASAK", "$message", "$mailheaders");
 
                 $this->session->set_flashdata('alert',"Użytkownik został dodany !");
             }
             else
-            {
-                $this->session->set_flashdata('alert',validation_errors());
-            }
+                {
+                    $this->session->set_flashdata('alert',validation_errors());
+                }
 
 
         }

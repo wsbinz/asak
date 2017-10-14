@@ -25,3 +25,13 @@ function random_string()
 
     return md5($random);
 }
+
+function logged_in()
+{
+    if(isset($_SESSION['logged_in']) && $_SESSION['logged_in']==1)
+    {
+        return true;
+    }
+    return false;
+
+}
