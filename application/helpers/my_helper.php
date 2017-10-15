@@ -38,7 +38,7 @@ function logged_in()
     return false;
 
 }
-
+//sfdsda
 //Funkcja zwraca przekonwertowany text np: Word is big > word-is-big
 function alias($alias)
 {
