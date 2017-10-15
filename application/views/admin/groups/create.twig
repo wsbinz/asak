@@ -1,0 +1,13 @@
+{{ validation|raw }}
+
+<form method="POST" action="{{ base_url() }}admin/group/add_group">
+    <div class="form-group">
+        <label for="exampleInputEmail1">Nazwa Grupy</label>
+        <input type="text" class="form-control" id="exampleInputEmail1" name="group_name" aria-describedby="emailHelp" placeholder="nazwa grup">
+    </div>
+    <div class="form-group">
+        <label for="exampleInputPassword1">Alias</label>
+        <input type="text" class="form-control" name="alias" id="exampleInputPassword1" placeholder="alias">
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
