@@ -12,16 +12,16 @@ class Account extends CI_Controller {
 
     public function index()
     {
-        if($_SESSION['logged_in'] == 1) {
+       /* if($_SESSION['logged_in'] == 1) {
             echo "Witaj " . $_SESSION['username'] . " Zostałeś pomyślnie zalogowany !";
-            /*$this->twig->display('site/account/login');*/
-
-            print_r($_COOKIE['remember_me']);
         }
         else
         {
             redirect('account/login');
-        }
+        }*/
+
+        $data['validation'] = $this->session->flashdata('alert');
+        $this->twig->display('admin/include/dashboard',$data);
     }
 
     public function login()

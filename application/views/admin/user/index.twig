@@ -1,3 +1,8 @@
+
+{% autoescape %}
+    {{ validation|raw }}
+{% endautoescape %}
+
 <table class="table table-sm">
     <thead>
     <tr>
@@ -13,7 +18,16 @@
         <th scope="row">{{ loop.index }}</th>
         <td>{{ user.username }}</td>
         <td>{{ user.email }}</td>
-        <td>{{ user.id }}</td>
+
+        {% for group_user in groups_users %}
+
+            {% if group_user.id_users == user.id %}
+
+                <td>{{ group[group_user.id_groups ] }}</td>
+
+            {% endif %}
+
+        {% endfor %}
     </tr>
     {% endfor %}
     </tbody>

@@ -1,11 +1,15 @@
 {% extends "admin/include/include.twig" %}
 
 {% block dashboard %}
+
 <div class="container theme-showcase" role="main">
     <!-- Szary Panel -->
     <div class="jumbotron">
         <h2>Pulpit</h2>
     </div>
+    {% autoescape %}
+        {{ validation|raw }}
+    {% endautoescape %}
     <div class="row">
         <div class="col-lg-4">
             <h2>To_do list:</h2>

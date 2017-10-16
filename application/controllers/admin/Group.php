@@ -9,7 +9,7 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 
-class Group extends My_Controller
+class Group extends Admin_Controller
 {
 
     public function __construct()

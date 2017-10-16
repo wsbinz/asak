@@ -9,7 +9,7 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class User extends CI_Controller {
+class User extends Admin_Controller {
 
 
     public function __construct()
@@ -33,10 +33,6 @@ class User extends CI_Controller {
         }
 
         $data['group'] =  $group_id_array;
-
-        print_r( $data['group']);
-        print_r( $data['groups_users']);
-        //print_r( $data['users']);
 
         $data['validation']= $this->session->flashdata('alert');
         $this->twig->display('admin/user/index',$data);
@@ -153,13 +149,13 @@ class User extends CI_Controller {
         $where = array('id_users' =>$id);
         $data['user_in_group'] = $this->Admin_model->get_single("GROUPS_USERS",$where);
 
-        foreach ( $data['group'] as $group)
-        {
-            if($group->id == $data['user_in_group']->id_groups)
-            {
-                $data['group_id'] = $data['user_in_group']->id_groups;
-            }
+        if(!empty($data['user_in_group'])) {
+            foreach ($data['group'] as $group) {
+                if ($group->id == $data['user_in_group']->id_groups) {
+                    $data['group_id'] = $data['user_in_group']->id_groups;
+                }
 
+            }
         }
 
         $data['validation']= $this->session->flashdata('alert');
