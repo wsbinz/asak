@@ -30,7 +30,7 @@ $config = array(
         array(
             'field'=>'email',
             'label' => 'Email',
-            'rules' => 'trim|required|valid_email|is_unique[users.email]'
+            'rules' => 'trim|required|valid_email|is_unique[USERS.email]'
         ),
         array(
             'field'=>'password',
@@ -41,6 +41,29 @@ $config = array(
             'field'=>'password_retry',
             'label' => 'Powtórz hasło',
             'rules' => 'trim|required|matches[password]'
+        ),
+    ),
+
+    'admin_user_edit'=> array(
+        array(
+            'field'=>'username',
+            'label' => 'Login',
+            'rules' => 'trim|required'
+        ),
+        array(
+            'field'=>'email',
+            'label' => 'Email',
+            'rules' => 'trim|required|valid_email|callback_edit_email'
+        ),
+        array(
+            'field'=>'password',
+            'label' => 'Hasło',
+            'rules' => 'trim|min_length[5]'
+        ),
+        array(
+            'field'=>'password_retry',
+            'label' => 'Powtórz hasło',
+            'rules' => 'trim|matches[password]'
         ),
     ),
 
@@ -55,6 +78,20 @@ $config = array(
             'field'=>'alias',
             'label' => 'Alias',
             'rules' => 'trim|is_unique[GROUPS.alias]'
+        ),
+    ),
+
+    'admin_group_edit'=> array(
+
+        array(
+            'field'=>'group_name',
+            'label' => 'Nazwa_grupy',
+            'rules' => 'trim|required'
+        ),
+        array(
+            'field'=>'alias',
+            'label' => 'Alias',
+            'rules' => 'trim|callback_edit_alias'
         ),
     ),
 

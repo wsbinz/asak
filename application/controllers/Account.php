@@ -15,6 +15,8 @@ class Account extends CI_Controller {
         if($_SESSION['logged_in'] == 1) {
             echo "Witaj " . $_SESSION['username'] . " Zostałeś pomyślnie zalogowany !";
             /*$this->twig->display('site/account/login');*/
+
+            print_r($_COOKIE['remember_me']);
         }
         else
         {
@@ -36,7 +38,7 @@ class Account extends CI_Controller {
             {
 
                 $where = array('email' => $this->input->post('email',true) );
-                $user = $this->Site_model->get_single('users',$where);
+                $user = $this->Site_model->get_single('USERS',$where);
 
                 $data = array(
                     'email' => $this->input->post('email',true),
@@ -54,6 +56,35 @@ class Account extends CI_Controller {
                             );
                             $this->session->set_userdata($data_login);
                             $this->session->set_flashdata('alert', "Zalogowałeś się pomyślnie !");
+
+                            if($this->input->post('remember_me',true) == 1)
+                            {
+                                $remember_code = random_string();
+
+                                $user_info = array(
+                                    'id' => $user->id,
+                                    'username' => $user->username,
+                                    'email' => $user->email,
+                                    'logged_in' => 1,
+                                    'remember_me' => 1,
+                                    'remember_code' => $remember_code
+                                );
+
+                                $user_info_json = json_encode($user_info);
+
+                                $data_cookie=array(
+                                    "name"=>'remember_me',
+                                    "value" =>$user_info_json,
+                                    "expire" => 60*60*60*24,
+                                    'path' => '/',
+                                );
+
+                                set_cookie($data_cookie);
+                                $data = array('remember_code'=>$remember_code);
+                                $where = array('id'=>$user->id);
+                                $this->Site_model->update("USERS",$data,$where); //model od update użytkownika
+                            }
+
                             redirect('account');
                         } else {
                             $this->session->set_flashdata('alert', "Musisz aktywować konto !");
@@ -77,6 +108,10 @@ class Account extends CI_Controller {
         $this->twig->display('site/account/login',$data);
     }
 
-
+    public function logout()
+    {
+        session_destroy();
+        delete_cookie("remember_me");
+    }
 
 }

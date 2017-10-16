@@ -1,0 +1,20 @@
+<table class="table table-sm">
+    <thead>
+    <tr>
+        <th>#</th>
+        <th>Imię</th>
+        <th>E-mail</th>
+        <th>Grupa</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for user in users %}
+    <tr>
+        <th scope="row">{{ loop.index }}</th>
+        <td>{{ user.username }}</td>
+        <td>{{ user.email }}</td>
+        <td>{{ user.id }}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>

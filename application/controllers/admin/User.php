@@ -23,6 +23,23 @@ class User extends CI_Controller {
     public function index()
     {
 
+        $data['users'] = $this->Admin_model->get("USERS"); // Pobieranie wszystkich grup
+        $groups = $this->Admin_model->get("GROUPS"); // Pobieranie wszystkich grup
+        $data['groups_users'] = $this->Admin_model->get('GROUPS_USERS');
+
+        foreach ($groups as $group)
+        {
+            $group_id_array[$group->id] = $group->group_name;
+        }
+
+        $data['group'] =  $group_id_array;
+
+        print_r( $data['group']);
+        print_r( $data['groups_users']);
+        //print_r( $data['users']);
+
+        $data['validation']= $this->session->flashdata('alert');
+        $this->twig->display('admin/user/index',$data);
     }
 
     public function create_user()
@@ -72,6 +89,99 @@ class User extends CI_Controller {
 
         $data['validation']= $this->session->flashdata('alert');
         $this->twig->display('admin/user/create',$data);
+    }
+
+    public function edit_user($id)
+    {
+        $where = array('id' =>$id);
+        $data['user'] = $this->Admin_model->get_single("USERS",$where); //Pobieranie danych uzytkownika
+
+        $data['group'] = $this->Admin_model->get("GROUPS"); // Pobieranie wszystkich grup
+
+
+        if(!empty($_POST)){
+            $old_password = $data['user']->password;
+
+            if($this->form_validation->run('admin_user_edit') == TRUE)
+            {
+                $data = array(
+                    'username' => $this->input->post('username',true),
+                    'email' => trim($this->input->post('email',true)),
+                    'password' => password_hash($this->input->post('password',true),PASSWORD_DEFAULT),
+                    'create_date' => time(),
+                );
+
+                if($_POST['password'] == '')
+                {
+                    $data['password'] = $old_password;
+                }
+
+                //edytowanie uzytkownika w bazie
+                $where = array('id' => $id);
+                $user = $this->Admin_model->update('USERS',$data,$where);
+
+                $data_group = array(
+                    'id_groups' => $this->input->post('group',true),
+                    'id_users' => $id,
+                );
+
+
+                $where = array('id_users' =>$id);
+                $data['user_in_group'] = $this->Admin_model->get_single("GROUPS_USERS",$where);
+                //Sprawdza czy uzytkownik nalezy do grupy jezeli tak to robi update jezeli nie to create
+                if($data['user_in_group'] == '')
+                {
+                    $user = $this->Admin_model->create('GROUPS_USERS',$data_group);
+                }
+                else
+                {
+                    $where = array('id_users' =>$id);
+                    $this->Admin_model->update('GROUPS_USERS',$data_group,$where);
+                }
+                $this->session->set_flashdata('alert',"Użytkownik został edytowany !");
+                refresh();
+            }
+            else
+            {
+                $this->session->set_flashdata('alert',validation_errors());
+            }
+
+
+        }
+
+
+        $where = array('id_users' =>$id);
+        $data['user_in_group'] = $this->Admin_model->get_single("GROUPS_USERS",$where);
+
+        foreach ( $data['group'] as $group)
+        {
+            if($group->id == $data['user_in_group']->id_groups)
+            {
+                $data['group_id'] = $data['user_in_group']->id_groups;
+            }
+
+        }
+
+        $data['validation']= $this->session->flashdata('alert');
+        $this->twig->display('admin/user/edit',$data);
+    }
+
+    public function edit_email($email)
+    {
+        $email_id = $this->uri->segment(4);
+        $where = array('email' =>$email);
+        $user_id = $this->Admin_model->get_single("USERS",$where);
+
+        if(!empty($user_id) && $email_id == $user_id->id)
+        {
+
+            return true;
+        }
+        else
+        {
+            $this->form_validation->set_message('edit_email', 'Ktoś posiada już taki e-mail');
+            return false;
+        }
     }
 
 

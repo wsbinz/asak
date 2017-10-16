@@ -9,7 +9,7 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 
-class Group extends CI_Controller
+class Group extends My_Controller
 {
 
     public function __construct()
@@ -71,4 +71,53 @@ class Group extends CI_Controller
         $this->twig->display('admin/groups/create',$data);
     }
 
+    public function edit_group($id)
+    {
+        $where= array("id" => $id);
+        $data['group'] = $this->Admin_model->get_single("GROUPS",$where);
+
+        if(!empty($_POST))
+        {
+            if($this->form_validation->run('admin_group_edit') == TRUE)
+            {
+                $data = array(
+                    'group_name' => $this->input->post('group_name',true),
+                    'alias' => trim($this->input->post('alias',true)),
+                );
+                //Tworzenie grupy w bazie
+                $where = array('id'=>$id);
+                $this->Admin_model->update('GROUPS',$data,$where);
+
+                $this->session->set_flashdata('alert',"Grupa została edytowana !");
+            }
+            else
+            {
+                $this->session->set_flashdata('alert',validation_errors());
+            }
+
+        }
+
+        $data['validation']= $this->session->flashdata('alert');
+        $this->twig->display('admin/groups/edit',$data);
+
+    }
+
+    public function edit_alias($alias)
+    {
+             $alias_id = $this->uri->segment(4);
+
+             print_r($alias_id);
+            $where = array('alias' => $alias);
+            $group_alias = $this->Admin_model->get_single("GROUPS",$where);
+
+            if(!empty($group_alias) && $group_alias->id == $alias_id)
+            {
+                return true;
+            }
+            else
+            {
+                $this->form_validation->set_message('edit_alias', 'Ktoś posiada już taki alias');
+                return false;
+            }
+    }
 }
