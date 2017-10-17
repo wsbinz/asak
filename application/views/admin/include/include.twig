@@ -52,7 +52,11 @@
                 <li><a href="#Raporty">Raporty</a></li>
                 <li><a href="#kontakt">Kontakt</a></li>
                 <li><a href="#kontakt">FAQ</a></li>
-                <li><a href="Zaloguj">Zaloguj</a></li>
+                   {% if logged_in() == 0 %}
+                <li><a href="{{ base_url() }}account/login">Zaloguj</a></li>
+                   {% else %}
+                 <li><a href="{{ base_url() }}account/logout">Wyloguj</a></li>
+                  {% endif %}
             </ul>
         </div><!--/.nav-collapse -->
     </div>

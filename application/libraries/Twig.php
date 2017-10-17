@@ -22,7 +22,7 @@ class Twig
 		'base_url', 'site_url'
 	];
 	private $functions_safe = [
-		'form_open', 'form_close', 'form_error', 'set_value', 'form_hidden'
+		'form_open', 'form_close', 'form_error', 'set_value', 'form_hidden', 'logged_in'
 	];
 
 	/**
