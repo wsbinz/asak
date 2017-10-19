@@ -5,7 +5,7 @@
     <div class="jumbotron">
         <h2>Dodanie produktu</h2>
     </div>
-
+<form>
     <section id="1">
         <!-- Progressbar -->
         <div class="progress">
@@ -15,18 +15,18 @@
         <!-- Nazwa towaru -->
         <div class="form-group">
             <label for="name">Wprowadz nazwę towaru:</label>
-            <input type="text" class="form-control" id="name"> <!-- check z pozycjami mat_nazwk z tabeli NAZW -->
+            <input type="text" class="form-control" id="name" name="mat_nazwk"> <!-- check z pozycjami mat_nazwk z tabeli NAZW -->
         </div>
 
         <!-- Grupa towarowa -->
         <div class="form-group">
             <label for="gr_tow">Wprowadz grupę towarową:</label>
-            <input type="text" class="form-control" id="name"> <!-- wybór z listy prod_hier z tabeli GRTW-->
+            <input type="text" class="form-control" id="gr_tow" name="prod_hier"> <!-- wybór z listy prod_hier z tabeli GRTW-->
         </div>
         <!-- Nazwa marketingowa rozwinięta -->
         <div class="form-group">
             <label for="name_mark">Nazwa marketingowa:</label>
-            <textarea class="form-control" rows="5" id="name_mark"></textarea> <!--ladowanie do pola mat_nazwd tabela NAZW -->
+            <textarea class="form-control" rows="5" id="name_mark" name="mat_nazwd"></textarea> <!--ladowanie do pola mat_nazwd tabela NAZW -->
         </div>
         <button type="button" class="btn btn-lg btn-default btn-forw" >Dalej</button>
     </section>
@@ -50,37 +50,38 @@
                         <th>Waga brutto:</th>
                         <th>Jedn. Wag:</th>
                         <th>Dł:</th>
-                        <th>Wys:</th>
                         <th>Szer:</th>
+                        <th>Wys:</th>
                         <th>Jedn. Wym:</th>
                         <th>Objętość:</th>
                         <th>Objętość jedn:</th>
+                        <th>Typ EAN:</th>
                         <th>EAN:</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr>
-                        <th>SZT</th>
-                        <th><input type="text" class="form-control" id="name"></th>
-                        <th><input type="text" class="form-control" id="name"></th>
-                        <th><input type="text" class="form-control" id="name"></th>
-                        <th><select class="form-control" id="sel1">
+                        <th>SZT</th> <!--tab MWYM pole j_str -->
+                        <th><input type="text" class="form-control" id="wart_str" name="wart_str"></th>
+                        <th><input type="text" class="form-control" id="waga_ne" name="waga_ne"></th>
+                        <th><input type="text" class="form-control" id="waga_br" name="waga_br"></th>
+                        <th><select class="form-control" id="sel1" name="j_wag"> <!--select trzeba zaczytać dane z tab JEDN z value z jedn_wag="X"-->
                                 <option>mg</option>
-                                <option>g</option>
-                                <option>kg</option>
-                                <option>t</option>
                             </select></th>
-                        <th><input type="text" class="form-control" id="name"></th>
-                        <th><input type="text" class="form-control" id="name"></th>
-                        <th><input type="text" class="form-control" id="name"></th>
-                        <th><select class="form-control" id="sel1">
+                        <th><input type="text" class="form-control" id="wart_dl" name="wart_dl"></th>
+                        <th><input type="text" class="form-control" id="wart_szer" name="wart_szer"></th>
+                        <th><input type="text" class="form-control" id="wart_wys" name="wart_wys"></th>
+                        <th><select class="form-control" id="sel1" name="j_wym"> <!--select trzeba zaczytać dane z tab JEDN z value z jedn_wym="X"-->
                                 <option>mm</option>
-                                <option>cm</option>
-                                <option>m</option>
                             </select></th>
-                        <th>wyliczana DxWxS:</th>
-                        <th>cm3</th>
-                        <th><input type="text" class="form-control" id="name"></th>
+                        <th>wyliczana DxSxW:</th>
+                        <th>cm3</th> <!-- zaadowanie do pola j_obj w tab MWYM-->
+                        <th><select class="form-control" id="sel1" name="ean_typ"> <!-- tutaj w pole ean_typ wart HE jesli 13 znakow lub HK dla 8 znakow-->
+                                <option>EAN 13 znakowy</option>
+                                <option>EAN 8 znakowy</option>
+                            </select></th>
+                        <th><input type="text" class="form-control" id="ean_kod" name="ean_kod"></th>
+
                     </tr>
                                         </tbody>
                 </table>
@@ -109,7 +110,7 @@
                         <td>Grupa załadunkowa w magazynie:</td>
                         <td>
                             <div class="form-group">
-                                <input type="text" class="form-control" id="gr_zalad"> <!-- TAB: INDK  gr_zalad select? -->
+                                <input type="text" class="form-control" id="gr_zalad" name="gr_zalad"> <!-- TAB: INDK  gr_zalad select? -->
                             </div>
                         </td>
                     </tr>
@@ -117,7 +118,7 @@
                         <td>Kod PKWIU:</td>
                         <td>
                             <div class="form-group">
-                                <input type="text" class="form-control" id="gr_zalad"> <!-- TAB: INDK  kod_pkwiu input ale select z PKWI -->
+                                <input type="text" class="form-control" id="kod_pkwiu" name="kod_pkwiu"> <!-- TAB: INDK  kod_pkwiu input ale select z PKWI -->
                             </div></td>
                     </tr>
                     <tr>
@@ -127,11 +128,11 @@
                     <tr>
                         <td>Stawka VAT</td>
                         <td><div class="form-group">
-                                <input type="text" class="form-control" id="gr_zalad"> <!-- TAB: INDK  vat input-->
+                                <input type="text" class="form-control" id="vat" name="vat"> <!-- TAB: INDK  vat input-->
                             </div></td>
                     </tr>
                     <tr>
-                        <td>Numer hierarchii produktowej:</td>
+                        <td>Numer hierarchii produktowej:</td> <!-- tu nie wiem czy tego nie wyjebac-->
                         <td>Numer prod_hier</td>
                     </tr>
                     </tbody>
@@ -157,23 +158,23 @@
                     <tbody>
                     <tr>
                         <td>Nazwa dostawcy</td>
-                        <td><input type="text" class="form-control" id="name"></td>
+                        <td><input type="text" class="form-control" id="dost_nazw" name="dost_nazw"></td> <!-- tab. DOST -->
                     </tr>
                     <tr>
                         <td>Adres dostawcy</td>
-                        <td><input type="text" class="form-control" id="name"> </td>
+                        <td><input type="text" class="form-control" id="dost_adres" name="dost_adres"> </td>
                     </tr>
                     <tr>
                         <td>Kod pocztowy</td>
-                        <td> <input type="text" class="form-control" id="name"></td>
+                        <td> <input type="text" class="form-control" id="dost_kod" name="dost_kod"></td>
                     </tr>
                     <tr>
                         <td>Miasto</td>
-                        <td><input type="text" class="form-control" id="name"></td>
+                        <td><input type="text" class="form-control" id="dost_miasto" nam="dost_miasto"></td>
                     </tr>
                     <tr>
                         <td>NIP</td>
-                        <td><input type="text" class="form-control" id="name"></td>
+                        <td><input type="text" class="form-control" id="dost_nip" name="dost_nip"></td>
                     </tr>
                     </tbody>
                 </table>
@@ -189,19 +190,19 @@
                     <tbody>
                     <tr>
                         <td>Nazwa dostawcy</td>
-                        <td><input type="text" class="form-control" id="name"></td>
+                        <td><input type="text" class="form-control" id="dostzwr_name" name="dostzwr_name"></td> <!-- dostzwr-->
                     </tr>
                     <tr>
                         <td>Adres dostawcy</td>
-                        <td><input type="text" class="form-control" id="name"> </td>
+                        <td><input type="text" class="form-control" id="dostzwr_adres" name="dostzwr_adres"> </td>
                     </tr>
                     <tr>
                         <td>Kod pocztowy</td>
-                        <td> <input type="text" class="form-control" id="name"></td>
+                        <td> <input type="text" class="form-control" id="dostzwr_kod" name="dostzwr_kod"></td>
                     </tr>
                     <tr>
                         <td>Miasto</td>
-                        <td><input type="text" class="form-control" id="name"></td>
+                        <td><input type="text" class="form-control" id="dostzwr_miasto" name="dostzwr_miasto"></td>
                     </tr>
                     </tbody>
                 </table>
@@ -214,6 +215,6 @@
         <!-- Zakonczenie spowoduje przejscie do podstrony wyswietlania produktu -->
     </section>
 
-</div>
 
+    </form>
 {% endblock %}
