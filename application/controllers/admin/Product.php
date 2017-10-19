@@ -27,7 +27,7 @@ class Product extends Admin_Controller  {
             redirect('account');
         }
 
-        $this->twig->display('site/product/list_product');
+        $this->twig->display('admin/product/add_product');
 
 
     }

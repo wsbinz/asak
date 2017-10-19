@@ -27,7 +27,7 @@ class Account extends CI_Controller {
     public function login()
     {
 
-        if($_SESSION['logged_in']==1)
+        if(isset($_SESSION['logged_in']) && $_SESSION['logged_in']==1)
         {
             redirect('account');
         }

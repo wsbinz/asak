@@ -64,12 +64,12 @@ function check_group($alias_group)
 
             $user_in_group = $CI->Admin_model->get_single("GROUPS_USERS", $where);
 
+            if (!empty($user_in_group)) {
+                return true;
+            }
         }
+        return false;
 
-        if (empty($user_in_group)) {
-            return false;
-        } else {
-            return true;
-        }
+
 
 }

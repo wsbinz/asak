@@ -17,7 +17,7 @@ class My_Controller extends CI_Controller {
     }
 }
 
-class Admin_Controller extends CI_Controller {
+class Admin_Controller extends My_Controller {
 
     public function __construct()
     {
@@ -25,7 +25,7 @@ class Admin_Controller extends CI_Controller {
         $this->load->library('session');
         $this->load->model('admin/Admin_model');
 
-        if(!check_group(array('admin','moderator')))
+        if(!check_group(array('moderator','uzytkownik','admin')))
         {
             $this->session->set_flashdata('alert',"Nie masz dostępu do tej częsci serwisu!");
             redirect('account');
