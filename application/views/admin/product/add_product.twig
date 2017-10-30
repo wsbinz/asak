@@ -40,50 +40,96 @@
             <div class="page-header">
                 <h2>Struktura</h2>
             </div>
-            <div class="col-md-1">
+            <div class="col-lg-12">
                 <table class="table table-striped">
                     <thead>
                     <tr>
                         <th>Rodzaj:</th>
                         <th>Ilość:</th>
-                        <th>Waga netto:</th>
-                        <th>Waga brutto:</th>
+                        <th>Waga ne:</th>
+                        <th>Waga br:</th>
                         <th>Jedn. Wag:</th>
                         <th>Dł:</th>
                         <th>Szer:</th>
                         <th>Wys:</th>
                         <th>Jedn. Wym:</th>
-                        <th>Objętość:</th>
-                        <th>Objętość jedn:</th>
-                        <th>Typ EAN:</th>
-                        <th>EAN:</th>
+                        <th>Obj:</th>
+                        <th>Obj. jedn:</th>
+                        <th>Kod EAN:</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr>
-                        <th>SZT</th> <!--tab MWYM pole j_str -->
-                        <th><input type="text" class="form-control" id="wart_str" name="wart_str"></th>
-                        <th><input type="text" class="form-control" id="waga_ne" name="waga_ne"></th>
-                        <th><input type="text" class="form-control" id="waga_br" name="waga_br"></th>
-                        <th><select class="form-control" id="sel1" name="j_wag"> <!--select trzeba zaczytać dane z tab JEDN z value z jedn_wag="X"-->
+                        <td width="2%">SZT</td> <!--tab MWYM pole j_str -->
+                        <td width="8%"><input type="text" class="form-control" id="wart_str" name="wart_str" value="1" disabled></td>
+                        <td width="9%"><input type="text" class="form-control" id="waga_ne" name="waga_ne"></td>
+                        <td width="9%"><input type="text" class="form-control" id="waga_br" name="waga_br"></td>
+                        <td width="10%"><select class="form-control" id="sel1" name="j_wag"> <!--select trzeba zaczytać dane z tab JEDN z value z jedn_wag="X"-->
                                 <option>mg</option>
-                            </select></th>
-                        <th><input type="text" class="form-control" id="wart_dl" name="wart_dl"></th>
-                        <th><input type="text" class="form-control" id="wart_szer" name="wart_szer"></th>
-                        <th><input type="text" class="form-control" id="wart_wys" name="wart_wys"></th>
-                        <th><select class="form-control" id="sel1" name="j_wym"> <!--select trzeba zaczytać dane z tab JEDN z value z jedn_wym="X"-->
+                            </select></td>
+                        <td width="8%"><input type="text" class="form-control" id="wart_dl" name="wart_dl"></td>
+                        <td width="8%"><input type="text" class="form-control" id="wart_szer" name="wart_szer"></td>
+                        <td width="8%"><input type="text" class="form-control" id="wart_wys" name="wart_wys"></td>
+                        <td width="10%"><select class="form-control" id="sel1" name="j_wym"> <!--select trzeba zaczytać dane z tab JEDN z value z jedn_wym="X"-->
                                 <option>mm</option>
-                            </select></th>
-                        <th>wyliczana DxSxW:</th>
-                        <th>cm3</th> <!-- zaadowanie do pola j_obj w tab MWYM-->
-                        <th><select class="form-control" id="sel1" name="ean_typ"> <!-- tutaj w pole ean_typ wart HE jesli 13 znakow lub HK dla 8 znakow-->
-                                <option>EAN 13 znakowy</option>
-                                <option>EAN 8 znakowy</option>
-                            </select></th>
-                        <th><input type="text" class="form-control" id="ean_kod" name="ean_kod"></th>
-
+                            </select></td>
+                        <td width="5%">wyliczana DxSxW:</td>
+                        <td width="8%">cm3</td> <!-- zaadowanie do pola j_obj w tab MWYM-->
+                        <td width="40%"><input type="text" class="form-control" id="ean_kod" name="ean_kod"></td>
                     </tr>
-                                        </tbody>
+                    <tr>
+                        <td width="2%">OPA</td> <!--tab MWYM pole j_str -->
+                        <td width="8%"><input type="text" class="form-control" id="wart_str" name="wart_str"></td>
+                        <td width="9%"><input type="text" class="form-control" id="waga_ne" name="waga_ne"></td>
+                        <td width="9%"><input type="text" class="form-control" id="waga_br" name="waga_br"></td>
+                        <td width="10%"><select class="form-control" id="sel1" name="j_wag"> <!--select trzeba zaczytać dane z tab JEDN z value z jedn_wag="X"-->
+                                <option>mg</option>
+                            </select></td>
+                        <td width="8%"><input type="text" class="form-control" id="wart_dl" name="wart_dl"></td>
+                        <td width="8%"><input type="text" class="form-control" id="wart_szer" name="wart_szer"></td>
+                        <td width="8%"><input type="text" class="form-control" id="wart_wys" name="wart_wys"></td>
+                        <td width="10%"><select class="form-control" id="sel1" name="j_wym"> <!--select trzeba zaczytać dane z tab JEDN z value z jedn_wym="X"-->
+                                <option>mm</option>
+                            </select></td>
+                        <td width="5%">wyliczana DxSxW:</td>
+                        <td width="8%">cm3</td> <!-- zaadowanie do pola j_obj w tab MWYM-->
+                        <td width="40%"><input type="text" class="form-control" id="ean_kod" name="ean_kod"></td>
+                    <tr>
+                        <td width="2%">KAR</td> <!--tab MWYM pole j_str -->
+                        <td width="8%"><input type="text" class="form-control" id="wart_str" name="wart_str"></td>
+                        <td width="9%"><input type="text" class="form-control" id="waga_ne" name="waga_ne"></td>
+                        <td width="9%"><input type="text" class="form-control" id="waga_br" name="waga_br"></td>
+                        <td width="10%"><select class="form-control" id="sel1" name="j_wag"> <!--select trzeba zaczytać dane z tab JEDN z value z jedn_wag="X"-->
+                                <option>mg</option>
+                            </select></td>
+                        <td width="8%"><input type="text" class="form-control" id="wart_dl" name="wart_dl"></td>
+                        <td width="8%"><input type="text" class="form-control" id="wart_szer" name="wart_szer"></td>
+                        <td width="8%"><input type="text" class="form-control" id="wart_wys" name="wart_wys"></td>
+                        <td width="10%"><select class="form-control" id="sel1" name="j_wym"> <!--select trzeba zaczytać dane z tab JEDN z value z jedn_wym="X"-->
+                                <option>mm</option>
+                            </select></td>
+                        <td width="5%">wyliczana DxSxW:</td>
+                        <td width="8%">cm3</td> <!-- zaadowanie do pola j_obj w tab MWYM-->
+                        <td width="40%"><input type="text" class="form-control" id="ean_kod" name="ean_kod"></td>
+                    <tr>
+                        <td width="2%">PAL</td> <!--tab MWYM pole j_str -->
+                        <td width="8%"><input type="text" class="form-control" id="wart_str" name="wart_str"></td>
+                        <td width="9%"><input type="text" class="form-control" id="waga_ne" name="waga_ne"></td>
+                        <td width="9%"><input type="text" class="form-control" id="waga_br" name="waga_br"></td>
+                        <td width="10%"><select class="form-control" id="sel1" name="j_wag"> <!--select trzeba zaczytać dane z tab JEDN z value z jedn_wag="X"-->
+                                <option>mg</option>
+                            </select></td>
+                        <td width="8%"><input type="text" class="form-control" id="wart_dl" name="wart_dl"></td>
+                        <td width="8%"><input type="text" class="form-control" id="wart_szer" name="wart_szer"></td>
+                        <td width="8%"><input type="text" class="form-control" id="wart_wys" name="wart_wys"></td>
+                        <td width="10%"><select class="form-control" id="sel1" name="j_wym"> <!--select trzeba zaczytać dane z tab JEDN z value z jedn_wym="X"-->
+                                <option>mm</option>
+                            </select></td>
+                        <td width="5%">wyliczana DxSxW:</td>
+                        <td width="8%">cm3</td> <!-- zaadowanie do pola j_obj w tab MWYM-->
+                        <td width="40%"><input type="text" class="form-control" id="ean_kod" name="ean_kod"></td>
+                    </tr>
+                    </tbody>
                 </table>
             </div>
         </div>
@@ -100,7 +146,7 @@
         <!-- Informacje dodatkowe -->
         <div class="row">
             <div class="page-header">
-                <h2>Informacja dodatkowe:</h2>
+                <h3>Informacja dodatkowe:</h3>
             </div>
 
             <div class="col-md-6">
@@ -151,7 +197,7 @@
         <!-- Dostawca -->
         <div class="row">
             <div class="page-header">
-                <h2>Wprowadź dane o dostawcy:</h2>
+                <h3>Wprowadź dane o dostawcy:</h3>
             </div>
             <div class="col-md-6">
                 <table class="table table-bordered">
@@ -183,7 +229,7 @@
         <!-- Dostawca zwroty-->
         <div class="row">
             <div class="page-header">
-                <h2>Dostawca zwroty:</h2>
+                <h3>Dostawca zwroty:</h3>
             </div>
             <div class="col-md-6">
                 <table class="table table-bordered">
