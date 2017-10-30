@@ -1,0 +1,271 @@
+{% extends "admin/include/include.twig" %}
+
+{% block body %}
+
+
+    <div class="container theme-showcase" role="main">
+        <!-- Szary Panel -->
+        <div class="jumbotron">
+            <h2>Edycja produktu o numerze:  XX</h2> <!--do wladowania numer produktu -->
+        </div>
+        <!-- Alert dla wycofania indeksu -->
+        <div class="alert alert-danger" role="alert">
+            <strong>UWAGA!</strong> PRODUKT WYCOFANY!
+        </div>
+        <!-- Nazwa towaru -->
+        <div class="row">
+            <div class="col-md-12">
+                <input type="text" class="form-control" id="name" name="mat_nazwk" value="nazwa towaru"> <!-- check z pozycjami mat_nazwk z tabeli NAZW -->
+            </div>
+        </div>
+        <!-- Grupa towarowa -->
+        <div class="row">
+            <div class="col-md-12">
+                <input type="text" class="form-control" id="gr_tow" name="prod_hier" value="grupa towarowa"> <!-- wybór z listy prod_hier z tabeli GRTW-->
+            </div>
+        </div>
+        <!-- Nazwa marketingowa rozwinięta -->
+        <div class="row">
+            <div class="col-md-12">
+                <textarea class="form-control" rows="5" id="name_mark" name="mat_nazwd">nazwa marketingowa</textarea> <!--ladowanie z pola mat_nazwd tabela NAZW -->
+            </div>
+        </div>
+        <!-- Struktura + zdjęcie -->
+        <div class="row">
+            <div class="page-header">
+                <div class="col-md-12">
+                    <h3>Struktura:</h3>
+                </div>
+            </div>
+            <div class="col-md-1">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>Rodzaj:</th>
+                        <th>Ilość:</th>
+                        <th>Waga ne:</th>
+                        <th>Waga br:</th>
+                        <th>Jedn. Wag:</th>
+                        <th>Dł:</th>
+                        <th>Szer:</th>
+                        <th>Wys:</th>
+                        <th>Jedn. Wym:</th>
+                        <th>Obj:</th>
+                        <th>Obj. jedn:</th>
+                        <th>Kod EAN:</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td width="2%">SZT</td> <!--tab MWYM pole j_str -->
+                        <td width="8%"><input type="text" class="form-control" id="wart_str" name="wart_str" value="1" disabled></td>
+                        <td width="9%"><input type="text" class="form-control" id="waga_ne" name="waga_ne"></td>
+                        <td width="9%"><input type="text" class="form-control" id="waga_br" name="waga_br"></td>
+                        <td width="10%"><select class="form-control" id="sel1" name="j_wag"> <!--select trzeba zaczytać dane z tab JEDN z value z jedn_wag="X"-->
+                                <option>mg</option>
+                            </select></td>
+                        <td width="8%"><input type="text" class="form-control" id="wart_dl" name="wart_dl"></td>
+                        <td width="8%"><input type="text" class="form-control" id="wart_szer" name="wart_szer"></td>
+                        <td width="8%"><input type="text" class="form-control" id="wart_wys" name="wart_wys"></td>
+                        <td width="10%"><select class="form-control" id="sel1" name="j_wym"> <!--select trzeba zaczytać dane z tab JEDN z value z jedn_wym="X"-->
+                                <option>mm</option>
+                            </select></td>
+                        <td width="5%">wyliczana DxSxW:</td>
+                        <td width="8%">cm3</td> <!-- zaadowanie do pola j_obj w tab MWYM-->
+                        <td width="40%"><input type="text" class="form-control" id="ean_kod" name="ean_kod"></td>
+                    </tr>
+                    <tr>
+                        <td width="2%">OPA</td> <!--tab MWYM pole j_str -->
+                        <td width="8%"><input type="text" class="form-control" id="wart_str" name="wart_str"></td>
+                        <td width="9%"><input type="text" class="form-control" id="waga_ne" name="waga_ne"></td>
+                        <td width="9%"><input type="text" class="form-control" id="waga_br" name="waga_br"></td>
+                        <td width="10%"><select class="form-control" id="sel1" name="j_wag"> <!--select trzeba zaczytać dane z tab JEDN z value z jedn_wag="X"-->
+                                <option>mg</option>
+                            </select></td>
+                        <td width="8%"><input type="text" class="form-control" id="wart_dl" name="wart_dl"></td>
+                        <td width="8%"><input type="text" class="form-control" id="wart_szer" name="wart_szer"></td>
+                        <td width="8%"><input type="text" class="form-control" id="wart_wys" name="wart_wys"></td>
+                        <td width="10%"><select class="form-control" id="sel1" name="j_wym"> <!--select trzeba zaczytać dane z tab JEDN z value z jedn_wym="X"-->
+                                <option>mm</option>
+                            </select></td>
+                        <td width="5%">wyliczana DxSxW:</td>
+                        <td width="8%">cm3</td> <!-- zaadowanie do pola j_obj w tab MWYM-->
+                        <td width="40%"><input type="text" class="form-control" id="ean_kod" name="ean_kod"></td>
+                    <tr>
+                        <td width="2%">KAR</td> <!--tab MWYM pole j_str -->
+                        <td width="8%"><input type="text" class="form-control" id="wart_str" name="wart_str"></td>
+                        <td width="9%"><input type="text" class="form-control" id="waga_ne" name="waga_ne"></td>
+                        <td width="9%"><input type="text" class="form-control" id="waga_br" name="waga_br"></td>
+                        <td width="10%"><select class="form-control" id="sel1" name="j_wag"> <!--select trzeba zaczytać dane z tab JEDN z value z jedn_wag="X"-->
+                                <option>mg</option>
+                            </select></td>
+                        <td width="8%"><input type="text" class="form-control" id="wart_dl" name="wart_dl"></td>
+                        <td width="8%"><input type="text" class="form-control" id="wart_szer" name="wart_szer"></td>
+                        <td width="8%"><input type="text" class="form-control" id="wart_wys" name="wart_wys"></td>
+                        <td width="10%"><select class="form-control" id="sel1" name="j_wym"> <!--select trzeba zaczytać dane z tab JEDN z value z jedn_wym="X"-->
+                                <option>mm</option>
+                            </select></td>
+                        <td width="5%">wyliczana DxSxW:</td>
+                        <td width="8%">cm3</td> <!-- zaadowanie do pola j_obj w tab MWYM-->
+                        <td width="40%"><input type="text" class="form-control" id="ean_kod" name="ean_kod"></td>
+                    <tr>
+                        <td width="2%">PAL</td> <!--tab MWYM pole j_str -->
+                        <td width="8%"><input type="text" class="form-control" id="wart_str" name="wart_str"></td>
+                        <td width="9%"><input type="text" class="form-control" id="waga_ne" name="waga_ne"></td>
+                        <td width="9%"><input type="text" class="form-control" id="waga_br" name="waga_br"></td>
+                        <td width="10%"><select class="form-control" id="sel1" name="j_wag"> <!--select trzeba zaczytać dane z tab JEDN z value z jedn_wag="X"-->
+                                <option>mg</option>
+                            </select></td>
+                        <td width="8%"><input type="text" class="form-control" id="wart_dl" name="wart_dl"></td>
+                        <td width="8%"><input type="text" class="form-control" id="wart_szer" name="wart_szer"></td>
+                        <td width="8%"><input type="text" class="form-control" id="wart_wys" name="wart_wys"></td>
+                        <td width="10%"><select class="form-control" id="sel1" name="j_wym"> <!--select trzeba zaczytać dane z tab JEDN z value z jedn_wym="X"-->
+                                <option>mm</option>
+                            </select></td>
+                        <td width="5%">wyliczana DxSxW:</td>
+                        <td width="8%">cm3</td> <!-- zaadowanie do pola j_obj w tab MWYM-->
+                        <td width="40%"><input type="text" class="form-control" id="ean_kod" name="ean_kod"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-6">
+                <img src="card.jpg" class="img-thumbnail" >
+            </div>
+        </div>
+        <!-- Informacje dodatkowe -->
+        <div class="row">
+            <div class="page-header">
+                <div class="col-md-12">
+                    <h3>Informacja dodatkowe:</h3>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <table class="table table-bordered">
+                    <tbody>
+                    <tr>
+                        <td>Grupa załadunkowa w magazynie:</td>
+                        <td><input type="text" class="form-control" id="gr_zalad" name="gr_zalad"> <!-- TAB: INDK  gr_zalad select? --></td>
+                    </tr>
+                    <tr>
+                        <td>Kod PKWIU:</td>
+                        <td><input type="text" class="form-control" id="kod_pkwiu" name="kod_pkwiu"> <!-- TAB: INDK  kod_pkwiu input ale select z PKWI --></td>
+                    </tr>
+                    <tr>
+                        <td>Opis PKWIU:</td>
+                        <td>opis kodu</td><!-- opis zaczytany na bazie selecta pkwui_kod z tab PKWI -->
+                    </tr>
+                    <tr>
+                        <td>Stawka VAT</td>
+                        <td><input type="text" class="form-control" id="vat" name="vat"> <!-- TAB: INDK  vat input--></td>
+                    </tr>
+                    <tr>
+                        <td>Numer hierarchii produktowej:</td><!-- tu nie wiem czy tego nie wyjebac-->
+                        <td>Numer prod_hier</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- Dostawca -->
+        <div class="row">
+            <div class="page-header">
+                <div class="col-md-12">
+                    <h3>Dostawca:</h3>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <table class="table table-bordered">
+                    <tbody>
+                    <tr>
+                        <td>Nazwa dostawcy</td>
+                        <td>nazwa dosaawcy</td>
+                    </tr>
+                    <tr>
+                        <td>Adres dostawcy</td>
+                        <td>ult kolejowa 15 </td>
+                    </tr>
+                    <tr>
+                        <td>Kod pocztowy</td>
+                        <td>11-111</td>
+                    </tr>
+                    <tr>
+                        <td>Miasto</td>
+                        <td>Poznań</td>
+                    </tr>
+                    <tr>
+                        <td>NIP</td>
+                        <td>123-23-24-213</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- Dostawca zwroty-->
+        <div class="row">
+            <div class="page-header">
+                <div class="col-md-12">
+                    <h3>Dostawca zwroty:</h3>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <table class="table table-bordered">
+                    <tbody>
+                    <tr>
+                        <td>Nazwa dostawcy</td>
+                        <td>nazwa dosaawcy</td>
+                    </tr>
+                    <tr>
+                        <td>Adres dostawcy</td>
+                        <td>ult kolejowa 15 </td>
+                    </tr>
+                    <tr>
+                        <td>Kod pocztowy</td>
+                        <td>11-111</td>
+                    </tr>
+                    <tr>
+                        <td>Miasto</td>
+                        <td>Poznań</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- Log działań -->
+        <div class="row">
+            <div class="page-header">
+                <div class="col-md-12">
+                    <h3>Log:</h3>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <table class="table table-bordered">
+                    <tbody>
+                    <tr>
+                        <td>Data utworzenia artykułu:</td>
+                        <td>01-01-1970</td>
+                    </tr>
+                    <tr>
+                        <td>Użytkownik:</td>
+                        <td>POZNAA</td>
+                    </tr>
+                    <tr>
+                        <td>Data ostatniej zmiany</td>
+                        <td>09-09-2017</td>
+                    </tr>
+                    <tr>
+                        <td>Użytownik</td>
+                        <td>POZNAA</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+
+    </div>
+
+{% endblock %}
+
