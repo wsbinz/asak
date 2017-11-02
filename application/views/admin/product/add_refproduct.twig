@@ -1,0 +1,51 @@
+{% extends "admin/include/include.twig" %}
+{% block add %}
+    <div class="container theme-showcase" role="main">
+    <!-- Szary Panel -->
+    <div class="jumbotron">
+        <h2>Wybierz produkt wzorcowy </h2>
+    </div>
+<form>
+    <section 1>
+    <div class="form-group">
+        <div class="col-md-12">
+            <label for="name">Wpisz szukaną frazę: </label>
+            <input type="text" class="form-control" id="name" name="mat_nazwk" placeholder="Nazwa lub numer towaru"> <!-- check z pozycjami mat_nazwk z tabeli NAZW -->
+        </div>
+        <div class="col-md-12">
+            <label for="name"></label>
+            <button type="button" class="btn btn-secondary btn-lg btn-block">Szukaj</button>
+        </div>
+
+    </div>
+
+    </section>
+
+    <section 2>
+
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th></th>
+                <th>Numer</th>
+                <th>Nazwa</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td width=5%><input type="checkbox" class="pull-left"></td>
+                <td width=15%>001</td>
+                <td width=80%>sok </td>
+            </tr>
+            <tr>
+                <td width=5%><input type="checkbox" class="pull-left"></td>
+                <td width=15%>002</td>
+                <td width=80%>baton</td>
+            </tr>
+            </tbody>
+        </table>
+        <button type="button" class="btn btn-primary btn-block">Wybierz</button>
+    </section>
+
+</form>
+{% endblock %}
