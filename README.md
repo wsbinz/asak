@@ -5,3 +5,9 @@
 W powyższym zdjęciu dodał bym właśnie okiengo do zarządzania kontem uzytkownika.
 
 ##Uwagi od Adi
+to_do list:
+    - ekran pierwszy
+    - ektran przed referencje z szukajka
+    - raportowka
+    - dopisac do bazy pole indeks - dostawca
+    
