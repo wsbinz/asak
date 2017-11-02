@@ -13,20 +13,23 @@
             <strong>UWAGA!</strong> PRODUKT WYCOFANY!
         </div>
         <!-- Nazwa towaru -->
-        <div class="row">
+        <div class="form-group">
             <div class="col-md-12">
+                <label for="name"> </label>
                 <input type="text" class="form-control" id="name" name="mat_nazwk" value="nazwa towaru"> <!-- check z pozycjami mat_nazwk z tabeli NAZW -->
             </div>
         </div>
         <!-- Grupa towarowa -->
-        <div class="row">
+        <div class="form-group">
             <div class="col-md-12">
+                <label for="gr_tow"> </label>
                 <input type="text" class="form-control" id="gr_tow" name="prod_hier" value="grupa towarowa"> <!-- wybór z listy prod_hier z tabeli GRTW-->
             </div>
         </div>
         <!-- Nazwa marketingowa rozwinięta -->
-        <div class="row">
+        <div class="form-group">
             <div class="col-md-12">
+                <label for="name_mark"> </label>
                 <textarea class="form-control" rows="5" id="name_mark" name="mat_nazwd">nazwa marketingowa</textarea> <!--ladowanie z pola mat_nazwd tabela NAZW -->
             </div>
         </div>
@@ -265,7 +268,9 @@
 
         </div>
 
+        <button type="submit" class="btn btn-lg btn-default btn-end">Zakończ</button>
     </div>
+
 
 {% endblock %}
 
