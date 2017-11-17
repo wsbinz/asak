@@ -38,4 +38,11 @@ class Admin_model extends CI_Model
         return $query->row();
     }
 
+    public function get_max($table,$max)
+    {
+        $this->db->select_max($max);
+        $query = $this->db->get($table);
+        return $query->result();
+    }
+
 }

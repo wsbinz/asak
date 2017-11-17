@@ -1,11 +1,17 @@
 {% extends "admin/include/include.twig" %}
 {% block add %}
+
+
     <div class="container theme-showcase" role="main">
     <!-- Szary Panel -->
     <div class="jumbotron">
         <h2>Dodanie produktu</h2>
     </div>
-<form>
+
+    {% autoescape %}
+        {{ validation|raw }}
+    {% endautoescape %}
+<form method="POST" action="{{ base_url() }}admin/product/add_product">
     <section id="1">
         <!-- Progressbar -->
         <div class="progress">
@@ -58,27 +64,30 @@
                         <th>Kod EAN:</th>
                     </tr>
                     </thead>
-                    <tbody>
-                    <tr>
-                        <td width="2%">SZT</td> <!--tab MWYM pole j_str -->
+                    <tbody class="section_2">
+                    <tr class="SZT">
+                        <td width="10%"><select class="form-control" id="sel1" name="j_wag"> <!--select trzeba zaczytać dane z tab JEDN z value z jedn_wag="X"-->
+                                <option>SZT</option>
+                                <option>KAR</option>
+                            </select></td> <!--tab MWYM pole j_str -->
                         <td width="8%"><input type="text" class="form-control" id="wart_str" name="wart_str" value="1" disabled></td>
                         <td width="9%"><input type="text" class="form-control" id="waga_ne" name="waga_ne"></td>
                         <td width="9%"><input type="text" class="form-control" id="waga_br" name="waga_br"></td>
                         <td width="10%"><select class="form-control" id="sel1" name="j_wag"> <!--select trzeba zaczytać dane z tab JEDN z value z jedn_wag="X"-->
-                                <option>mg</option>
+                                <option value="mg">mg</option>
                             </select></td>
                         <td width="8%"><input type="text" class="form-control" id="wart_dl" name="wart_dl"></td>
                         <td width="8%"><input type="text" class="form-control" id="wart_szer" name="wart_szer"></td>
                         <td width="8%"><input type="text" class="form-control" id="wart_wys" name="wart_wys"></td>
                         <td width="10%"><select class="form-control" id="sel1" name="j_wym"> <!--select trzeba zaczytać dane z tab JEDN z value z jedn_wym="X"-->
-                                <option>mm</option>
+                                <option value="mm">mm</option>
                             </select></td>
-                        <td width="5%">wyliczana DxSxW:</td>
+                        <td width="5%" id="sum_DSW">wyliczana DxSxW:</td>
                         <td width="8%">cm3</td> <!-- zaadowanie do pola j_obj w tab MWYM-->
                         <td width="40%"><input type="text" class="form-control" id="ean_kod" name="ean_kod"></td>
                     </tr>
-                    <tr>
-                        <td width="2%">OPA</td> <!--tab MWYM pole j_str -->
+                    {#<tr class="OPA">
+                        <td width="2%" name="j_str">OPA</td> <!--tab MWYM pole j_str -->
                         <td width="8%"><input type="text" class="form-control" id="wart_str" name="wart_str"></td>
                         <td width="9%"><input type="text" class="form-control" id="waga_ne" name="waga_ne"></td>
                         <td width="9%"><input type="text" class="form-control" id="waga_br" name="waga_br"></td>
@@ -91,11 +100,11 @@
                         <td width="10%"><select class="form-control" id="sel1" name="j_wym"> <!--select trzeba zaczytać dane z tab JEDN z value z jedn_wym="X"-->
                                 <option>mm</option>
                             </select></td>
-                        <td width="5%">wyliczana DxSxW:</td>
+                        <td width="5%" id="sum_DSW">wyliczana DxSxW:</td>
                         <td width="8%">cm3</td> <!-- zaadowanie do pola j_obj w tab MWYM-->
                         <td width="40%"><input type="text" class="form-control" id="ean_kod" name="ean_kod"></td>
-                    <tr>
-                        <td width="2%">KAR</td> <!--tab MWYM pole j_str -->
+                    <tr class="KAR">
+                        <td width="2%" name="j_str">KAR</td> <!--tab MWYM pole j_str -->
                         <td width="8%"><input type="text" class="form-control" id="wart_str" name="wart_str"></td>
                         <td width="9%"><input type="text" class="form-control" id="waga_ne" name="waga_ne"></td>
                         <td width="9%"><input type="text" class="form-control" id="waga_br" name="waga_br"></td>
@@ -108,11 +117,11 @@
                         <td width="10%"><select class="form-control" id="sel1" name="j_wym"> <!--select trzeba zaczytać dane z tab JEDN z value z jedn_wym="X"-->
                                 <option>mm</option>
                             </select></td>
-                        <td width="5%">wyliczana DxSxW:</td>
+                        <td width="5%" id="sum_DSW">wyliczana DxSxW:</td>
                         <td width="8%">cm3</td> <!-- zaadowanie do pola j_obj w tab MWYM-->
                         <td width="40%"><input type="text" class="form-control" id="ean_kod" name="ean_kod"></td>
-                    <tr>
-                        <td width="2%">PAL</td> <!--tab MWYM pole j_str -->
+                    <tr class="PAL">
+                        <td width="2%" name="j_str">PAL</td> <!--tab MWYM pole j_str -->
                         <td width="8%"><input type="text" class="form-control" id="wart_str" name="wart_str"></td>
                         <td width="9%"><input type="text" class="form-control" id="waga_ne" name="waga_ne"></td>
                         <td width="9%"><input type="text" class="form-control" id="waga_br" name="waga_br"></td>
@@ -125,10 +134,10 @@
                         <td width="10%"><select class="form-control" id="sel1" name="j_wym"> <!--select trzeba zaczytać dane z tab JEDN z value z jedn_wym="X"-->
                                 <option>mm</option>
                             </select></td>
-                        <td width="5%">wyliczana DxSxW:</td>
+                        <td width="5%" id="sum_DSW">wyliczana DxSxW:</td>
                         <td width="8%">cm3</td> <!-- zaadowanie do pola j_obj w tab MWYM-->
                         <td width="40%"><input type="text" class="form-control" id="ean_kod" name="ean_kod"></td>
-                    </tr>
+                    </tr>#}
                     </tbody>
                 </table>
             </div>

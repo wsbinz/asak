@@ -31,8 +31,17 @@ $(document).ready(function () {
     });
 
 });
-
 //Progress bar. Będzie się aktualizował po każdym wypełnieniu danych
 
 
 
+
+
+$('.section_2 tr').click(function()
+{
+    var dl = $(this).find("#wart_dl").val();
+    var szer = $(this).find("#wart_szer").val();
+    var wys = $(this).find("#wart_wys").val();
+
+    $(this).find("#sum_DSW").html(dl*szer*wys);
+});

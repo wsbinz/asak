@@ -95,4 +95,28 @@ $config = array(
         ),
     ),
 
+    'add_product'=> array(
+
+        array(
+            'field'=>'kod_pkwiu',
+            'label' => 'Kod PKWIU',
+            'rules' => 'trim|required'
+        ),
+        array(
+            'field'=>'gr_zalad',
+            'label' => 'Grupa załadunkowa',
+            'rules' => 'trim|required'
+        ),
+        array(
+            'field'=>'vat',
+            'label' => 'Wartość VAT',
+            'rules' => 'trim|required'
+        ),
+        array(
+            'field'=>'prod_hier',
+            'label' => 'Hierarchia produktu',
+            'rules' => 'trim|required'
+        ),
+    ),
+
 );
