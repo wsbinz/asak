@@ -94,6 +94,7 @@ class Product extends Admin_Controller  {
                     'j_wag' => $this->input->post('j_wag', true),
                     'j_wym' => $this->input->post('j_wym', true),
                     'ean_kod' => $this->input->post('ean_kod', true),
+                    'nr_mat' => $kod[0]->nr_mat,
                 );
                 $this->Admin_model->create("MWYM", $data);
 

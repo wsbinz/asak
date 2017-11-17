@@ -35,13 +35,9 @@ $(document).ready(function () {
 
 
 
+//$("#sum_DSW").html($("#wart_dl").val() * $("#wart_szer").val() * $("#wart_wys").val())
 
+$("input[id^=wart_]").on("change",function () {
 
-$('.section_2 tr').click(function()
-{
-    var dl = $(this).find("#wart_dl").val();
-    var szer = $(this).find("#wart_szer").val();
-    var wys = $(this).find("#wart_wys").val();
-
-    $(this).find("#sum_DSW").html(dl*szer*wys);
+    $("#sum_DSW").html($("#wart_dl").val() * $("#wart_szer").val() * $("#wart_wys").val());
 });
