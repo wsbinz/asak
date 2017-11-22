@@ -115,10 +115,10 @@ class Product extends Admin_Controller  {
        // TODO: Implement edit_product() method.
    }
 
-   public function change_product($id)
-   {
-       // TODO: Implement change_product() method.
-   }
+    public function change_product($id)
+    {
+        // TODO: Implement change_product() method.
+    }
 
    public function delete_product($id)
    {
