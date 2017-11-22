@@ -27,15 +27,20 @@ class Product extends Admin_Controller  {
             redirect('account');
         }
 
-        print_r($_SESSION);
+        //print_r($_SESSION);
+
+        $data['indk_mwym'] = $this->Admin_model->get("VIEW_INDK_MWYM");
+        //print_r($data['indk_mwym']);
         $data['validation'] = $this->session->flashdata('alert');
         $this->twig->display('site/product/lists_products',$data);
 
     }
 
-    public function show($id, $alias)
+    public function show($id)
     {
-        // TODO: Implement show() method.
+        $where = array('id' => $id);
+        $data['single_indk_mwym'] = $this->Admin_model->get_signle("VIEW_INDK_MWYM");
+        echo "lalla";
     }
 
     public function add_product()
@@ -79,24 +84,48 @@ class Product extends Admin_Controller  {
                 //Tabela GRTW
                 $data = array(
                     'prod_hier' => $this->input->post('prod_hier', true),
+                    'prod_opis' => "dodatki",
                 );
                 $this->Admin_model->create("GRTW", $data);
 
                 //Tabela MWYM
                 $data = array(
                     'j_str' => $this->input->post('j_str', true),
-                    'wart_str' => $this->input->post('wart_str', true),
+                    'wart_str' => "1",//$this->input->post('wart_str', true), //Poprawic
                     'waga_ne' => $this->input->post('waga_ne', true),
                     'waga_br' => $this->input->post('waga_br', true),
                     'wart_dl' => $this->input->post('wart_dl', true),
                     'wart_szer' => $this->input->post('wart_szer', true),
                     'wart_wys' => $this->input->post('wart_wys', true),
+                    'wart_obj' => "24",//$this->input->post('wart_obj',true),
+                    'j_obj' => "cm3",//$this->input->post("j_obj",true),
                     'j_wag' => $this->input->post('j_wag', true),
                     'j_wym' => $this->input->post('j_wym', true),
                     'ean_kod' => $this->input->post('ean_kod', true),
                     'nr_mat' => $kod[0]->nr_mat,
                 );
                 $this->Admin_model->create("MWYM", $data);
+
+                //Tabela DOST
+                $data = array(
+                    'dost_nazw' => $this->input->post('dost_nazw',true),
+                    'dost_adres' => $this->input->post('dost_adres',true),
+                    'dost_kod' => $this->input->post('dost_kod',true),
+                    'dost_miasto' => $this->input->post('dost_miasto',true),
+                    'dost_nip' => $this->input->post('dost_nip',true),
+                );
+
+                $this->Admin_model->create("DOST", $data);
+
+                //Tabela dostzwr
+                $data = array(
+                    'dostzwr_name' =>$this->input->post('dostzwr_name',true),
+                    'dostzwr_adres' => $this->input->post('dostzwr_adres',true),
+                    'dostzwr_kod' => $this->input->post('dostzwr_kod',true),
+                    'dostzwr_miasto' => $this->input->post('dostzwr_miasto',true)
+                );
+
+                //$this->Admin_model->create("DOSTZWR", $data);
 
                 $this->session->set_flashdata('alert', "Pomyślnie dadano!");
                 redirect('admin/product');
