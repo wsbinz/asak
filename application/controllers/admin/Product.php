@@ -51,6 +51,29 @@ class Product extends Admin_Controller  {
         if(!empty($_POST)) {
 
             if ($this->form_validation->run('add_product') == TRUE) {
+
+                $this->db->trans_start(); //Otwieranie tranzakcji
+
+                if($this->input->post('empty_dost',true) == true) {
+                    //Tabela DOST
+                    $data = array(
+                        'dost_nazw' => $this->input->post('dost_nazw', true),
+                        'dost_adres' => $this->input->post('dost_adres', true),
+                        'dost_kod' => $this->input->post('dost_kod', true),
+                        'dost_miasto' => $this->input->post('dost_miasto', true),
+                        'dost_nip' => $this->input->post('dost_nip', true),
+                    );
+
+                    $this->Admin_model->create("DOST", $data);
+                    $max = "id_dost";
+                    $kod = $this->Admin_model->get_max("DOST", $max); //Pobieranie ostatniego ID z tabeli DOST
+                    $kod[0] = $kod[0]->nr_mat;
+                }
+                else
+                {
+                    $kod[0] =  $this->input->post('select_dost',true);
+                }
+
                 //Tabela INDK
                 $data = array(
                     'gr_zalad' => $this->input->post('gr_zalad', true),
@@ -63,7 +86,7 @@ class Product extends Admin_Controller  {
                     'prod_hier' => $this->input->post('prod_hier', true),
                 );
 
-                $this->db->trans_start(); //Otwieranie tranzakcji
+
                 $this->Admin_model->create("INDK", $data); //Tworzenie wpisu do INDK
 
                 $max = "nr_mat";
@@ -74,7 +97,7 @@ class Product extends Admin_Controller  {
                 $data = array(
                     'mat_nazwk' => $this->input->post('mat_nazwk', true),
                     'mat_nazwd' => $this->input->post('mat_nazwd', true),
-                    'nr_mat' => $kod[0]->nr_mat,
+                    'nr_mat' => $kod[0],
                     'kl_jez' => "PL",
                 );
 
@@ -85,6 +108,7 @@ class Product extends Admin_Controller  {
                 $data = array(
                     'prod_hier' => $this->input->post('prod_hier', true),
                     'prod_opis' => "dodatki",
+                    'nr_mar' => $kod[0],
                 );
                 $this->Admin_model->create("GRTW", $data);
 
@@ -102,20 +126,9 @@ class Product extends Admin_Controller  {
                     'j_wag' => $this->input->post('j_wag', true),
                     'j_wym' => $this->input->post('j_wym', true),
                     'ean_kod' => $this->input->post('ean_kod', true),
-                    'nr_mat' => $kod[0]->nr_mat,
+                    'nr_mat' => $kod[0],
                 );
                 $this->Admin_model->create("MWYM", $data);
-
-                //Tabela DOST
-                $data = array(
-                    'dost_nazw' => $this->input->post('dost_nazw',true),
-                    'dost_adres' => $this->input->post('dost_adres',true),
-                    'dost_kod' => $this->input->post('dost_kod',true),
-                    'dost_miasto' => $this->input->post('dost_miasto',true),
-                    'dost_nip' => $this->input->post('dost_nip',true),
-                );
-
-                $this->Admin_model->create("DOST", $data);
 
                 //Tabela dostzwr
                 $data = array(
@@ -137,6 +150,30 @@ class Product extends Admin_Controller  {
 
         $val['validation'] = $this->session->flashdata('alert');
         $this->twig->display('admin/product/add_product',$val);
+    }
+
+    public function add_product_ref ($id='')
+    {
+        if(!empty($id))
+        {
+            $where = array('id_indk'=>$id);
+            $data['product'] = $this->Admin_model->get_single("VIEW_INDK_MWYM",$where);
+
+            print_r($data);
+
+            $this->twig->display('admin/product/add_product_ref',$data);
+        }
+        else
+        {
+            $this->twig->display('admin/product/add_refproduct');
+        }
+    }
+
+    public function search_product()
+    {
+        $col = array('mat_nazwd'=>$this->input->post('mat_nazwk',true));
+        $search = $this->Admin_model->search("VIEW_INDK_MWYM",$col);
+        echo json_encode($search);
     }
 
    public function edit_product($id)

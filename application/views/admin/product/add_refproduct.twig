@@ -5,8 +5,8 @@
     <div class="jumbotron">
         <h2>Wybierz produkt wzorcowy </h2>
     </div>
-<form>
-    <section 1>
+
+    <section>
     <div class="form-group">
         <div class="col-md-12">
             <label for="name">Wpisz szukaną frazę: </label>
@@ -14,35 +14,60 @@
         </div>
         <div class="col-md-12">
             <label for="name"></label>
-            <button type="button" class="btn btn-secondary btn-lg btn-block">Szukaj</button>
+            <button type="button" class="btn btn-secondary btn-lg btn-block" id="search">Szukaj</button>
         </div>
     </div>
     </section>
 
-    <section 2>
+    <section>
         <table class="table table-hover">
             <thead>
             <tr>
                 <th></th>
                 <th>Numer</th>
                 <th>Nazwa</th>
+                <th>Akcja</th>
             </tr>
             </thead>
             <tbody>
-            <tr>
-                <td width=5%><input type="checkbox" class="pull-left"></td>
-                <td width=15%>001</td>
-                <td width=80%>sok </td>
-            </tr>
-            <tr>
-                <td width=5%><input type="checkbox" class="pull-left"></td>
-                <td width=15%>002</td>
-                <td width=80%>baton</td>
-            </tr>
+
+
+
             </tbody>
         </table>
-        <button type="button" class="btn btn-primary btn-block">Wybierz</button> <!-- przejscie do add product z wypelnionynm -->
+
     </section>
 
-</form>
+
+{% endblock %}
+
+{% block javascript %}
+
+        <script>
+
+           $("#search").on('click',function() {
+
+                $.ajax({
+                    type: 'POST',
+                    url: "../../admin/product/search_product",
+                    data: {mat_nazwk: $('[name=mat_nazwk]').val()},
+                    dataType: 'text',
+                    success: function(html){
+                       html = JSON.parse(html);
+
+                       var count = html.length;
+console.log(html);
+                       for(var i = 0; i<count; i++)
+                           {
+                            $("tbody").append("<tr><td width=5%><input type='checkbox' class='pull-left'></td><td width=15%>"+ html[i]['ean_kod'] +"</td><td width=80%>"+ html[i]['mat_nazwd'] +"</td><td><a href='{{ base_url() }}admin/product/add_product_ref/"+html[i]['id_indk']+"' <button type='button' class='btn btn-primary btn-block'>Wybierz</button></a> </td></tr>");
+                           }
+
+                    }
+
+                });
+
+            });
+
+        </script>
+
 {% endblock %}

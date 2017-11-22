@@ -12,7 +12,7 @@ $(document).ready(function () {
     }
 
 
-    $( ".btn").click(function(e) {
+    $( "form .btn").click(function(e) {
         console.log(e);
         $("#"+x).hide();
         var var_help = x+1;
@@ -21,7 +21,7 @@ $(document).ready(function () {
         console.log("x wynosi:" + x + "  A var_help = " + var_help)
     });
 
-    $( ".prev").click(function(e) {
+    $( "form .prev").click(function(e) {
         console.log(e);
         $("#"+x).hide();
         var var_help = x-2;
@@ -29,6 +29,22 @@ $(document).ready(function () {
         $("#"+var_help).show();
         console.log("x wynosi:" + x + "  A var_help = " + var_help)
     });
+
+
+    $(".dost").hide();
+
+    $(".empty_dost").click(function () {
+        if($(".empty_dost").is(':checked')) {
+            $(".dost").show();
+            $("[name=select_dost]").prop("disabled", true)
+        }
+        else
+        {
+            $(".dost").hide();
+            $("[name=select_dost]").prop("disabled", false)
+        }
+    })
+
 
 });
 //Progress bar. Będzie się aktualizował po każdym wypełnieniu danych
@@ -41,3 +57,5 @@ $("input[id^=wart_]").on("change",function () {
 
     $("#sum_DSW").html($("#wart_dl").val() * $("#wart_szer").val() * $("#wart_wys").val());
 });
+
+

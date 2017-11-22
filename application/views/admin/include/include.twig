@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="{{ base_url() }}/asset/css/bootstrap.css" crossorigin="anonymous">
     <!-- nasza nakładka CSS -->
     <link rel="stylesheet" href="{{ base_url() }}/asset/css/theme.css" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
     <body>
     <!-- Fixed navbar -->
         <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -27,7 +28,7 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Produkty <span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li><a href="{{ base_url() }}admin/product/add_product">Dodanie produktu - pusty formularz</a></li>
-                        <li><a href="{{ base_url() }}admin/product/add_ref">Dodanie produktu - referencja</a></li>
+                        <li><a href="{{ base_url() }}admin/product/add_product_ref">Dodanie produktu - referencja</a></li>
                         <li><a href="{{ base_url() }}application/views/admin/product/edit_product">Edycja produktu</a></li>
                         <li><a href="#">Wycofanie produktu</a></li>
                         <li><a href="#">Wyświetlenie produktu</a></li>
@@ -75,12 +76,13 @@
 <!-- Bootstrap core JavaScript
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
-<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
 <script src="{{ base_url() }}/asset/js/bootstrap.min.js"></script>
 <script src="{{ base_url() }}/asset/js/add_product.js"></script>
 <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 <script src="ie10-viewport-bug-workaround.js"></script>
+{% block javascript %}{% endblock %}
 </body>
 </html>
