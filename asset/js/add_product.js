@@ -1,5 +1,7 @@
 //Ukrywanie sekcji
-$(document).ready(function () {
+$(document).ready(function ()
+{
+
 
     var length_section = $("section").length;
 
@@ -7,7 +9,7 @@ $(document).ready(function () {
     for ( var i = 2 ; i<=length_section; i++)
     {
 
-        $("#"+i).hide();
+      //  $("#"+i).hide();
 
     }
 

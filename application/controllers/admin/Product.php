@@ -148,8 +148,11 @@ class Product extends Admin_Controller  {
             }
         }
 
-        $val['validation'] = $this->session->flashdata('alert');
-        $this->twig->display('admin/product/add_product',$val);
+
+
+        $zmienna['dost'] = $this->Admin_model->get('DOST');
+        $zmienna['validation'] = $this->session->flashdata('alert');
+        $this->twig->display('admin/product/add_product',$zmienna);
     }
 
     public function add_product_ref ($id='')
@@ -159,9 +162,15 @@ class Product extends Admin_Controller  {
             $where = array('id_indk'=>$id);
             $data['product'] = $this->Admin_model->get_single("VIEW_INDK_MWYM",$where);
 
-            print_r($data);
-
-            $this->twig->display('admin/product/add_product_ref',$data);
+            if(!empty($data['product']))
+            {
+                $this->twig->display('admin/product/add_product_ref', $data);
+            }
+            else
+            {
+                $this->session->set_flashdata('alert', "Nie ma takiego produktu");
+                redirect('/account');
+            }
         }
         else
         {

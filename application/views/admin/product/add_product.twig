@@ -161,10 +161,21 @@
         <!-- Dostawca -->
         <div class="row">
             <div class="page-header">
-                <h3>Wprowadź dane o dostawcy:</h3>
+                <h3>Wybierz Dostawcę:</h3>
             </div>
+
+            <select class="form-control" name="select_dost" style="width: 50%;"> <!--tab MWYM pole j_str -->
+
+                <option value="SZT">SZT</option>
+
+            </select>
+
             <div class="col-md-6">
-                <table class="table table-bordered">
+
+                <label>Brak dostawcy na liście</label>
+                <input type="checkbox" class="empty_dost">
+
+                <table class="table table-bordered dost">
                     <tbody>
                     <tr>
                         <td>Nazwa dostawcy</td>

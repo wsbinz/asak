@@ -87,3 +87,7 @@ body {
     border-top-right-radius: 0;
 }
 
+form section:nth-of-type(n+2)
+{
+    display: none;
+}
