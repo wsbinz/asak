@@ -111,22 +111,27 @@ class Product extends Admin_Controller  {
                 $this->Admin_model->create("STORAGE", $data);
 
                 //Tabela MWYM
+/*            echo "<pre>";
+            print_r($_POST);
+            echo "</pre>";*/
+            for($i=0; $i<4; $i++) {
                 $data = array(
-                    'unit_structure' => $this->input->post('unit_structure', true),
-                    'value_struct' => $this->input->post('value_struct', true), //Poprawic
-                    'weight_net' => $this->input->post('weight_net', true),
-                    'weight_gross' => $this->input->post('weight_gross', true),
-                    'value_length' => $this->input->post('value_length', true),
-                    'value_width' => $this->input->post('value_width', true),
-                    'value_height' => $this->input->post('value_height', true),
+                    'unit_structure' => $this->input->post('unit_structure', true)[$i],
+                    'value_struct' => $this->input->post('value_struct', true)[$i], //Poprawic
+                    'weight_net' => $this->input->post('weight_net', true)[$i],
+                    'weight_gross' => $this->input->post('weight_gross', true)[$i],
+                    'value_length' => $this->input->post('value_length', true)[$i],
+                    'value_width' => $this->input->post('value_width', true)[$i],
+                    'value_height' => $this->input->post('value_height', true)[$i],
                     'value_capacit' => "24",//$this->input->post('wart_obj',true),
                     'unit_capacity' => "cm3",//$this->input->post("j_obj",true),
-                    'unit_weight' => $this->input->post('unit_weight', true),
-                    'unit_dim' => $this->input->post('unit_dim', true),
-                    'ean_code' => $this->input->post('ean_code', true),
+                    'unit_weight' => $this->input->post('unit_weight', true)[$i],
+                    'unit_dim' => $this->input->post('unit_dim', true)[$i],
+                    'ean_code' => $this->input->post('ean_code', true)[$i],
                     'nr_mat' => $nr_mat,
                 );
                 $this->Admin_model->create("MSIZE", $data);
+            }
 
                 //Tabela dostzwr
                 $data = array(
