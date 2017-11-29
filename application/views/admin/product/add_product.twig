@@ -21,7 +21,7 @@
         <!-- Nazwa towaru -->
         <div class="form-group">
             <label for="name">Wprowadź nazwę towaru:</label>
-            <input type="text" class="form-control" id="name" name="mat_nazwk"> <!-- check z pozycjami mat_nazwk z tabeli NAZW -->
+            <input type="text" class="form-control" id="name" name="name_short"> <!-- check z pozycjami mat_nazwk z tabeli NAZW -->
         </div>
 
         <!-- Grupa towarowa -->
@@ -31,12 +31,12 @@
         </div>
         <div class="form-group">
             <label for="gr_tow">Opis grupy towarowej:</label>
-            <input type="text" class="form-control" id="gr_tow" name="prod_opis"> <!-- wybór z listy prod_hier z tabeli GRTW-->
+            <input type="text" class="form-control" id="gr_tow" name="prod_descr"> <!-- wybór z listy prod_hier z tabeli GRTW-->
         </div>
         <!-- Nazwa marketingowa rozwinięta -->
         <div class="form-group">
             <label for="name_mark">Nazwa marketingowa:</label>
-            <textarea class="form-control" rows="5" id="name_mark" name="mat_nazwd"></textarea> <!--ladowanie do pola mat_nazwd tabela NAZW -->
+            <textarea class="form-control" rows="5" id="name_mark" name="name_long"></textarea> <!--ladowanie do pola mat_nazwd tabela NAZW -->
         </div>
         <button type="button" class="btn btn-lg btn-default btn-forw" >Dalej</button>
     </section>
@@ -70,27 +70,79 @@
                     </thead>
                     <tbody class="section_2">
                     <tr class="SZT">
-                        <td width="8%"><select class="form-control" name="j_str"> <!--tab MWYM pole j_str -->
-                                <option value="SZT">SZT</option>
-                                <option value="OPA">OPA</option>
-                                <option value="KAR">KAR</option>
-                                <option value="PAL">PAL</option>
-                            </select></td> <!--tab MWYM pole j_str -->
-                        <td width="8%"><input type="text" class="form-control" id="wart_str" name="wart_str" value="1"></td>
-                        <td width="9%"><input type="text" class="form-control" id="waga_ne" name="waga_ne"></td>
-                        <td width="9%"><input type="text" class="form-control" id="waga_br" name="waga_br"></td>
-                        <td width="10%"><select class="form-control" id="sel1" name="j_wag"> <!--select trzeba zaczytać dane z tab JEDN z value z jedn_wag="X"-->
+                        <td width="8%"><input type="text" class="form-control" name="unit_structure[]" id="unit_structure" value="SZT"></td> <!--tab MWYM pole unit_structure -->
+                        <td width="8%"><input type="text" class="form-control" id="value_struct" name="value_struct[]" value="1"></td>
+                        <td width="9%"><input type="text" class="form-control" id="weight_net" name="weight_net[]"></td>
+                        <td width="9%"><input type="text" class="form-control" id="weight_gross" name="weight_gross[]"></td>
+                        <td width="10%"><select class="form-control" id="sel1" name="unit_weight"> <!--select trzeba zaczytać dane z tab JEDN z value z jedn_wag="X"-->
                                 <option value="mg">mg</option>
                             </select></td>
-                        <td width="8%"><input type="text" class="form-control" id="wart_dl" name="wart_dl"></td>
-                        <td width="8%"><input type="text" class="form-control" id="wart_szer" name="wart_szer"></td>
-                        <td width="8%"><input type="text" class="form-control" id="wart_wys" name="wart_wys"></td>
-                        <td width="10%"><select class="form-control" id="sel1" name="j_wym"> <!--select trzeba zaczytać dane z tab JEDN z value z jedn_wym="X"-->
+                        <td width="8%"><input type="text" class="form-control" id="value_length" name="value_length[]"></td>
+                        <td width="8%"><input type="text" class="form-control" id="value_width" name="value_width[]"></td>
+                        <td width="8%"><input type="text" class="form-control" id="value_height" name="value_height[]"></td>
+                        <td width="10%"><select class="form-control" id="sel1" name="unit_dim[]"> <!--select trzeba zaczytać dane z tab JEDN z value z jedn_wym="X"-->
                                 <option value="mm">mm</option>
                             </select></td>
-                        <td width="5%" id="sum_DSW" name="wart_obj">wyliczana DxSxW:</td>
-                        <td width="8%" name="j_obj">cm3</td> <!-- zaadowanie do pola j_obj w tab MWYM-->
-                        <td width="40%"><input type="text" class="form-control" id="ean_kod" name="ean_kod"></td>
+                        <td width="5%" id="sum_DSW" name="value_capacit[]">0</td>
+                        <td width="8%" name="j_obj[]">cm3</td> <!-- zaadowanie do pola j_obj w tab MWYM-->
+                        <td width="40%"><input type="text" class="form-control" id="ean_code" name="ean_code[]"></td>
+                    </tr>
+
+                    <tr class="OPA">
+                        <td width="8%"><input type="text" class="form-control" name="unit_structure[]" id="unit_structure" value="OPA"></td> <!--tab MWYM pole unit_structure -->
+                        <td width="8%"><input type="text" class="form-control" id="value_struct" name="value_struct[]" value="1"></td>
+                        <td width="9%"><input type="text" class="form-control" id="weight_net" name="weight_net[]"></td>
+                        <td width="9%"><input type="text" class="form-control" id="weight_gross" name="weight_gross[]"></td>
+                        <td width="10%"><select class="form-control" id="sel1" name="unit_weight"> <!--select trzeba zaczytać dane z tab JEDN z value z jedn_wag="X"-->
+                                <option value="mg">mg</option>
+                            </select></td>
+                        <td width="8%"><input type="text" class="form-control" id="value_length" name="value_length[]"></td>
+                        <td width="8%"><input type="text" class="form-control" id="value_width" name="value_width[]"></td>
+                        <td width="8%"><input type="text" class="form-control" id="value_height" name="value_height[]"></td>
+                        <td width="10%"><select class="form-control" id="sel1" name="unit_dim[]"> <!--select trzeba zaczytać dane z tab JEDN z value z jedn_wym="X"-->
+                                <option value="mm">mm</option>
+                            </select></td>
+                        <td width="5%" id="sum_DSW" name="value_capacit[]">0</td>
+                        <td width="8%" name="j_obj[]">cm3</td> <!-- zaadowanie do pola j_obj w tab MWYM-->
+                        <td width="40%"><input type="text" class="form-control" id="ean_code" name="ean_code[]"></td>
+                    </tr>
+
+                    <tr class="KAR">
+                        <td width="8%"><input type="text" class="form-control" name="unit_structure[]" id="unit_structure" value="KAR"></td> <!--tab MWYM pole unit_structure -->
+                        <td width="8%"><input type="text" class="form-control" id="value_struct" name="value_struct[]" value="1"></td>
+                        <td width="9%"><input type="text" class="form-control" id="weight_net" name="weight_net[]"></td>
+                        <td width="9%"><input type="text" class="form-control" id="weight_gross" name="weight_gross[]"></td>
+                        <td width="10%"><select class="form-control" id="sel1" name="unit_weight"> <!--select trzeba zaczytać dane z tab JEDN z value z jedn_wag="X"-->
+                                <option value="mg">mg</option>
+                            </select></td>
+                        <td width="8%"><input type="text" class="form-control" id="value_length" name="value_length[]"></td>
+                        <td width="8%"><input type="text" class="form-control" id="value_width" name="value_width[]"></td>
+                        <td width="8%"><input type="text" class="form-control" id="value_height" name="value_height[]"></td>
+                        <td width="10%"><select class="form-control" id="sel1" name="unit_dim[]"> <!--select trzeba zaczytać dane z tab JEDN z value z jedn_wym="X"-->
+                                <option value="mm">mm</option>
+                            </select></td>
+                        <td width="5%" id="sum_DSW" name="value_capacit[]">0</td>
+                        <td width="8%" name="j_obj[]">cm3</td> <!-- zaadowanie do pola j_obj w tab MWYM-->
+                        <td width="40%"><input type="text" class="form-control" id="ean_code" name="ean_code[]"></td>
+                    </tr>
+
+                    <tr class="PAL">
+                        <td width="8%"><input type="text" class="form-control" name="unit_structure[]" id="unit_structure" value="PAL"></td> <!--tab MWYM pole unit_structure -->
+                        <td width="8%"><input type="text" class="form-control" id="value_struct" name="value_struct[]" value="1"></td>
+                        <td width="9%"><input type="text" class="form-control" id="weight_net" name="weight_net[]"></td>
+                        <td width="9%"><input type="text" class="form-control" id="weight_gross" name="weight_gross[]"></td>
+                        <td width="10%"><select class="form-control" id="sel1" name="unit_weight"> <!--select trzeba zaczytać dane z tab JEDN z value z jedn_wag="X"-->
+                                <option value="mg">mg</option>
+                            </select></td>
+                        <td width="8%"><input type="text" class="form-control" id="value_length" name="value_length[]"></td>
+                        <td width="8%"><input type="text" class="form-control" id="value_width" name="value_width[]"></td>
+                        <td width="8%"><input type="text" class="form-control" id="value_height" name="value_height[]"></td>
+                        <td width="10%"><select class="form-control" id="sel1" name="unit_dim[]"> <!--select trzeba zaczytać dane z tab JEDN z value z jedn_wym="X"-->
+                                <option value="mm">mm</option>
+                            </select></td>
+                        <td width="5%" id="sum_DSW" name="value_capacit[]">0</td>
+                        <td width="8%" name="j_obj[]">cm3</td> <!-- zaadowanie do pola j_obj w tab MWYM-->
+                        <td width="40%"><input type="text" class="form-control" id="ean_code" name="ean_code[]"></td>
                     </tr>
 
                     </tbody>
@@ -120,7 +172,7 @@
                         <td>Grupa załadunkowa w magazynie:</td>
                         <td>
                             <div class="form-group">
-                                <input type="text" class="form-control" id="gr_zalad" name="gr_zalad"> <!-- TAB: INDK  gr_zalad select? -->
+                                <input type="text" class="form-control" id="load_group" name="load_group"> <!-- TAB: INDK  gr_zalad select? -->
                             </div>
                         </td>
                     </tr>
@@ -128,7 +180,7 @@
                         <td>Kod PKWIU:</td>
                         <td>
                             <div class="form-group">
-                                <input type="text" class="form-control" id="kod_pkwiu" name="kod_pkwiu"> <!-- TAB: INDK  kod_pkwiu input ale select z PKWI -->
+                                <input type="text" class="form-control" id="kod_pkwiu" name="pkwiu_code"> <!-- TAB: INDK  kod_pkwiu input ale select z PKWI -->
                             </div></td>
                     </tr>
                     <tr>
@@ -138,7 +190,7 @@
                     <tr>
                         <td>Stawka VAT</td>
                         <td><div class="form-group">
-                                <input type="text" class="form-control" id="vat" name="vat"> <!-- TAB: INDK  vat input-->
+                                <input type="text" class="form-control" id="vat" name="tax"> <!-- TAB: INDK  vat input-->
                             </div></td>
                     </tr>
                     <tr>
@@ -164,7 +216,7 @@
                 <h3>Wybierz Dostawcę:</h3>
             </div>
 
-            <select class="form-control" name="select_dost" style="width: 50%;"> <!--tab MWYM pole j_str -->
+            <select class="form-control" name="select_dost" style="width: 50%;"> <!--tab MWYM pole unit_structure -->
 
                 <option value="SZT">SZT</option>
 
@@ -173,29 +225,29 @@
             <div class="col-md-6">
 
                 <label>Brak dostawcy na liście</label>
-                <input type="checkbox" class="empty_dost">
+                <input type="checkbox" class="empty_vend" name="empty_vend">
 
                 <table class="table table-bordered dost">
                     <tbody>
                     <tr>
                         <td>Nazwa dostawcy</td>
-                        <td><input type="text" class="form-control" id="dost_nazw" name="dost_nazw"></td> <!-- tab. DOST -->
+                        <td><input type="text" class="form-control" id="dost_nazw" name="vend_name"></td> <!-- tab. DOST -->
                     </tr>
                     <tr>
                         <td>Adres dostawcy</td>
-                        <td><input type="text" class="form-control" id="dost_adres" name="dost_adres"> </td>
+                        <td><input type="text" class="form-control" id="dost_adres" name="vend_adress"> </td>
                     </tr>
                     <tr>
                         <td>Kod pocztowy</td>
-                        <td> <input type="text" class="form-control" id="dost_kod" name="dost_kod"></td>
+                        <td> <input type="text" class="form-control" id="dost_kod" name="vend_code"></td>
                     </tr>
                     <tr>
                         <td>Miasto</td>
-                        <td><input type="text" class="form-control" id="dost_miasto" name="dost_miasto"></td>
+                        <td><input type="text" class="form-control" id="dost_miasto" name="vend_city"></td>
                     </tr>
                     <tr>
                         <td>NIP</td>
-                        <td><input type="text" class="form-control" id="dost_nip" name="dost_nip"></td>
+                        <td><input type="text" class="form-control" id="dost_nip" name="vend_tax"></td>
                     </tr>
                     </tbody>
                 </table>
@@ -211,19 +263,19 @@
                     <tbody>
                     <tr>
                         <td>Nazwa dostawcy</td>
-                        <td><input type="text" class="form-control" id="dostzwr_name" name="dostzwr_name"></td> <!-- dostzwr-->
+                        <td><input type="text" class="form-control" id="dostzwr_name" name="vendrefund_name"></td> <!-- dostzwr-->
                     </tr>
                     <tr>
                         <td>Adres dostawcy</td>
-                        <td><input type="text" class="form-control" id="dostzwr_adres" name="dostzwr_adres"> </td>
+                        <td><input type="text" class="form-control" id="dostzwr_adres" name="vendrefund_adress"> </td>
                     </tr>
                     <tr>
                         <td>Kod pocztowy</td>
-                        <td> <input type="text" class="form-control" id="dostzwr_kod" name="dostzwr_kod"></td>
+                        <td> <input type="text" class="form-control" id="dostzwr_kod" name="vendrefund_code"></td>
                     </tr>
                     <tr>
                         <td>Miasto</td>
-                        <td><input type="text" class="form-control" id="dostzwr_miasto" name="dostzwr_miasto"></td>
+                        <td><input type="text" class="form-control" id="dostzwr_miasto" name="vendrefund_city"></td>
                     </tr>
                     </tbody>
                 </table>

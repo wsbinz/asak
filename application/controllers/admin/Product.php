@@ -50,23 +50,23 @@ class Product extends Admin_Controller  {
 
         if(!empty($_POST)) {
 
-            if ($this->form_validation->run('add_product') == TRUE) {
+           // if ($this->form_validation->run('add_product') == TRUE) {
 
                 $this->db->trans_start(); //Otwieranie tranzakcji
 
-                if($this->input->post('empty_dost',true) == true) {
+                if($this->input->post('empty_vend',true) == true) {
                     //Tabela DOST
                     $data = array(
-                        'dost_nazw' => $this->input->post('dost_nazw', true),
-                        'dost_adres' => $this->input->post('dost_adres', true),
-                        'dost_kod' => $this->input->post('dost_kod', true),
-                        'dost_miasto' => $this->input->post('dost_miasto', true),
-                        'dost_nip' => $this->input->post('dost_nip', true),
+                        'vend_name' => $this->input->post('vend_name', true),
+                        'vend_adress' => $this->input->post('vend_adress', true),
+                        'vend_code' => $this->input->post('vend_code', true),
+                        'vend_city' => $this->input->post('vend_city', true),
+                        'vend_tax' => $this->input->post('vend_tax', true),
                     );
 
-                    $this->Admin_model->create("DOST", $data);
+                    $this->Admin_model->create("VEND", $data);
                     $max = "id_dost";
-                    $kod = $this->Admin_model->get_max("DOST", $max); //Pobieranie ostatniego ID z tabeli DOST
+                    $kod = $this->Admin_model->get_max("VEND", $max); //Pobieranie ostatniego ID z tabeli DOST
                     $kod[0] = $kod[0]->nr_mat;
                 }
                 else
@@ -76,13 +76,11 @@ class Product extends Admin_Controller  {
 
                 //Tabela INDK
                 $data = array(
-                    'gr_zalad' => $this->input->post('gr_zalad', true),
-                    'kod_pkwiu' => $this->input->post('kod_pkwiu', true),
-                    'vat' => $this->input->post('vat', true),
-                    'utw_data' => date('d-m-Y'),
-                    'utw_user' => $_SESSION['id'],
-                    'zm_data' => date('d-m-Y'),
-                    'zm_user' => $_SESSION['id'],
+                    'load_group' => $this->input->post('load_group', true),
+                    'pkwiu_code' => $this->input->post('pkwiu_code', true),
+                    'tax' => $this->input->post('tax', true),
+                    'create_date' => date('d-m-Y'),
+                    'create_user' => $_SESSION['id'],
                     'prod_hier' => $this->input->post('prod_hier', true),
                 );
 
@@ -90,67 +88,67 @@ class Product extends Admin_Controller  {
                 $this->Admin_model->create("INDK", $data); //Tworzenie wpisu do INDK
 
                 $max = "nr_mat";
-                $kod = $this->Admin_model->get_max("INDK", $max); //Pobieranie ostatniego ID z tabeli INDK
+                $nr_mat = $this->Admin_model->get_max("INDK", $max); //Pobieranie ostatniego ID z tabeli INDK
+                $nr_mat = $nr_mat[0] -> nr_mat;
                 $this->db->trans_complete();//Zakończenie tranzakcji
 
                 //Tabela NAZW
                 $data = array(
-                    'mat_nazwk' => $this->input->post('mat_nazwk', true),
-                    'mat_nazwd' => $this->input->post('mat_nazwd', true),
-                    'nr_mat' => $kod[0],
-                    'kl_jez' => "PL",
+                    'name_short' => $this->input->post('name_short', true),
+                    'name_long' => $this->input->post('name_long', true),
+                    'nr_mat' => $nr_mat,
+                    'lang' => "PL",
                 );
 
-                $this->Admin_model->create("NAZW", $data);
+                $this->Admin_model->create("MNAME", $data);
 
 
-                //Tabela GRTW
+                //Tabela STORAGE  - grupa zaladunkowa
                 $data = array(
-                    'prod_hier' => $this->input->post('prod_hier', true),
-                    'prod_opis' => "dodatki",
-                    'nr_mar' => $kod[0],
+                    'load_group' => $this->input->post('load_group', true),
+                    'load_group_descr' => "dodatki",
                 );
-                $this->Admin_model->create("GRTW", $data);
+                $this->Admin_model->create("STORAGE", $data);
 
                 //Tabela MWYM
                 $data = array(
-                    'j_str' => $this->input->post('j_str', true),
-                    'wart_str' => "1",//$this->input->post('wart_str', true), //Poprawic
-                    'waga_ne' => $this->input->post('waga_ne', true),
-                    'waga_br' => $this->input->post('waga_br', true),
-                    'wart_dl' => $this->input->post('wart_dl', true),
-                    'wart_szer' => $this->input->post('wart_szer', true),
-                    'wart_wys' => $this->input->post('wart_wys', true),
-                    'wart_obj' => "24",//$this->input->post('wart_obj',true),
-                    'j_obj' => "cm3",//$this->input->post("j_obj",true),
-                    'j_wag' => $this->input->post('j_wag', true),
-                    'j_wym' => $this->input->post('j_wym', true),
-                    'ean_kod' => $this->input->post('ean_kod', true),
-                    'nr_mat' => $kod[0],
+                    'unit_structure' => $this->input->post('unit_structure', true),
+                    'value_struct' => $this->input->post('value_struct', true), //Poprawic
+                    'weight_net' => $this->input->post('weight_net', true),
+                    'weight_gross' => $this->input->post('weight_gross', true),
+                    'value_length' => $this->input->post('value_length', true),
+                    'value_width' => $this->input->post('value_width', true),
+                    'value_height' => $this->input->post('value_height', true),
+                    'value_capacit' => "24",//$this->input->post('wart_obj',true),
+                    'unit_capacity' => "cm3",//$this->input->post("j_obj",true),
+                    'unit_weight' => $this->input->post('unit_weight', true),
+                    'unit_dim' => $this->input->post('unit_dim', true),
+                    'ean_code' => $this->input->post('ean_code', true),
+                    'nr_mat' => $nr_mat,
                 );
-                $this->Admin_model->create("MWYM", $data);
+                $this->Admin_model->create("MSIZE", $data);
 
                 //Tabela dostzwr
                 $data = array(
-                    'dostzwr_name' =>$this->input->post('dostzwr_name',true),
-                    'dostzwr_adres' => $this->input->post('dostzwr_adres',true),
-                    'dostzwr_kod' => $this->input->post('dostzwr_kod',true),
-                    'dostzwr_miasto' => $this->input->post('dostzwr_miasto',true)
+                    'vendrefund_name' =>$this->input->post('vendrefund_name',true),
+                    'vendrefund_adress' => $this->input->post('vendrefund_adress',true),
+                    'vendrefund_code' => $this->input->post('vendrefund_code',true),
+                    'vendrefund_city' => $this->input->post('vendrefund_city',true)
                 );
 
-                //$this->Admin_model->create("DOSTZWR", $data);
+                $this->Admin_model->create("VEND_REFUND", $data);
 
                 $this->session->set_flashdata('alert', "Pomyślnie dadano!");
                 redirect('admin/product');
-            }
+           /* }
             else {
                 $this->session->set_flashdata('alert', validation_errors());
-            }
+            }*/
         }
 
 
 
-        $zmienna['dost'] = $this->Admin_model->get('DOST');
+        $zmienna['dost'] = $this->Admin_model->get('VEND');
         $zmienna['validation'] = $this->session->flashdata('alert');
         $this->twig->display('admin/product/add_product',$zmienna);
     }
