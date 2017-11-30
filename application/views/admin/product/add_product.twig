@@ -11,7 +11,7 @@
     {% autoescape %}
         {{ validation|raw }}
     {% endautoescape %}
-<form method="POST" action="{{ base_url() }}admin/product/add_product">
+<form method="POST" action="{{ base_url() }}admin/product/add_product" enctype="multipart/form-data">
     <section id="1">
         <!-- Progressbar -->
         <div class="progress">
@@ -200,6 +200,15 @@
                     </tbody>
                 </table>
             </div>
+
+            <div class="col-md-6">
+
+                  <label for="fileToUpload">Wybierz zdjęcie</label><br />
+                  <input type="file" name="filesToUpload" id="filesToUpload" />
+                  <output id="filesInfo"></output>
+
+            </div>
+
         </div>
         <button type="button" class="btn btn-lg btn-default btn-back prev">Wstecz</button>
         <button type="button" class="btn btn-lg btn-default btn-forw" id="next">Dalej</button>

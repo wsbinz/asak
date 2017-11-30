@@ -33,14 +33,17 @@
                 <td width=10%><a href="{{ base_url() }}admin/product/show/{{ indk.nr_mat }}"><button type="button" class="btn btn-default">Przejdź</button></a><td> <!-- Przjscie do wyswietlenia produktu z danego numeru -->
             </tr>
             {% endfor %}
-
-
-
-
-
             </tbody>
         </table>
 
+        <nav aria-label="Page navigation example">
+        {{ links|raw }}
+        </nav>
+{#        <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            <li class="page-item">{{ links|raw }}</li>
+        </ul>
+        </nav>#}
 
     </div>
 {% endblock %}
