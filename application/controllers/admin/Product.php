@@ -36,9 +36,9 @@ class Product extends Admin_Controller  {
         $config['uri_segment'] = 4;
         $config['base_url'] = base_url('admin/product/index');
 
-        $config['num_links'] = 2;
+/*        $config['num_links'] = 2;
         $config['use_page_numbers'] = TRUE;
-        $config['reuse_query_string'] = TRUE;
+        $config['reuse_query_string'] = TRUE;*/
 
         $config['full_tag_open'] = '<ul class="pagination">';
         $config['full_tag_close'] = '</ul>';
@@ -59,8 +59,8 @@ class Product extends Admin_Controller  {
         $config['prev_tag_open'] = '<li class="page-item"><span class="page-link">';
         $config['prev_tag_close'] = '</span></li>';
 
-        $config['cur_tag_open'] = '';
-        $config['cur_tag_close'] = '</li>';
+        $config['cur_tag_open'] = '<li class="page-item"><a href="">';
+        $config['cur_tag_close'] = '</a></li>';
 
         $config['num_tag_open'] = '<li class="page-item">';
         $config['num_tag_close'] = '</li>';
