@@ -1,7 +1,5 @@
 
-{% autoescape %}
-    {{ validation|raw }}
-{% endautoescape %}
+
 <!-- Bootstrap core CSS -->
 <link rel="stylesheet" href="{{ base_url() }}/asset/css/bootstrap.css" crossorigin="anonymous">
 <!-- nasza nakładka CSS -->
@@ -24,6 +22,9 @@
     </div>
 
     <div class="checkbox">
+        {% autoescape %}
+            {{ validation|raw }}
+        {% endautoescape %}
         <label>
             <input type="checkbox" value="1" name="remember_me"> Zapamiętaj mnie
         </label>
