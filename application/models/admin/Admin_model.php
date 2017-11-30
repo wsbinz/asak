@@ -38,6 +38,13 @@ class Admin_model extends CI_Model
         }
     }
 
+    public function get_where($table,$where)
+    {
+        $this->db->where($where);
+        $query = $this->db->get($table);
+        return $query->result();
+    }
+
     public function get_single($table,$where)
     {
         $query = $this->db->get_where($table,$where);

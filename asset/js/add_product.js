@@ -9,7 +9,7 @@ $(document).ready(function ()
     for ( var i = 2 ; i<=length_section; i++)
     {
 
-      //  $("#"+i).hide();
+        //  $("#"+i).hide();
 
     }
 
@@ -33,38 +33,54 @@ $(document).ready(function ()
     });
 
 
-    $(".dost").hide();
+    $(".vend").hide();
 
-    $(".empty_dost").click(function () {
-        if($(".empty_dost").is(':checked')) {
-            $(".dost").show();
-            $("[name=select_dost]").prop("disabled", true)
+    $(".empty_vend").click(function () {
+        if($(".empty_vend").is(':checked')) {
+            $(".vend").show();
+            $("[name=select_vend]").prop("disabled", true)
         }
         else
         {
-            $(".dost").hide();
-            $("[name=select_dost]").prop("disabled", false)
+            $(".vend").hide();
+            $("[name=select_vend]").prop("disabled", false)
         }
     })
 
+    $(".vend_refund").hide();
+
+    $(".empty_vend_refund").click(function () {
+        if($(".empty_vend_refund").is(':checked')) {
+            $(".vend_refund").show();
+            $("[name=select_vend_refund]").prop("disabled", true)
+        }
+        else
+        {
+            $(".vend_refund").hide();
+            $("[name=select_vend_refund]").prop("disabled", false)
+        }
+    })
+
+
+
+    $('.section_2 tr').on('change',function()
+    {
+        var dl = $(this).find("#value_length").val();
+        var szer = $(this).find("#value_width").val();
+        var wys = $(this).find("#value_height").val();
+
+        $(this).find("#sum_DSW").html(dl*szer*wys);
+        console.log(this);
+
+    });
 
 });
 //Progress bar. Będzie się aktualizował po każdym wypełnieniu danych
 
 
-/*$('.section_2 tr').click(function()
-{
-    var dl = $(this).find("#wart_dl").val();
-    var szer = $(this).find("#wart_szer").val();
-    var wys = $(this).find("#wart_wys").val();
 
-    $(this).find("#sum_DSW").html(dl*szer*wys);
-});*/
 //$("#sum_DSW").html($("#wart_dl").val() * $("#wart_szer").val() * $("#wart_wys").val())
 
-$("input[id^=wart_]").on("change",function () {
-
-    $("#sum_DSW").html($("#wart_dl").val() * $("#wart_szer").val() * $("#wart_wys").val());
-});
-
-
+/*$("input[id^=wart_]").on("change",function () {
+ $("#sum_DSW").html($("#wart_dl").val() * $("#wart_szer").val() * $("#wart_wys").val());
+ });*/

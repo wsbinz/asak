@@ -28,6 +28,7 @@ class Product extends Admin_Controller  {
         {
             redirect('account');
         }
+
         $total_rows = $this->Admin_model->num_rows("MNAME");
         $start_index = ($this->uri->segment(4)) ? $this->uri->segment(4) : 0 ;
 
@@ -59,7 +60,7 @@ class Product extends Admin_Controller  {
         $config['prev_tag_open'] = '<li class="page-item"><span class="page-link">';
         $config['prev_tag_close'] = '</span></li>';
 
-        $config['cur_tag_open'] = '<li class="page-item"><a href="">';
+        $config['cur_tag_open'] = '<li class="page-item active"><a href="">';
         $config['cur_tag_close'] = '</a></li>';
 
         $config['num_tag_open'] = '<li class="page-item">';
@@ -105,7 +106,7 @@ class Product extends Admin_Controller  {
                     );
 
                     $this->Admin_model->create("VEND", $data);
-                    $max = "id_dost";
+                    $max = "id_vend";
                     $kod = $this->Admin_model->get_max("VEND", $max); //Pobieranie ostatniego ID z tabeli DOST
                     $kod[0] = $kod[0]->nr_mat;
                 }
@@ -268,7 +269,16 @@ class Product extends Admin_Controller  {
         if(!empty($id))
         {
             $where = array('id_indk'=>$id);
-            $data['product'] = $this->Admin_model->get_single("VIEW_INDK_MWYM",$where);
+            $data['product'] = $this->Admin_model->get_single("VIEW_CARGO",$where);
+
+            $where = array('nr_mat'=>$id);
+            $data['msize'] = $this->Admin_model->get_where("MSIZE",$where);
+
+            $data['pkwiu'] = $this->Admin_model->get('PKWI');
+            $data['dost'] = $this->Admin_model->get('VEND');
+            $data['dost_zwrot'] = $this->Admin_model->get('VEND_REFUND');
+
+            print_r($data['msize']);
 
             if(!empty($data['product']))
             {
