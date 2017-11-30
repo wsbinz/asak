@@ -18,19 +18,58 @@ class Product extends Admin_Controller  {
         //date_default_timezone_set('UTC');
         $this->load->model('admin/Admin_model');
         $this->load->helper('My');
+        $this->load->library('image_lib');
+        $this->load->library('pagination');
     }
 
-    public function index()
+    public function index($id='')
     {
         if(logged_in()!= 1)
         {
             redirect('account');
         }
+        $total_rows = $this->Admin_model->num_rows("MNAME");
+        $start_index = ($this->uri->segment(4)) ? $this->uri->segment(4) : 0 ;
 
-        //print_r($_SESSION);
+        $config['total_rows'] = $total_rows;
+        $config['per_page'] = 3;
+        $config['uri_segment'] = 4;
+        $config['base_url'] = base_url('admin/product/index');
 
-        $data['indk_mwym'] = $this->Admin_model->get("VIEW_INDK_MWYM");
-        //print_r($data['indk_mwym']);
+        $config['num_links'] = 2;
+        $config['use_page_numbers'] = TRUE;
+        $config['reuse_query_string'] = TRUE;
+
+        $config['full_tag_open'] = '<ul class="pagination">';
+        $config['full_tag_close'] = '</ul>';
+
+        $config['first_link'] = 'First';
+        $config['first_tag_open'] = '<li class="">';
+        $config['first_tag_close'] = '</li>';
+
+        $config['last_link'] = 'Last';
+        $config['last_tag_open'] = '<li class="">';
+        $config['last_tag_close'] = '</li>';
+
+        $config['next_link'] = 'Next';
+        $config['next_tag_open'] = '<li class="page-item"><span class="page-link">';
+        $config['next_tag_close'] = '</span></li>';
+
+        $config['prev_link'] = 'Previous';
+        $config['prev_tag_open'] = '<li class="page-item"><span class="page-link">';
+        $config['prev_tag_close'] = '</span></li>';
+
+        $config['cur_tag_open'] = '';
+        $config['cur_tag_close'] = '</li>';
+
+        $config['num_tag_open'] = '<li class="page-item">';
+        $config['num_tag_close'] = '</li>';
+
+        $data['indk_mwym'] = $this->Admin_model->get("MNAME",$config['per_page'],$start_index);
+
+        $this->pagination->initialize($config);
+        $data['links'] = $this->pagination->create_links();
+
         $data['validation'] = $this->session->flashdata('alert');
         $this->twig->display('site/product/lists_products',$data);
 
@@ -38,15 +77,15 @@ class Product extends Admin_Controller  {
 
     public function show($id)
     {
-        $where = array('id' => $id);
-        $data['single_indk_mwym'] = $this->Admin_model->get_signle("VIEW_INDK_MWYM");
-        echo "lalla";
+        $where = array('nr_mat' => $id);
+        $data['single_indk_mwym'] = $this->Admin_model->get_single("VIEW_INDK_MWYM",$where);
+        $this->twig->display('site/product/list_product',$data);
     }
 
     public function add_product()
     {
 
-        $create_date = time();
+       $create_date = time();
 
         if(!empty($_POST)) {
 
@@ -54,91 +93,158 @@ class Product extends Admin_Controller  {
 
                 $this->db->trans_start(); //Otwieranie tranzakcji
 
-                if($this->input->post('empty_dost',true) == true) {
+                if($this->input->post('empty_vend',true) == true) {
+
                     //Tabela DOST
                     $data = array(
-                        'dost_nazw' => $this->input->post('dost_nazw', true),
-                        'dost_adres' => $this->input->post('dost_adres', true),
-                        'dost_kod' => $this->input->post('dost_kod', true),
-                        'dost_miasto' => $this->input->post('dost_miasto', true),
-                        'dost_nip' => $this->input->post('dost_nip', true),
+                        'vend_name' => $this->input->post('vend_name', true),
+                        'vend_adress' => $this->input->post('vend_adress', true),
+                        'vend_code' => $this->input->post('vend_code', true),
+                        'vend_city' => $this->input->post('vend_city', true),
+                        'vend_tax' => $this->input->post('vend_tax', true),
                     );
 
-                    $this->Admin_model->create("DOST", $data);
+                    $this->Admin_model->create("VEND", $data);
                     $max = "id_dost";
-                    $kod = $this->Admin_model->get_max("DOST", $max); //Pobieranie ostatniego ID z tabeli DOST
+                    $kod = $this->Admin_model->get_max("VEND", $max); //Pobieranie ostatniego ID z tabeli DOST
                     $kod[0] = $kod[0]->nr_mat;
                 }
                 else
                 {
-                    $kod[0] =  $this->input->post('select_dost',true);
+                    $kod[0] =  $this->input->post('select_vend',true);
                 }
+
+
+                if ($this->input->post("empty_vend_refund",true) == true)
+                {
+                    //Tabela dostzwr
+                    $data = array(
+                        'vendrefund_name' =>$this->input->post('vendrefund_name',true),
+                        'vendrefund_adress' => $this->input->post('vendrefund_adress',true),
+                        'vendrefund_code' => $this->input->post('vendrefund_code',true),
+                        'vendrefund_city' => $this->input->post('vendrefund_city',true)
+                    );
+
+                    $this->Admin_model->create("VEND_REFUND", $data);
+
+                    $max = "id_vendrefund";
+                    $kod_refund = $this->Admin_model->get_max("VEND_REFUND", $max); //Pobieranie ostatniego ID z tabeli DOST
+                    $kod_refund[0] = $kod_refund[0]->id_vendrefund;
+
+                }
+                else
+                {
+                    $kod_refund[0] =  $this->input->post('select_vend_refund',true);
+                }
+
 
                 //Tabela INDK
                 $data = array(
-                    'gr_zalad' => $this->input->post('gr_zalad', true),
-                    'kod_pkwiu' => $this->input->post('kod_pkwiu', true),
-                    'vat' => $this->input->post('vat', true),
-                    'utw_data' => date('d-m-Y'),
-                    'utw_user' => $_SESSION['id'],
-                    'zm_data' => date('d-m-Y'),
-                    'zm_user' => $_SESSION['id'],
+                    'load_group' => $this->input->post('load_group', true),
+                    'pkwiu_code' => $this->input->post('pkwiu_code', true),
+                    'tax' => $this->input->post('tax', true),
+                    'create_date' => date('d-m-Y'),
+                    'create_user' => $_SESSION['id'],
                     'prod_hier' => $this->input->post('prod_hier', true),
+                    'id_vend' => $kod[0],
+                    'id_vendrefund' => $kod_refund[0],
                 );
 
 
                 $this->Admin_model->create("INDK", $data); //Tworzenie wpisu do INDK
 
                 $max = "nr_mat";
-                $kod = $this->Admin_model->get_max("INDK", $max); //Pobieranie ostatniego ID z tabeli INDK
+                $nr_mat = $this->Admin_model->get_max("INDK", $max); //Pobieranie ostatniego ID z tabeli INDK
+                $nr_mat = $nr_mat[0] -> nr_mat;
                 $this->db->trans_complete();//Zakończenie tranzakcji
 
                 //Tabela NAZW
                 $data = array(
-                    'mat_nazwk' => $this->input->post('mat_nazwk', true),
-                    'mat_nazwd' => $this->input->post('mat_nazwd', true),
-                    'nr_mat' => $kod[0],
-                    'kl_jez' => "PL",
+                    'name_short' => $this->input->post('name_short', true),
+                    'name_long' => $this->input->post('name_long', true),
+                    'nr_mat' => $nr_mat,
+                    'lang' => "PL",
                 );
 
-                $this->Admin_model->create("NAZW", $data);
+                $this->Admin_model->create("MNAME", $data);
 
 
-                //Tabela GRTW
+                //Tabela STORAGE  - grupa zaladunkowa
                 $data = array(
-                    'prod_hier' => $this->input->post('prod_hier', true),
-                    'prod_opis' => "dodatki",
-                    'nr_mar' => $kod[0],
+                    'load_group' => $this->input->post('load_group', true),
+                    'load_group_descr' => "dodatki",
                 );
-                $this->Admin_model->create("GRTW", $data);
+                $this->Admin_model->create("STORAGE", $data);
 
                 //Tabela MWYM
+            for($i=0; $i<4; $i++) {
                 $data = array(
-                    'j_str' => $this->input->post('j_str', true),
-                    'wart_str' => "1",//$this->input->post('wart_str', true), //Poprawic
-                    'waga_ne' => $this->input->post('waga_ne', true),
-                    'waga_br' => $this->input->post('waga_br', true),
-                    'wart_dl' => $this->input->post('wart_dl', true),
-                    'wart_szer' => $this->input->post('wart_szer', true),
-                    'wart_wys' => $this->input->post('wart_wys', true),
-                    'wart_obj' => "24",//$this->input->post('wart_obj',true),
-                    'j_obj' => "cm3",//$this->input->post("j_obj",true),
-                    'j_wag' => $this->input->post('j_wag', true),
-                    'j_wym' => $this->input->post('j_wym', true),
-                    'ean_kod' => $this->input->post('ean_kod', true),
-                    'nr_mat' => $kod[0],
+                    'unit_structure' => $this->input->post('unit_structure', true)[$i],
+                    'value_struct' => $this->input->post('value_struct', true)[$i], //Poprawic
+                    'weight_net' => $this->input->post('weight_net', true)[$i],
+                    'weight_gross' => $this->input->post('weight_gross', true)[$i],
+                    'value_length' => $this->input->post('value_length', true)[$i],
+                    'value_width' => $this->input->post('value_width', true)[$i],
+                    'value_height' => $this->input->post('value_height', true)[$i],
+                    'value_capacit' => $this->input->post('value_capacit',true)[$i],
+                    'unit_capacity' => "cm3",//$this->input->post("j_obj",true),
+                    'unit_weight' => $this->input->post('unit_weight', true)[$i],
+                    'unit_dim' => $this->input->post('unit_dim', true)[$i],
+                    'ean_code' => $this->input->post('ean_code', true)[$i],
+                    'nr_mat' => $nr_mat,
                 );
-                $this->Admin_model->create("MWYM", $data);
+                $this->Admin_model->create("MSIZE", $data);
+            }
 
-                //Tabela dostzwr
-                $data = array(
-                    'dostzwr_name' =>$this->input->post('dostzwr_name',true),
-                    'dostzwr_adres' => $this->input->post('dostzwr_adres',true),
-                    'dostzwr_kod' => $this->input->post('dostzwr_kod',true),
-                    'dostzwr_miasto' => $this->input->post('dostzwr_miasto',true)
-                );
 
-                //$this->Admin_model->create("DOSTZWR", $data);
+
+            //Upload IMG
+                if(!empty($_FILES))
+                {
+                    $move = true;
+                    foreach ($_FILES as $file) {
+                        $tempFile = $file['tmp_name'];
+                        $fileName = $file['name'];
+                        $targetPath = BASEPATH . "../asset/img/product/";
+                        $targetFile = $targetPath . $fileName;
+                        $file_exist = file_exists($targetFile);
+                    }
+
+                    if (!$file_exist) {
+                        $move = move_uploaded_file($tempFile, $targetFile);
+
+                        $config['image_library'] = 'gd2';
+                        $config['source_image'] = $targetFile;
+                        $config['create_thumb'] = FALSE;
+                        // $config['new_image'] = BASEPATH.'../asset/file/home/thumbs';
+                        $config['maintain_ratio'] = TRUE;
+                        $config['width'] = 1000;
+                        // $config['height'] = 200;
+
+                        $this->image_lib->initialize($config);
+                        $this->image_lib->resize();
+                    } else {
+                        $duplicate = true;
+                        $this->session->set_flashdata('alert', "Taki plik już istnieje !");
+                    }
+
+                    if($move == true)
+                    {
+                        $targetFile = strstr($targetFile, 'asset');
+                        $data = array(
+                            'nr_mat' => $nr_mat,
+                            'adr_ph' => $targetFile,
+
+                        );
+                        $this->Admin_model->create("PHOT", $data);
+                    }
+
+                }
+                else
+                {
+                    $this->session->set_flashdata('alert', "Nie przesłano pliku");
+                }
+
 
                 $this->session->set_flashdata('alert', "Pomyślnie dadano!");
                 redirect('admin/product');
@@ -150,9 +256,11 @@ class Product extends Admin_Controller  {
 
 
 
-        $zmienna['dost'] = $this->Admin_model->get('DOST');
-        $zmienna['validation'] = $this->session->flashdata('alert');
-        $this->twig->display('admin/product/add_product',$zmienna);
+        $variable['dost'] = $this->Admin_model->get('VEND');
+        $variable['dost_zwrot'] = $this->Admin_model->get('VEND_REFUND');
+        $variable['pkwiu'] = $this->Admin_model->get('PKWI');
+        $variable['validation'] = $this->session->flashdata('alert');
+        $this->twig->display('admin/product/add_product',$variable);
     }
 
     public function add_product_ref ($id='')
@@ -180,10 +288,11 @@ class Product extends Admin_Controller  {
 
     public function search_product()
     {
-        $col = array('mat_nazwd'=>$this->input->post('mat_nazwk',true));
-        $search = $this->Admin_model->search("VIEW_INDK_MWYM",$col);
+        $col = array('mat_nazwd'=>strtolower($this->input->post('mat_nazwk',true)));
+        $search = $this->Admin_model->search("VIEW_CARGO",$col);
         echo json_encode($search);
     }
+
 
    public function edit_product($id)
    {

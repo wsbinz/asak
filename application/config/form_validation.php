@@ -98,17 +98,17 @@ $config = array(
     'add_product'=> array(
 
         array(
-            'field'=>'kod_pkwiu',
+            'field'=>'pkwiu_code',
             'label' => 'Kod PKWIU',
             'rules' => 'trim|required'
         ),
         array(
-            'field'=>'gr_zalad',
+            'field'=>'load_group',
             'label' => 'Grupa załadunkowa',
             'rules' => 'trim|required'
         ),
         array(
-            'field'=>'vat',
+            'field'=>'tax',
             'label' => 'Wartość VAT',
             'rules' => 'trim|required'
         ),

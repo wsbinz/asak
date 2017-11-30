@@ -25,10 +25,17 @@ class Admin_model extends CI_Model
         $this->db->delete($table);
     }
 
-    public function get($table)
+    public function get($table,$limit='',$offset='')
     {
-        $query = $this->db->get($table);
-        return $query->result();
+        if($limit == '') {
+            $query = $this->db->get($table);
+            return $query->result();
+        }
+        else
+        {
+            $query = $this->db->get($table,$limit,$offset);
+            return $query->result();
+        }
     }
 
     public function get_single($table,$where)
@@ -47,9 +54,15 @@ class Admin_model extends CI_Model
 
     public function search($table,$col)
     {
-        $this->db->like($col);
+        $this->db->like($col,'both');
         $query = $this->db->get($table);
         return $query->result();
+    }
+
+    public function num_rows($table)
+    {
+        $query = $this->db->get($table);
+        return $query->num_rows();
     }
 
 }

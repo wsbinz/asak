@@ -48,11 +48,6 @@ $(document).ready(function ()
     })
 
 
-    $("input[id^=wart_]").on("change",function () {
-
-        $("#sum_DSW").html($("#wart_dl").val() * $("#wart_szer").val() * $("#wart_wys").val());
-    });
-
 });
 //Progress bar. Będzie się aktualizował po każdym wypełnieniu danych
 
@@ -65,7 +60,11 @@ $(document).ready(function ()
 
     $(this).find("#sum_DSW").html(dl*szer*wys);
 });*/
+//$("#sum_DSW").html($("#wart_dl").val() * $("#wart_szer").val() * $("#wart_wys").val())
 
+$("input[id^=wart_]").on("change",function () {
 
+    $("#sum_DSW").html($("#wart_dl").val() * $("#wart_szer").val() * $("#wart_wys").val());
+});
 
 
