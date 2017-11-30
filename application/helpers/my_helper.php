@@ -49,7 +49,6 @@ function alias($alias)
 
 function check_group($alias_group)
 {
-
         $CI =& get_instance();
         foreach ($alias_group as $group) {
             $where = array('alias' => $group);

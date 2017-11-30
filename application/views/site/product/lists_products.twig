@@ -30,7 +30,13 @@
                 <td width=40%>{{ indk.name_short }}</td>
                 <td width=20%>{{ indk.name_long }}</td>
                 <td width=20%>{{ indk.nr_mat}}</td>
-                <td width=10%><a href="{{ base_url() }}admin/product/show/{{ indk.nr_mat }}"><button type="button" class="btn btn-default">Przejdź</button></a><td> <!-- Przjscie do wyswietlenia produktu z danego numeru -->
+                <td width=10%>
+                    <a href="{{ base_url() }}admin/product/show/{{ indk.nr_mat }}"><button type="button" class="btn btn-default">Przejdź</button></a>
+
+                {% if check_group(['admin','moderator']) %}
+                    <a href="{{ base_url() }}admin/product/show/{{ indk.nr_mat }}"><button type="button" class="btn btn-warning">Edytuj</button></a>
+                {% endif %}
+                <td> <!-- Przjscie do wyswietlenia produktu z danego numeru -->
             </tr>
             {% endfor %}
             </tbody>
