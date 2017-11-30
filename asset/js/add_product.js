@@ -33,19 +33,34 @@ $(document).ready(function ()
     });
 
 
-    $(".dost").hide();
+    $(".vend").hide();
 
-    $(".empty_dost").click(function () {
-        if($(".empty_dost").is(':checked')) {
-            $(".dost").show();
-            $("[name=select_dost]").prop("disabled", true)
+    $(".empty_vend").click(function () {
+        if($(".empty_vend").is(':checked')) {
+            $(".vend").show();
+            $("[name=select_vend]").prop("disabled", true)
         }
         else
         {
-            $(".dost").hide();
-            $("[name=select_dost]").prop("disabled", false)
+            $(".vend").hide();
+            $("[name=select_vend]").prop("disabled", false)
         }
     })
+
+    $(".vend_refund").hide();
+
+    $(".empty_vend_refund").click(function () {
+        if($(".empty_vend_refund").is(':checked')) {
+            $(".vend_refund").show();
+            $("[name=select_vend_refund]").prop("disabled", true)
+        }
+        else
+        {
+            $(".vend_refund").hide();
+            $("[name=select_vend_refund]").prop("disabled", false)
+        }
+    })
+
 
 
     $('.section_2 tr').on('change',function()

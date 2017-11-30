@@ -29,7 +29,7 @@ class Product extends Admin_Controller  {
 
         //print_r($_SESSION);
 
-        $data['indk_mwym'] = $this->Admin_model->get("VIEW_INDK_MWYM");
+        $data['indk_mwym'] = $this->Admin_model->get("MNAME");
         //print_r($data['indk_mwym']);
         $data['validation'] = $this->session->flashdata('alert');
         $this->twig->display('site/product/lists_products',$data);
@@ -39,8 +39,8 @@ class Product extends Admin_Controller  {
     public function show($id)
     {
         $where = array('id' => $id);
-        $data['single_indk_mwym'] = $this->Admin_model->get_signle("VIEW_INDK_MWYM");
-        echo "lalla";
+        $data['single_indk_mwym'] = $this->Admin_model->get_single("VIEW_INDK_MWYM",$where);
+        $this->twig->display('site/product/list_product',$data);
     }
 
     public function add_product()
@@ -71,7 +71,7 @@ class Product extends Admin_Controller  {
                 }
                 else
                 {
-                    $kod[0] =  $this->input->post('select_dost',true);
+                    $kod[0] =  $this->input->post('select_vend',true);
                 }
 
                 //Tabela INDK
@@ -82,6 +82,8 @@ class Product extends Admin_Controller  {
                     'create_date' => date('d-m-Y'),
                     'create_user' => $_SESSION['id'],
                     'prod_hier' => $this->input->post('prod_hier', true),
+                    'id_vend' => $kod[0],
+                    'id_vendrefund' => $this->input->post('select_vend_refund',true),
                 );
 
 
@@ -153,9 +155,11 @@ class Product extends Admin_Controller  {
 
 
 
-        $zmienna['dost'] = $this->Admin_model->get('VEND');
-        $zmienna['validation'] = $this->session->flashdata('alert');
-        $this->twig->display('admin/product/add_product',$zmienna);
+        $variable['dost'] = $this->Admin_model->get('VEND');
+        $variable['dost_zwrot'] = $this->Admin_model->get('VEND_REFUND');
+        $variable['pkwiu'] = $this->Admin_model->get('PKWI');
+        $variable['validation'] = $this->session->flashdata('alert');
+        $this->twig->display('admin/product/add_product',$variable);
     }
 
     public function add_product_ref ($id='')

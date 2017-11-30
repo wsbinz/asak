@@ -18,8 +18,8 @@
             <tr>
                 <th>Numer:</th>
                 <th>Nazwa:</th>
-                <th>Gr. załad:</th>
-                <th>Dostawca:</th>
+                <th>Dluga nazwa:</th>
+                <th>Nr mat:</th>
                 <th><th>
             </tr>
             </thead>
@@ -27,10 +27,10 @@
             {% for indk in indk_mwym %}
             <tr>
                 <td width=10%>{{ loop.index }}</td>
-                <td width=40%>{{ indk.prod_hier }}</td>
-                <td width=20%>{{ indk.gr_zalad }}</td>
+                <td width=40%>{{ indk.name_short }}</td>
+                <td width=20%>{{ indk.name_long }}</td>
                 <td width=20%>{{ indk.nr_mat}}</td>
-                <td width=10%><a href="{{ base_url() }}admin/product/show/{{ indk.id_indk }}"><button type="button" class="btn btn-default">Przejdź</button></a><td> <!-- Przjscie do wyswietlenia produktu z danego numeru -->
+                <td width=10%><a href="{{ base_url() }}admin/product/show/{{ indk.nr_mat }}"><button type="button" class="btn btn-default">Przejdź</button></a><td> <!-- Przjscie do wyswietlenia produktu z danego numeru -->
             </tr>
             {% endfor %}
 

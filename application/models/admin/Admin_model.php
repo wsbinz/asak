@@ -47,7 +47,7 @@ class Admin_model extends CI_Model
 
     public function search($table,$col)
     {
-        $this->db->like($col);
+        $this->db->like($col,'both');
         $query = $this->db->get($table);
         return $query->result();
     }

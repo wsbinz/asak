@@ -185,7 +185,7 @@
                     </tr>
                     <tr>
                         <td>Opis PKWIU:</td>
-                        <td>opis kodu</td> <!-- opis zaczytany na bazie selecta pkwui_kod z tab PKWI -->
+                        <td id="desc_code_pkwiu">opis kodu</td> <!-- opis zaczytany na bazie selecta pkwui_kod z tab PKWI -->
                     </tr>
                     <tr>
                         <td>Stawka VAT</td>
@@ -216,9 +216,11 @@
                 <h3>Wybierz Dostawcę:</h3>
             </div>
 
-            <select class="form-control" name="select_dost" style="width: 50%;"> <!--tab MWYM pole unit_structure -->
+            <select class="form-control" name="select_vend" style="width: 50%;"> <!--tab MWYM pole unit_structure -->
 
-                <option value="SZT">SZT</option>
+                {% for dostawca in dost %}
+                <option value="{{ dostawca.id_vend }}">{{ dostawca.vend_name }}</option>
+                {% endfor %}
 
             </select>
 
@@ -227,7 +229,7 @@
                 <label>Brak dostawcy na liście</label>
                 <input type="checkbox" class="empty_vend" name="empty_vend">
 
-                <table class="table table-bordered dost">
+                <table class="table table-bordered vend">
                     <tbody>
                     <tr>
                         <td>Nazwa dostawcy</td>
@@ -258,8 +260,22 @@
             <div class="page-header">
                 <h3>Dostawca zwroty:</h3>
             </div>
+
+             <select class="form-control" name="select_vend_refund" style="width: 50%;"> <!--tab MWYM pole unit_structure -->
+
+                {% for dostawca in dost_zwrot %}
+                <option value="{{ dostawca.id_vendrefund }}">{{ dostawca.vendrefund_name }}</option>
+                {% endfor %}
+
+            </select>
+
+
             <div class="col-md-6">
-                <table class="table table-bordered">
+
+                <label>Brak dostawcy na liście</label>
+                <input type="checkbox" class="empty_vend_refund" name="empty_vend_refund">
+
+                <table class="table table-bordered vend_refund">
                     <tbody>
                     <tr>
                         <td>Nazwa dostawcy</td>
@@ -288,4 +304,45 @@
         <!-- Zakonczenie spowoduje przejscie do podstrony wyswietlania produktu -->
     </section>
     </form>
+{% endblock %}
+
+{% block javascript %}
+        <script>
+
+                $( function() {
+            var availableTags = [
+              {% for pkwi in pkwiu %}
+              "{{ pkwi.pkwiu_code|raw|trim(' ','right') }}",
+              {% endfor %}
+            ];
+            $( "#kod_pkwiu" ).autocomplete({
+              source: availableTags
+            });
+            desc();
+          } );
+
+
+                function desc() {
+
+                  $("#kod_pkwiu").on('change',function() {
+
+                       var code =  $( "#kod_pkwiu" ).val();
+
+                       {% for pkwi in pkwiu %}
+
+                        var code_pkwi = {{ pkwi.pkwiu_code|raw|trim(' ','right') }};
+
+                               if(code_pkwi == code)
+                               {
+                                   $('#desc_code_pkwiu').html("{{ pkwi.pkwiu_descr|raw|trim(' ','right') }}");
+                               }
+
+                      {% endfor %}
+
+                    });
+                }
+
+
+
+        </script>
 {% endblock %}
