@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Account extends CI_Controller {
+class Account extends My_Controller {
 
 
     public function __construct()
@@ -12,13 +12,10 @@ class Account extends CI_Controller {
 
     public function index()
     {
-       /* if($_SESSION['logged_in'] == 1) {
-            echo "Witaj " . $_SESSION['username'] . " Zostałeś pomyślnie zalogowany !";
-        }
-        else
+        if(logged_in() != 1)
         {
             redirect('account/login');
-        }*/
+        }
 
         $data['validation'] = $this->session->flashdata('alert');
         $this->twig->display('admin/include/dashboard',$data);
@@ -112,6 +109,7 @@ class Account extends CI_Controller {
     {
         session_destroy();
         delete_cookie("remember_me");
+        redirect('account/login');
     }
 
 }

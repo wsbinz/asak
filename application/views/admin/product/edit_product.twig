@@ -1,46 +1,56 @@
 {% extends "admin/include/include.twig" %}
-
-{% block body %}
+{% block add %}
 
 
     <div class="container theme-showcase" role="main">
-        <!-- Szary Panel -->
-        <div class="jumbotron">
-            <h2>Edycja produktu o numerze:  XX</h2> <!--do wladowania numer produktu -->
+    <!-- Szary Panel -->
+    <div class="jumbotron">
+        <h2>Edycja produktu o nazwie {{ product.mat_nazwk }}</h2>
+    </div>
+
+    {% autoescape %}
+        {{ validation|raw }}
+    {% endautoescape %}
+<form method="POST" action="{{ base_url() }}admin/product/edit_product/{{ product.nr_mat }}" enctype="multipart/form-data">
+    <section id="1">
+        <!-- Progressbar -->
+        <div class="progress">
+            <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 20%;"><span class="sr-only">20% Complete</span></div>
         </div>
-        <!-- Alert dla wycofania indeksu -->
-        <div class="alert alert-danger" role="alert">
-            <strong>UWAGA!</strong> PRODUKT WYCOFANY!
-        </div>
+
         <!-- Nazwa towaru -->
         <div class="form-group">
-            <div class="col-md-12">
-                <label for="name"> </label>
-                <input type="text" class="form-control" id="name" name="mat_nazwk" value="nazwa towaru"> <!-- check z pozycjami mat_nazwk z tabeli NAZW -->
-            </div>
+            <label for="name">Wprowadź nazwę towaru:</label>
+            <input type="text" class="form-control" id="name" name="name_short" value="{{ product.mat_nazwk }}"> <!-- check z pozycjami mat_nazwk z tabeli NAZW -->
         </div>
+
         <!-- Grupa towarowa -->
         <div class="form-group">
-            <div class="col-md-12">
-                <label for="gr_tow"> </label>
-                <input type="text" class="form-control" id="gr_tow" name="prod_hier" value="grupa towarowa"> <!-- wybór z listy prod_hier z tabeli GRTW-->
-            </div>
+            <label for="gr_tow">Wprowadz grupę towarową:</label>
+            <input type="text" class="form-control" id="gr_tow" name="prod_hier" value="{{ product.prod_hier }}"> <!-- wybór z listy prod_hier z tabeli GRTW-->
+        </div>
+        <div class="form-group">
+            <label for="gr_tow">Opis grupy towarowej:</label>
+            <input type="text" class="form-control" id="gr_tow" name="prod_descr"> <!-- wybór z listy prod_hier z tabeli GRTW-->
         </div>
         <!-- Nazwa marketingowa rozwinięta -->
         <div class="form-group">
-            <div class="col-md-12">
-                <label for="name_mark"> </label>
-                <textarea class="form-control" rows="5" id="name_mark" name="mat_nazwd">nazwa marketingowa</textarea> <!--ladowanie z pola mat_nazwd tabela NAZW -->
-            </div>
+            <label for="name_mark">Nazwa marketingowa:</label>
+            <textarea class="form-control" rows="5" id="name_mark" name="name_long">{{ product.mat_nazwd }}</textarea> <!--ladowanie do pola mat_nazwd tabela NAZW -->
         </div>
-        <!-- Struktura + zdjęcie -->
+        <button type="button" class="btn btn-lg btn-default btn-forw" >Dalej</button>
+    </section>
+
+    <section id="2">
+        <!-- Progressbar -->
+        <div class="progress">
+            <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 40%;"><span class="sr-only">40% Complete</span></div>
+        </div>
         <div class="row">
             <div class="page-header">
-                <div class="col-md-12">
-                    <h3>Struktura:</h3>
-                </div>
+                <h2>Struktura</h2>
             </div>
-            <div class="col-md-1">
+            <div class="col-lg-12">
                 <table class="table table-striped">
                     <thead>
                     <tr>
@@ -58,90 +68,46 @@
                         <th>Kod EAN:</th>
                     </tr>
                     </thead>
-                    <tbody>
-                    <tr>
-                        <td width="2%">SZT</td> <!--tab MWYM pole j_str -->
-                        <td width="8%"><input type="text" class="form-control" id="wart_str" name="wart_str" value="1" disabled></td>
-                        <td width="9%"><input type="text" class="form-control" id="waga_ne" name="waga_ne"></td>
-                        <td width="9%"><input type="text" class="form-control" id="waga_br" name="waga_br"></td>
-                        <td width="10%"><select class="form-control" id="sel1" name="j_wag"> <!--select trzeba zaczytać dane z tab JEDN z value z jedn_wag="X"-->
-                                <option>mg</option>
+                    <tbody class="section_2">
+                    {% for msizee in msize %}
+                    <tr class="{{ msizee.unit_structure }}">
+                        <td width="8%"><input type="text" class="form-control" name="unit_structure[]" id="unit_structure" value="{{ msizee.unit_structure }}"></td> <!--tab MWYM pole unit_structure -->
+                        <td width="8%"><input type="text" class="form-control" id="value_struct" name="value_struct[]" value="1"></td>
+                        <td width="9%"><input type="text" class="form-control" id="weight_net" name="weight_net[]" value="{{  msizee.weight_net }}"></td>
+                        <td width="9%"><input type="text" class="form-control" id="weight_gross" name="weight_gross[]" value="{{  msizee.weight_gross }}"></td>
+                        <td width="10%"><select class="form-control" id="sel1" name="unit_weight"> <!--select trzeba zaczytać dane z tab JEDN z value z jedn_wag="X"-->
+                                <option value="mg">mg</option>
                             </select></td>
-                        <td width="8%"><input type="text" class="form-control" id="wart_dl" name="wart_dl"></td>
-                        <td width="8%"><input type="text" class="form-control" id="wart_szer" name="wart_szer"></td>
-                        <td width="8%"><input type="text" class="form-control" id="wart_wys" name="wart_wys"></td>
-                        <td width="10%"><select class="form-control" id="sel1" name="j_wym"> <!--select trzeba zaczytać dane z tab JEDN z value z jedn_wym="X"-->
-                                <option>mm</option>
+                        <td width="8%"><input type="text" class="form-control" id="value_length" name="value_length[]" value="{{  msizee.value_length }}"></td>
+                        <td width="8%"><input type="text" class="form-control" id="value_width" name="value_width[]" value="{{  msizee.value_width }}"></td>
+                        <td width="8%"><input type="text" class="form-control" id="value_height" name="value_height[]" value="{{  msizee.value_height }}"></td>
+                        <td width="10%"><select class="form-control" id="sel1" name="unit_dim[]"> <!--select trzeba zaczytać dane z tab JEDN z value z jedn_wym="X"-->
+                                <option value="mm">mm</option>
                             </select></td>
-                        <td width="5%">wyliczana DxSxW:</td>
-                        <td width="8%">cm3</td> <!-- zaadowanie do pola j_obj w tab MWYM-->
-                        <td width="40%"><input type="text" class="form-control" id="ean_kod" name="ean_kod"></td>
+                        <td width="5%" id="sum_DSW" name="value_capacit[]">{{  msizee.value_capacit }}</td>
+                        <td width="8%" name="j_obj[]">cm3</td> <!-- zaadowanie do pola j_obj w tab MWYM-->
+                        <td width="40%"><input type="text" class="form-control" id="ean_code" name="ean_code[]" value="{{  msizee.ean_code }}"></td>
                     </tr>
-                    <tr>
-                        <td width="2%">OPA</td> <!--tab MWYM pole j_str -->
-                        <td width="8%"><input type="text" class="form-control" id="wart_str" name="wart_str"></td>
-                        <td width="9%"><input type="text" class="form-control" id="waga_ne" name="waga_ne"></td>
-                        <td width="9%"><input type="text" class="form-control" id="waga_br" name="waga_br"></td>
-                        <td width="10%"><select class="form-control" id="sel1" name="j_wag"> <!--select trzeba zaczytać dane z tab JEDN z value z jedn_wag="X"-->
-                                <option>mg</option>
-                            </select></td>
-                        <td width="8%"><input type="text" class="form-control" id="wart_dl" name="wart_dl"></td>
-                        <td width="8%"><input type="text" class="form-control" id="wart_szer" name="wart_szer"></td>
-                        <td width="8%"><input type="text" class="form-control" id="wart_wys" name="wart_wys"></td>
-                        <td width="10%"><select class="form-control" id="sel1" name="j_wym"> <!--select trzeba zaczytać dane z tab JEDN z value z jedn_wym="X"-->
-                                <option>mm</option>
-                            </select></td>
-                        <td width="5%">wyliczana DxSxW:</td>
-                        <td width="8%">cm3</td> <!-- zaadowanie do pola j_obj w tab MWYM-->
-                        <td width="40%"><input type="text" class="form-control" id="ean_kod" name="ean_kod"></td>
-                    <tr>
-                        <td width="2%">KAR</td> <!--tab MWYM pole j_str -->
-                        <td width="8%"><input type="text" class="form-control" id="wart_str" name="wart_str"></td>
-                        <td width="9%"><input type="text" class="form-control" id="waga_ne" name="waga_ne"></td>
-                        <td width="9%"><input type="text" class="form-control" id="waga_br" name="waga_br"></td>
-                        <td width="10%"><select class="form-control" id="sel1" name="j_wag"> <!--select trzeba zaczytać dane z tab JEDN z value z jedn_wag="X"-->
-                                <option>mg</option>
-                            </select></td>
-                        <td width="8%"><input type="text" class="form-control" id="wart_dl" name="wart_dl"></td>
-                        <td width="8%"><input type="text" class="form-control" id="wart_szer" name="wart_szer"></td>
-                        <td width="8%"><input type="text" class="form-control" id="wart_wys" name="wart_wys"></td>
-                        <td width="10%"><select class="form-control" id="sel1" name="j_wym"> <!--select trzeba zaczytać dane z tab JEDN z value z jedn_wym="X"-->
-                                <option>mm</option>
-                            </select></td>
-                        <td width="5%">wyliczana DxSxW:</td>
-                        <td width="8%">cm3</td> <!-- zaadowanie do pola j_obj w tab MWYM-->
-                        <td width="40%"><input type="text" class="form-control" id="ean_kod" name="ean_kod"></td>
-                    <tr>
-                        <td width="2%">PAL</td> <!--tab MWYM pole j_str -->
-                        <td width="8%"><input type="text" class="form-control" id="wart_str" name="wart_str"></td>
-                        <td width="9%"><input type="text" class="form-control" id="waga_ne" name="waga_ne"></td>
-                        <td width="9%"><input type="text" class="form-control" id="waga_br" name="waga_br"></td>
-                        <td width="10%"><select class="form-control" id="sel1" name="j_wag"> <!--select trzeba zaczytać dane z tab JEDN z value z jedn_wag="X"-->
-                                <option>mg</option>
-                            </select></td>
-                        <td width="8%"><input type="text" class="form-control" id="wart_dl" name="wart_dl"></td>
-                        <td width="8%"><input type="text" class="form-control" id="wart_szer" name="wart_szer"></td>
-                        <td width="8%"><input type="text" class="form-control" id="wart_wys" name="wart_wys"></td>
-                        <td width="10%"><select class="form-control" id="sel1" name="j_wym"> <!--select trzeba zaczytać dane z tab JEDN z value z jedn_wym="X"-->
-                                <option>mm</option>
-                            </select></td>
-                        <td width="5%">wyliczana DxSxW:</td>
-                        <td width="8%">cm3</td> <!-- zaadowanie do pola j_obj w tab MWYM-->
-                        <td width="40%"><input type="text" class="form-control" id="ean_kod" name="ean_kod"></td>
-                    </tr>
+                    {% endfor %}
+
                     </tbody>
                 </table>
             </div>
-            <div class="col-md-6">
-                <img src="card.jpg" class="img-thumbnail" >
-            </div>
         </div>
+        <button type="button" class="btn btn-lg btn-default btn-back prev">Wstecz</button>
+        <button type="button" class="btn btn-lg btn-default btn-forw" id="next">Dalej</button>
+    </section>
+
+    <section id="3">
+        <!-- Progressbar -->
+        <div class="progress">
+            <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;"><span class="sr-only">60% Complete</span></div>
+        </div>
+
         <!-- Informacje dodatkowe -->
         <div class="row">
             <div class="page-header">
-                <div class="col-md-12">
-                    <h3>Informacja dodatkowe:</h3>
-                </div>
+                <h3>Informacja dodatkowe:</h3>
             </div>
 
             <div class="col-md-6">
@@ -149,58 +115,95 @@
                     <tbody>
                     <tr>
                         <td>Grupa załadunkowa w magazynie:</td>
-                        <td><input type="text" class="form-control" id="gr_zalad" name="gr_zalad"> <!-- TAB: INDK  gr_zalad select? --></td>
+                        <td>
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="load_group" name="load_group" value="{{ product.gr_zalad }}"> <!-- TAB: INDK  gr_zalad select? -->
+                            </div>
+                        </td>
                     </tr>
                     <tr>
                         <td>Kod PKWIU:</td>
-                        <td><input type="text" class="form-control" id="kod_pkwiu" name="kod_pkwiu"> <!-- TAB: INDK  kod_pkwiu input ale select z PKWI --></td>
+                        <td>
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="kod_pkwiu" name="pkwiu_code" value="{{ product.kod_pkwiu }}"> <!-- TAB: INDK  kod_pkwiu input ale select z PKWI -->
+                            </div></td>
                     </tr>
                     <tr>
                         <td>Opis PKWIU:</td>
-                        <td>opis kodu</td><!-- opis zaczytany na bazie selecta pkwui_kod z tab PKWI -->
+                        <td id="desc_code_pkwiu">{{ product.pkwiu_descr }}</td> <!-- opis zaczytany na bazie selecta pkwui_kod z tab PKWI -->
                     </tr>
                     <tr>
                         <td>Stawka VAT</td>
-                        <td><input type="text" class="form-control" id="vat" name="vat"> <!-- TAB: INDK  vat input--></td>
+                        <td><div class="form-group">
+                                <input type="text" class="form-control" id="vat" name="tax" value="{{ product.vat }}"> <!-- TAB: INDK  vat input-->
+                            </div></td>
                     </tr>
                     <tr>
-                        <td>Numer hierarchii produktowej:</td><!-- tu nie wiem czy tego nie wyjebac-->
+                        <td>Numer hierarchii produktowej:</td> <!-- tu nie wiem czy tego nie wyjebac-->
                         <td>Numer prod_hier</td>
                     </tr>
                     </tbody>
                 </table>
             </div>
+
+            <div class="col-md-6">
+
+                  <label for="fileToUpload">Wybierz zdjęcie</label><br />
+                  <input type="file" name="filesToUpload" id="filesToUpload" />
+                  <output id="filesInfo"></output>
+
+            </div>
+
+        </div>
+        <button type="button" class="btn btn-lg btn-default btn-back prev">Wstecz</button>
+        <button type="button" class="btn btn-lg btn-default btn-forw" id="next">Dalej</button>
+    </section>
+
+    <section id="4">
+        <!-- Progressbar -->
+        <div class="progress">
+            <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 80%;"><span class="sr-only">80% Complete</span></div>
         </div>
         <!-- Dostawca -->
         <div class="row">
             <div class="page-header">
-                <div class="col-md-12">
-                    <h3>Dostawca:</h3>
-                </div>
+                <h3>Wybierz Dostawcę:</h3>
             </div>
 
+            <select class="form-control" name="select_vend" style="width: 50%;"> <!--tab MWYM pole unit_structure -->
+
+                {% for dostawca in dost %}
+                <option {% if product.id_vend == dostawca.id_vend %} selected {% endif %} value="{{ dostawca.id_vend }}">{{ dostawca.vend_name }}</option>
+                {% endfor %}
+
+            </select>
+
             <div class="col-md-6">
-                <table class="table table-bordered">
+
+                <label>Brak dostawcy na liście</label>
+                <input type="checkbox" class="empty_vend" name="empty_vend">
+
+                <table class="table table-bordered vend">
                     <tbody>
                     <tr>
                         <td>Nazwa dostawcy</td>
-                        <td>nazwa dosaawcy</td>
+                        <td><input type="text" class="form-control" id="dost_nazw" name="vend_name"></td> <!-- tab. DOST -->
                     </tr>
                     <tr>
                         <td>Adres dostawcy</td>
-                        <td>ult kolejowa 15 </td>
+                        <td><input type="text" class="form-control" id="dost_adres" name="vend_adress"> </td>
                     </tr>
                     <tr>
                         <td>Kod pocztowy</td>
-                        <td>11-111</td>
+                        <td> <input type="text" class="form-control" id="dost_kod" name="vend_code"></td>
                     </tr>
                     <tr>
                         <td>Miasto</td>
-                        <td>Poznań</td>
+                        <td><input type="text" class="form-control" id="dost_miasto" name="vend_city"></td>
                     </tr>
                     <tr>
                         <td>NIP</td>
-                        <td>123-23-24-213</td>
+                        <td><input type="text" class="form-control" id="dost_nip" name="vend_tax"></td>
                     </tr>
                     </tbody>
                 </table>
@@ -209,68 +212,78 @@
         <!-- Dostawca zwroty-->
         <div class="row">
             <div class="page-header">
-                <div class="col-md-12">
-                    <h3>Dostawca zwroty:</h3>
-                </div>
+                <h3>Dostawca zwroty:</h3>
             </div>
+
+             <select class="form-control" name="select_vend_refund" style="width: 50%;"> <!--tab MWYM pole unit_structure -->
+
+                {% for dostawca in dost_zwrot %}
+                <option {% if product.id_vendrefund == dostawca.id_vendrefund %} selected {% endif %} value="{{ dostawca.id_vendrefund }}">{{ dostawca.vendrefund_name }}</option>
+                {% endfor %}
+
+            </select>
+
+
             <div class="col-md-6">
-                <table class="table table-bordered">
+
+                <label>Brak dostawcy na liście</label>
+                <input type="checkbox" class="empty_vend_refund" name="empty_vend_refund">
+
+                <table class="table table-bordered vend_refund">
                     <tbody>
                     <tr>
                         <td>Nazwa dostawcy</td>
-                        <td>nazwa dosaawcy</td>
+                        <td><input type="text" class="form-control" id="dostzwr_name" name="vendrefund_name"></td> <!-- dostzwr-->
                     </tr>
                     <tr>
                         <td>Adres dostawcy</td>
-                        <td>ult kolejowa 15 </td>
+                        <td><input type="text" class="form-control" id="dostzwr_adres" name="vendrefund_adress"> </td>
                     </tr>
                     <tr>
                         <td>Kod pocztowy</td>
-                        <td>11-111</td>
+                        <td> <input type="text" class="form-control" id="dostzwr_kod" name="vendrefund_code"></td>
                     </tr>
                     <tr>
                         <td>Miasto</td>
-                        <td>Poznań</td>
+                        <td><input type="text" class="form-control" id="dostzwr_miasto" name="vendrefund_city"></td>
                     </tr>
                     </tbody>
                 </table>
             </div>
         </div>
-        <!-- Log działań -->
-        <div class="row">
-            <div class="page-header">
-                <div class="col-md-12">
-                    <h3>Log:</h3>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <table class="table table-bordered">
-                    <tbody>
-                    <tr>
-                        <td>Data utworzenia artykułu:</td>
-                        <td>01-01-1970</td>
-                    </tr>
-                    <tr>
-                        <td>Użytkownik:</td>
-                        <td>POZNAA</td>
-                    </tr>
-                    <tr>
-                        <td>Data ostatniej zmiany</td>
-                        <td>09-09-2017</td>
-                    </tr>
-                    <tr>
-                        <td>Użytownik</td>
-                        <td>POZNAA</td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-
-        </div>
-
-        <button type="submit" class="btn btn-lg btn-default btn-end">Zakończ</button>
-    </div>
 
 
+    <button type="button" class="btn btn-lg btn-default btn-back prev">Wstecz</button>
+    <button type="submit" class="btn btn-lg btn-default btn-end" name="submit">Zakończ</button>
+        <!-- Zakonczenie spowoduje przejscie do podstrony wyswietlania produktu -->
+    </section>
+    </form>
 {% endblock %}
 
+{% block javascript %}
+        <script>
+                $( function() {
+            var availableTags = [
+              {% for pkwi in pkwiu %}
+              "{{ pkwi.pkwiu_code|raw|trim(' ','right') }}",
+              {% endfor %}
+            ];
+            $( "#kod_pkwiu" ).autocomplete({
+              source: availableTags
+            });
+            desc();
+          } );
+                function desc() {
+                  $("#kod_pkwiu").on('change',function() {
+                       var code =  $( "#kod_pkwiu" ).val();
+                       {% for pkwi in pkwiu %}
+                        var code_pkwi = {{ pkwi.pkwiu_code|raw|trim(' ','right') }};
+                               if(code_pkwi == code)
+                               {
+                                   $('#desc_code_pkwiu').html("{{ pkwi.pkwiu_descr|raw|trim(' ','right') }}");
+                               }
+                      {% endfor %}
+                    });
+                }
+        </script>
+{% endblock %}

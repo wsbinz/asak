@@ -1,0 +1,73 @@
+{% extends "admin/include/include.twig" %}
+{% block add %}
+    <div class="container theme-showcase" role="main">
+    <!-- Szary Panel -->
+    <div class="jumbotron">
+        <h2>Wyszukaj produkt do edycji </h2>
+    </div>
+
+    <section>
+    <div class="form-group">
+        <div class="col-md-12">
+            <label for="name">Wpisz szukaną frazę: </label>
+            <input type="text" class="form-control" id="name" name="mat_nazwk" placeholder="Nazwa lub numer towaru"> <!-- check z pozycjami mat_nazwk z tabeli NAZW -->
+        </div>
+        <div class="col-md-12">
+            <label for="name"></label>
+            <button type="button" class="btn btn-secondary btn-lg btn-block" id="search">Szukaj</button>
+        </div>
+    </div>
+    </section>
+
+    <section>
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th></th>
+                <th>Numer PKWIU</th>
+                <th>Nazwa</th>
+                <th>Akcja</th>
+            </tr>
+            </thead>
+            <tbody>
+
+
+
+            </tbody>
+        </table>
+
+    </section>
+
+
+{% endblock %}
+
+{% block javascript %}
+
+        <script>
+
+           $("#search").on('click',function() {
+
+                $.ajax({
+                    type: 'POST',
+                    url: "../../admin/product/search_product",
+                    data: {mat_nazwk: $('[name=mat_nazwk]').val()},
+                    dataType: 'text',
+                    success: function(html){
+                       html = JSON.parse(html);
+
+                       var count = html.length;
+console.log(html);
+                       for(var i = 0; i<count; i++)
+                           {
+                            $("tbody").append("<tr><td width=5%><input type='checkbox' class='pull-left'></td><td width=15%>"+ html[i]['kod_pkwiu'] +"</td><td width=80%>"+ html[i]['mat_nazwd'] +"</td><td><a href='{{ base_url() }}admin/product/edit_product/"+html[i]['id_indk']+"' <button type='button' class='btn btn-primary btn-block'>Wybierz</button></a> </td></tr>");
+                           }
+
+                    }
+
+                });
+
+            });
+
+        </script>
+
+{% endblock %}
