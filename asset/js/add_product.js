@@ -69,7 +69,7 @@ $(document).ready(function ()
         var szer = $(this).find("#value_width").val();
         var wys = $(this).find("#value_height").val();
 
-        $(this).find("#sum_DSW").html(dl*szer*wys);
+        $(this).find("#sum_DSW").val(dl*szer*wys);
         console.log(this);
 
     });

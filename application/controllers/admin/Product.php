@@ -81,9 +81,28 @@ class Product extends Admin_Controller  {
 
     public function show($id)
     {
+        $user_arr = array();
+
         $where = array('nr_mat' => $id);
-        $data['single_indk_mwym'] = $this->Admin_model->get_single("VIEW_INDK_MWYM",$where);
-        $this->twig->display('site/product/list_product',$data);
+        $data['product'] = $this->Admin_model->get_single("VIEW_CARGO",$where);
+        $users = $this->Admin_model->get("USERS");
+
+        foreach ($users as $user)
+        $user_arr[$user->id] = $user->email;
+
+        $data['users'] = $user_arr;
+
+        $data['msize'] = $this->Admin_model->get_where("MSIZE",$where);
+
+        $data['photo'] = $this->Admin_model->get_single("PHOT",$where);
+
+        if(empty($data['product']))
+        {
+            $this->session->set_flashdata('alert', "Podany produkt nie istnieje !");
+            redirect('account');
+        }
+
+        $this->twig->display('admin/product/show_product',$data);
     }
 
     public function add_product()
@@ -393,9 +412,9 @@ class Product extends Admin_Controller  {
                    $where = array('nr_mat' => $id);
                    $this->Admin_model->update("INDK", $data,$where); //Tworzenie wpisu do INDK
 
-                   $max = "nr_mat";
+/*                   $max = "nr_mat";
                    $nr_mat = $this->Admin_model->get_max("INDK", $max); //Pobieranie ostatniego ID z tabeli INDK
-                   $nr_mat = $nr_mat[0] -> nr_mat;
+                   $nr_mat = $nr_mat[0] -> nr_mat;*/
                    $this->db->trans_complete();//Zakończenie tranzakcji
 
                    //Tabela NAZW
@@ -417,10 +436,12 @@ class Product extends Admin_Controller  {
                    $this->Admin_model->update("STORAGE", $data,$where);*/
 
                    //Tabela MWYM
+                   $where = array('nr_mat' => $id);
+                   $id_msize = $this->Admin_model->get_where("MSIZE", $where);
                    for($i=0; $i<4; $i++) {
                        $data = array(
                            'unit_structure' => $this->input->post('unit_structure', true)[$i],
-                           'value_struct' => $this->input->post('value_struct', true)[$i], //Poprawic
+                           'value_struct' => $this->input->post('value_struct', true)[$i],
                            'weight_net' => $this->input->post('weight_net', true)[$i],
                            'weight_gross' => $this->input->post('weight_gross', true)[$i],
                            'value_length' => $this->input->post('value_length', true)[$i],
@@ -433,6 +454,7 @@ class Product extends Admin_Controller  {
                            'ean_code' => $this->input->post('ean_code', true)[$i],
                            'nr_mat' => $id,
                        );
+                       $where = array('id_msize' => $id_msize[$i]->id_msize);
                        $this->Admin_model->update("MSIZE", $data,$where);
                    }
 
@@ -472,7 +494,7 @@ class Product extends Admin_Controller  {
                        {
                            $targetFile = strstr($targetFile, 'asset');
                            $data = array(
-                               'nr_mat' => $nr_mat,
+                               'nr_mat' => $id,
                                'adr_ph' => $targetFile,
 
                            );

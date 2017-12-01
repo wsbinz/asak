@@ -1,0 +1,214 @@
+{% extends "admin/include/include.twig" %}
+
+{% block body %}
+
+
+    <div class="container theme-showcase" role="main">
+        <!-- Szary Panel -->
+        <div class="jumbotron">
+            <h2>Wyswietlanie produktu o numerze:  {{ product.nr_mat }}</h2> <!--do wladowania numer produktu -->
+        </div>
+        {% if product.retire %}
+        <!-- Alert dla wycofania indeksu -->
+        <div class="alert alert-danger" role="alert">
+            <strong>UWAGA!</strong> PRODUKT WYCOFANY!
+        </div>
+        {% endif %}
+        <!-- Nazwa towaru -->
+        <div class="row">
+            <div class="col-md-6">
+                <h2>
+                    {{ product.mat_nazwk }}
+                </h2>
+            </div>
+
+            <div class="col-md-6">
+                <img width="450" style="position:absolute;" src="{{ base_url(photo.adr_ph|trim(' ','right')) }}">
+            </div>
+
+        </div>
+        <!-- Grupa towarowa -->
+        <div class="row">
+            <div class="col-md-12">
+                <h4>grupa towarowa - tutaj nie wiem co z tym gównem !</h4>
+            </div>
+        </div>
+        <!-- Nazwa marketingowa rozwinięta -->
+        <div class="row">
+            <div class="col-md-12">
+                <h4>{{ product.mat_nazwd }}</h4>
+            </div>
+        </div>
+        <!-- Struktura + zdjęcie -->
+        <div class="row">
+            <div class="page-header">
+                <div class="col-md-12">
+                    <h3>Struktura:</h3>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>Rodzaj</th>
+                        <th>Ilość</th>
+                        <th>Waga</th>
+                        <th>Wymiary(DxWxS)</th>
+                        <th>Objętość</th>
+                        <th>Kod EAN</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for msizee in msize %}
+                    <tr>
+                        <td>{{ msizee.unit_structure }}</td>
+                        <td>{{ msizee.value_struct}}</td>
+                        <td>{{ msizee.weight_gross }}</td>
+                        <td>{{ msizee.value_length }}x{{ msizee.value_width }}x{{ msizee.value_height }}</td>
+                        <td>100cm3</td>
+                        <td>1234567898</td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-6">
+                <img src="card.jpg" class="img-thumbnail" >
+            </div>
+        </div>
+        <!-- Informacje dodatkowe -->
+        <div class="row">
+            <div class="page-header">
+                <div class="col-md-12">
+                    <h3>Informacja dodatkowe:</h3>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <table class="table table-bordered">
+                    <tbody>
+                    <tr>
+                        <td>Grupa załadunkowa w magazynie:</td>
+                        <td>{{ product.gr_zalad }}</td>
+                    </tr>
+                    <tr>
+                        <td>Kod PKWIU:</td>
+                        <td>{{ product.kod_pkwiu }}</td>
+                    </tr>
+                    <tr>
+                        <td>Opis PKWIU:</td>
+                        <td>{{ product.pkwiu_descr }}</td>
+                    </tr>
+                    <tr>
+                        <td>Stawka VAT</td>
+                        <td>{{ product.vat }}</td>
+                    </tr>
+                    <tr>
+                        <td>Numer hierarchii produktowej:</td>
+                        <td>{{ product.prod_hier }}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- Dostawca -->
+        <div class="row">
+            <div class="page-header">
+                <div class="col-md-12">
+                    <h3>Dostawca:</h3>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <table class="table table-bordered">
+                    <tbody>
+                    <tr>
+                        <td>Nazwa dostawcy</td>
+                        <td>{{ product.dost_nazw }}</td>
+                    </tr>
+                    <tr>
+                        <td>Adres dostawcy</td>
+                        <td>{{ product.dost_adres }}</td>
+                    </tr>
+                    <tr>
+                        <td>Kod pocztowy</td>
+                        <td>{{ product.dost_kod }}</td>
+                    </tr>
+                    <tr>
+                        <td>Miasto</td>
+                        <td>{{ product.dost_miasto }}</td>
+                    </tr>
+                    <tr>
+                        <td>NIP</td>
+                        <td>{{ product.dost_nip }}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- Dostawca zwroty-->
+        <div class="row">
+            <div class="page-header">
+                <div class="col-md-12">
+                    <h3>Dostawca zwroty:</h3>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <table class="table table-bordered">
+                    <tbody>
+                    <tr>
+                        <td>Nazwa dostawcy</td>
+                        <td>{{ product.vendrefund_name }}</td>
+                    </tr>
+                    <tr>
+                        <td>Adres dostawcy</td>
+                        <td>{{ product.vendrefund_adress }}</td>
+                    </tr>
+                    <tr>
+                        <td>Kod pocztowy</td>
+                        <td>{{ product.vendrefund_code }}</td>
+                    </tr>
+                    <tr>
+                        <td>Miasto</td>
+                        <td>{{ product.vendrefund_city }}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- Log działań -->
+        <div class="row">
+            <div class="page-header">
+                <div class="col-md-12">
+                    <h3>Log:</h3>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <table class="table table-bordered">
+                    <tbody>
+                    <tr>
+                        <td>Data utworzenia artykułu:</td>
+                        <td>{{ product.utw_data }}</td>
+                    </tr>
+                    <tr>
+                        <td>Użytkownik:</td>
+                        <td>{{ users[ product.utw_user|number_format ] }}</td>
+                    </tr>
+                    <tr>
+                        <td>Data ostatniej zmiany</td>
+                        <td>{{ product.zm_data }}</td>
+                    </tr>
+                    <tr>
+                        <td>Użytownik</td>
+                        <td>{{ users[ product.zm_user|number_format ] }}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+
+    </div>
+
+{% endblock %}
+
