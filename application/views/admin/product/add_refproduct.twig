@@ -31,7 +31,11 @@
             </thead>
             <tbody>
 
-
+                <div id="loader-wrapper">
+                    <div class="load">
+                      <hr/><hr/><hr/><hr/>
+                    </div>
+                </div>
 
             </tbody>
         </table>
@@ -53,19 +57,27 @@
                     data: {mat_nazwk: $('[name=mat_nazwk]').val()},
                     dataType: 'text',
                     success: function(html){
+
                        html = JSON.parse(html);
 
                        var count = html.length;
-console.log(html);
+                        console.log(html);
                        for(var i = 0; i<count; i++)
                            {
                             $("tbody").append("<tr><td width=5%><input type='checkbox' class='pull-left'></td><td width=15%>"+ html[i]['kod_pkwiu'] +"</td><td width=80%>"+ html[i]['mat_nazwd'] +"</td><td><a href='{{ base_url() }}admin/product/add_product_ref/"+html[i]['id_indk']+"' <button type='button' class='btn btn-primary btn-block'>Wybierz</button></a> </td></tr>");
                            }
 
                     }
-
                 });
 
+            });
+
+           $(document).ajaxStart(function(){
+                $('#loader-wrapper').fadeIn(500);
+            });
+
+           $(document).ajaxComplete(function(){
+                 $('#loader-wrapper').fadeOut(200);
             });
 
         </script>
