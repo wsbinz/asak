@@ -282,10 +282,12 @@
                        var code =  $( "#kod_pkwiu" ).val();
                        {% for pkwi in pkwiu %}
                         var code_pkwi = {{ pkwi.pkwiu_code|raw|trim(' ','right') }};
+
                                if(code_pkwi == code)
                                {
                                    $('#desc_code_pkwiu').html("{{ pkwi.pkwiu_descr|raw|trim(' ','right') }}");
                                }
+
                       {% endfor %}
                     });
                 }
