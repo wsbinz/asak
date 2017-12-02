@@ -112,4 +112,30 @@ class Account extends My_Controller {
         redirect('account/login');
     }
 
+    public function active_account($activation_code)
+    {
+        $where = array("activation_code" => $activation_code);
+        $code = $this->Site_model->get_single("USERS",$where);
+
+        if(empty($code))
+        {
+            echo "Podałeś niepoprawny kod aktywacji !";
+            exit();
+        }
+        elseif ($code->active==1)
+        {
+            echo "Twoje konto jest już aktywne !";
+        }
+        else
+        {
+            $data = array('active' => 1);
+            $where = array('activation_code' => $activation_code);
+            $this->Site_model->update("USERS",$data,$where);
+            echo "Gratulację ! Twoje konto zostało aktywowane możesz się zalogować :)";
+            echo "<br>";
+            echo "<a href=".base_url()."account/login>Zaloguj się</a>";
+        }
+
+    }
+
 }

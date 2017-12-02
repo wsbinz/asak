@@ -299,7 +299,7 @@ class Product extends Admin_Controller  {
             $data['pkwiu'] = $this->Admin_model->get('PKWI');
             $data['dost'] = $this->Admin_model->get('VEND');
             $data['dost_zwrot'] = $this->Admin_model->get('VEND_REFUND');
-
+            $data['photo'] = $this->Admin_model->get_single("PHOT",$where);
            // print_r($data['msize']);
 
             if(!empty($data['product']))
@@ -512,6 +512,9 @@ class Product extends Admin_Controller  {
                    $this->session->set_flashdata('alert', "Pomyślnie edytowano produkt!");
                    redirect('admin/product');
                }
+
+               $data['photo'] = $this->Admin_model->get_single("PHOT",$where);
+
                $this->twig->display('admin/product/edit_product', $data);
            }
            else

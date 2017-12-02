@@ -162,6 +162,7 @@ class User extends Admin_Controller {
         $this->twig->display('admin/user/edit',$data);
     }
 
+
     public function edit_email($email)
     {
         $email_id = $this->uri->segment(4);

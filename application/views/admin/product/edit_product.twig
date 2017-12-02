@@ -153,6 +153,10 @@
                   <output id="filesInfo"></output>
 
             </div>
+             <div class="col-md-6 edit_img">
+                <img width="450" style="position:relative;" src="{{ base_url(photo.adr_ph|trim(' ','right')) }}">
+                <div class="remove_img"><img src="{{ base_url() }}asset/img/icon/remove.png"></div>
+            </div>
 
         </div>
         <button type="button" class="btn btn-lg btn-default btn-back prev">Wstecz</button>
@@ -285,5 +289,10 @@
                       {% endfor %}
                     });
                 }
+
+
+
+
+
         </script>
 {% endblock %}
