@@ -1,0 +1,58 @@
+{% extends "admin/include/include.twig" %}
+
+{% block body %}
+
+
+    <div class="container theme-showcase" role="main">
+        <!-- Szary Panel -->
+        <div class="jumbotron">
+            <h2>Wyswietlanie produktów</h2> <!--do wladowania numer produktu -->
+        </div>
+
+        {% autoescape %}
+            {{ validation|raw }}
+        {% endautoescape %}
+
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>Numer:</th>
+                <th>Nazwa:</th>
+                <th>Dluga nazwa:</th>
+                <th>Nr mat:</th>
+                <th><th>
+                <th><th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for indk in indk_mwym %}
+            <tr>
+                <td width=10%>{{ loop.index }}</td>
+                <td width=20%>{{ indk.name_short }}</td>
+                <td width=40%>{{ indk.name_long }}</td>
+                <td width=20%>{{ indk.nr_mat}}</td>
+                <td width=10%>
+                    <a href="{{ base_url() }}admin/product/show/{{ indk.nr_mat }}"><button type="button" class="btn btn-default">Przejdź</button></a>
+                </td>
+                <td>
+                {% if check_group(['admin','moderator']) %}
+                    <a href="{{ base_url() }}admin/product/edit_product/{{ indk.nr_mat }}"><button type="button" class="btn btn-warning">Edytuj</button></a>
+                {% endif %}
+                </td> <!-- Przjscie do wyswietlenia produktu z danego numeru -->
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <nav aria-label="Page navigation example">
+        {{ links|raw }}
+        </nav>
+{#        <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            <li class="page-item">{{ links|raw }}</li>
+        </ul>
+        </nav>#}
+
+    </div>
+{% endblock %}
+
