@@ -59,10 +59,10 @@ class Admin_model extends CI_Model
         return $query->result();
     }
 
-    public function search($table,$col)
+    public function search($table,$col,$or)
     {
         $this->db->like($col);
-        //$this->db->or_like($or);
+        $this->db->or_like($or);
         $query = $this->db->get($table);
         return $query->result();
     }

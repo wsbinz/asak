@@ -29,7 +29,7 @@ class Product extends Admin_Controller  {
 
         if(logged_in()!= 1)
         {
-            redirect('account');
+            redirect('login');
         }
 
         $total_rows = $this->Admin_model->num_rows("MNAME");
@@ -320,9 +320,9 @@ class Product extends Admin_Controller  {
 
     public function search_product()
     {
-        $col = array('mat_nazwd'=>strtolower($this->input->post('mat_nazwk',true)));
-       // $or = array('kod_pkwiu' => (int)$this->input->post('mat_nazwk',true));
-        $search = $this->Admin_model->search("VIEW_CARGO",$col);
+        $col = array('mat_nazwk'=>strtolower($this->input->post('mat_nazwk',true)));
+        $or = array('kod_pkwiu' => $this->input->post('mat_nazwk',true));
+        $search = $this->Admin_model->search("VIEW_CARGO",$col,$or);
         echo json_encode($search);
     }
 

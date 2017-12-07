@@ -82,7 +82,7 @@ class Account extends My_Controller {
                                 $this->Site_model->update("USERS",$data,$where); //model od update użytkownika
                             }
 
-                            redirect('account');
+                            redirect('');
                         } else {
                             $this->session->set_flashdata('alert', "Musisz aktywować konto !");
                         }
@@ -109,7 +109,7 @@ class Account extends My_Controller {
     {
         session_destroy();
         delete_cookie("remember_me");
-        redirect('account/login');
+        redirect('login');
     }
 
     public function active_account($activation_code)
