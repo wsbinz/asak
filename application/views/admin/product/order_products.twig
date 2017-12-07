@@ -1,0 +1,81 @@
+{% extends "admin/include/include.twig" %}
+
+{% block body %}
+
+
+    <div class="container theme-showcase" role="main">
+        <!-- Szary Panel -->
+        <div class="jumbotron">
+            <h2>Zamówienie</h2> <!--do wladowania numer produktu -->
+        </div>
+
+        {% autoescape %}
+            {{ validation|raw }}
+        {% endautoescape %}
+
+        <div class="page-header">
+            <h3>Wybierz Dostawcę:</h3>
+        </div>
+
+        <select class="form-control" name="select_vend" style="width: 50%;"> <!--tab MWYM pole unit_structure -->
+
+            {% for dostawca in dost %}
+                <option value="{{ dostawca.id_vend }}">{{ dostawca.vend_name }}</option>
+            {% endfor %}
+
+        </select>
+
+
+
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>Numer:</th>
+                <th>Nazwa:</th>
+                <th>Nr mat:</th>
+                <th>Ilość w KAR:</th>
+                <th>Stan w mag.</th>
+                <th>Ilość do zamówienia:<th>
+            </tr>
+            </thead>
+            <tbody>
+
+            <tr>
+                <td width=10%>{{ loop.index }}</td>
+                <td width=40%>{{ indk.name_short }}</td>
+                <td width=20%>{{ indk.nr_mat}}</td>
+                <td width=10%> 10</td>   <!-- do zassania dane  value... z tabeli MSIZE dla danego nr_mat oraz unit_structure = KAR  -->
+                <td width=10%>
+                    10
+                </td>
+                <td width=10%><input type="text" class="form-control" id="" name="vend_name"></td> <!-- tab.
+                </td> <!-- Przjscie do wyswietlenia produktu z danego numeru -->
+            </tr>
+            {% for indk in indk_mwym %}
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <table class="table table-hover">
+            <thead>
+                <th></th>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+
+
+        <button type="submit" class="btn btn-lg btn-default btn-end">Wyślij</button>
+        <button type="submit" class="btn btn-lg btn-default btn-end">Wygeneruj do pdf</button>
+        <nav aria-label="Page navigation example">
+        {{ links|raw }}
+        </nav>
+{#        <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            <li class="page-item">{{ links|raw }}</li>
+        </ul>
+        </nav>#}
+
+    </div>
+{% endblock %}
+
