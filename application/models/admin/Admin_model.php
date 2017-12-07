@@ -59,8 +59,9 @@ class Admin_model extends CI_Model
         return $query->result();
     }
 
-    public function search($table,$col,$or)
+    public function search($table,$col,$or,$where='')
     {
+        $this->db->where($where);
         $this->db->like($col);
         $this->db->or_like($or);
         $query = $this->db->get($table);

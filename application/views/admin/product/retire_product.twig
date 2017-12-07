@@ -5,8 +5,11 @@
     <div class="jumbotron">
         <h2>Wycofanie produktu</h2>
     </div>
-<form>
-    <section 1>
+
+    {{ validation|raw }}
+
+<form method="POST" action="{{ base_url() }}admin/product/retire_product">
+    <section>
     <div class="form-group">
         <div class="col-md-12">
             <label for="name">Wpisz szukaną frazę: </label>
@@ -14,12 +17,12 @@
         </div>
         <div class="col-md-12">
             <label for="name"></label>
-            <button type="button" class="btn btn-secondary btn-lg btn-block">Szukaj</button>
+            <button type="button" id="search" class="btn btn-secondary btn-lg btn-block">Szukaj</button>
         </div>
     </div>
     </section>
 
-    <section 2>
+    <section>
         <table class="table table-hover">
             <thead>
             <tr>
@@ -29,20 +32,71 @@
             </tr>
             </thead>
             <tbody>
+            <div id="loader-wrapper">
+                    <div class="load">
+                      <hr/><hr/><hr/><hr/>
+                    </div>
+                </div>
             <tr>
                 <td width=5%><input type="checkbox" class="pull-left"></td>
                 <td width=15%>001</td>
                 <td width=80%>sok </td>
             </tr>
-            <tr>
-                <td width=5%><input type="checkbox" class="pull-left"></td>
-                <td width=15%>002</td>
-                <td width=80%>baton</td>
-            </tr>
             </tbody>
         </table>
-        <button type="button" class="btn btn-primary btn-block">Wycofaj</button> <!-- przejscie do list product z info error na czerowono ze produkt wycofany oraz w tabeli INDK na danym indeksie uzupenialmy pole wycof -->
+        <input type="submit" class="btn btn-primary btn-block" value="Wycofaj"> <!-- przejscie do list product z info error na czerowono ze produkt wycofany oraz w tabeli INDK na danym indeksie uzupenialmy pole wycof -->
     </section>
 
 </form>
+{% endblock %}
+
+        {% block javascript %}
+
+        <script>
+
+           $("#search").on('click',function() {
+
+               if(!$('[name=mat_nazwk]').val() == '')
+                   {
+                    $('section') .eq(1).show();
+
+                    $.ajax({
+                        type: 'POST',
+                        url: "../../admin/product/search_product",
+                        data: {mat_nazwk: $('[name=mat_nazwk]').val()},
+                        dataType: 'text',
+                        success: function(html){
+                           html = JSON.parse(html);
+
+                           $('tbody > tr').remove();
+                           var count = html.length;
+                                console.log(html);
+                           for(var i = 0; i<count; i++)
+                               {
+                                $("tbody").append("<tr><td width=5%><input type='checkbox' class='pull-left' name='retire_product["+html[i]['nr_mat']+"]' ></td><td width=15%>"+ html[i]['kod_pkwiu'] +"</td><td width=80%>"+ html[i]['mat_nazwk'] +"</td><td><a href='{{ base_url() }}admin/product/edit_product/"+html[i]['id_indk']+"' </a> </td></tr>");
+                               }
+
+                        }
+
+                    });
+                }
+                else
+                    {
+                        alert("Musisz wpisać jakąś wartość !")
+                    }
+
+            });
+
+
+
+            $(document).ajaxStart(function(){
+                $('#loader-wrapper').fadeIn(500);
+            });
+
+           $(document).ajaxComplete(function(){
+                 $('#loader-wrapper').hide();
+            });
+
+        </script>
+
 {% endblock %}

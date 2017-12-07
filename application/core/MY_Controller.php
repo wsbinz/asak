@@ -81,7 +81,7 @@ class Admin_Controller extends My_Controller {
         if(!check_group(array('moderator','uzytkownik','admin')))
         {
             $this->session->set_flashdata('alert',"Nie masz dostępu do tej częsci serwisu!");
-            redirect('login');
+            redirect('account/login');
         }
 
 

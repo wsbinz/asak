@@ -282,6 +282,7 @@ class Product extends Admin_Controller  {
         $variable['dost'] = $this->Admin_model->get('VEND');
         $variable['dost_zwrot'] = $this->Admin_model->get('VEND_REFUND');
         $variable['pkwiu'] = $this->Admin_model->get('PKWI');
+        $variable['unit_weight'] = $this->Admin_model->get_where('UNITS', array('unit_weight' => '1'));
         $variable['validation'] = $this->session->flashdata('alert');
         $this->twig->display('admin/product/add_product',$variable);
     }
@@ -322,7 +323,8 @@ class Product extends Admin_Controller  {
     {
         $col = array('mat_nazwk'=>strtolower($this->input->post('mat_nazwk',true)));
         $or = array('kod_pkwiu' => $this->input->post('mat_nazwk',true));
-        $search = $this->Admin_model->search("VIEW_CARGO",$col,$or);
+        $where = array('retire !=' => '1');
+        $search = $this->Admin_model->search("VIEW_CARGO",$col,$or,$where);
         echo json_encode($search);
     }
 
@@ -531,14 +533,41 @@ class Product extends Admin_Controller  {
        }
 
 
-    public function change_product($id)
+    public function remove_img()
     {
-        // TODO: Implement change_product() method.
+       if(!empty($_POST))
+       {
+           print_r($_POST);
+       }
     }
 
-   public function delete_product($id)
+   public function retire_product()
    {
-       // TODO: Implement delete_product() method.
+       $retire_product = $this->input->post('retire_product',true);
+
+       if(!empty($this->input->post('retire_product',true))) {
+           foreach ($retire_product as $key => $value) {
+
+               if($value == 'on')
+               {
+
+                   $data = array(
+                       'retire' => 1,
+                   );
+
+                   $where = array("nr_mat" => $key);
+                   $this->Admin_model->update("INDK", $data,$where); //Tworzenie wpisu do INDK
+                   $this->session->set_flashdata('alert', "Produkt o id: $key został wycofany.");
+               }
+
+           }
+       }
+
+      /* echo "<pre>";
+       print_r($_POST);
+       echo "</pre>";*/
+       $data['validation'] = $this->session->flashdata('alert');
+       $this->twig->display('admin/product/retire_product',$data);
    }
 
 

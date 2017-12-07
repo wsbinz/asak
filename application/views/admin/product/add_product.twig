@@ -71,11 +71,13 @@
                     <tbody class="section_2">
                     <tr class="SZT">
                         <td width="8%"><input type="text" class="form-control" name="unit_structure[]" id="unit_structure" value="SZT"></td> <!--tab MWYM pole unit_structure -->
-                        <td width="8%"><input type="text" class="form-control" id="value_struct" name="value_struct[]" value="1"></td>
+                        <td width="8%"><input type="text" class="form-control" id="value_struct" name="value_struct[]" value="1" disabled></td>
                         <td width="9%"><input type="text" class="form-control" id="weight_net" name="weight_net[]"></td>
                         <td width="9%"><input type="text" class="form-control" id="weight_gross" name="weight_gross[]"></td>
                         <td width="10%"><select class="form-control" id="sel1" name="unit_weight"> <!--select trzeba zaczytać dane z tab JEDN z value z jedn_wag="X"-->
-                                <option value="mg">mg</option>
+                                {%  for unit in unit_weight %}
+                                <option value="{{ unit.value }}">{{ unit.value }}</option>
+                                {% endfor %}
                             </select></td>
                         <td width="8%"><input type="text" class="form-control" id="value_length" name="value_length[]"></td>
                         <td width="8%"><input type="text" class="form-control" id="value_width" name="value_width[]"></td>
@@ -83,7 +85,7 @@
                         <td width="10%"><select class="form-control" id="sel1" name="unit_dim[]"> <!--select trzeba zaczytać dane z tab JEDN z value z jedn_wym="X"-->
                                 <option value="mm">mm</option>
                             </select></td>
-                        <td width="5%" id="sum_DSW" name="value_capacit[]">0</td>
+                         <td width="7%"><input class="form-control" id="sum_DSW" name="value_capacit[]" value="0"></td>
                         <td width="8%" name="j_obj[]">cm3</td> <!-- zaadowanie do pola j_obj w tab MWYM-->
                         <td width="40%"><input type="text" class="form-control" id="ean_code" name="ean_code[]"></td>
                     </tr>
@@ -94,7 +96,9 @@
                         <td width="9%"><input type="text" class="form-control" id="weight_net" name="weight_net[]"></td>
                         <td width="9%"><input type="text" class="form-control" id="weight_gross" name="weight_gross[]"></td>
                         <td width="10%"><select class="form-control" id="sel1" name="unit_weight"> <!--select trzeba zaczytać dane z tab JEDN z value z jedn_wag="X"-->
-                                <option value="mg">mg</option>
+                               {%  for unit in unit_weight %}
+                                <option value="{{ unit.value }}">{{ unit.value }}</option>
+                                {% endfor %}
                             </select></td>
                         <td width="8%"><input type="text" class="form-control" id="value_length" name="value_length[]"></td>
                         <td width="8%"><input type="text" class="form-control" id="value_width" name="value_width[]"></td>
@@ -113,7 +117,9 @@
                         <td width="9%"><input type="text" class="form-control" id="weight_net" name="weight_net[]"></td>
                         <td width="9%"><input type="text" class="form-control" id="weight_gross" name="weight_gross[]"></td>
                         <td width="10%"><select class="form-control" id="sel1" name="unit_weight"> <!--select trzeba zaczytać dane z tab JEDN z value z jedn_wag="X"-->
-                                <option value="mg">mg</option>
+                                {%  for unit in unit_weight %}
+                                <option value="{{ unit.value }}">{{ unit.value }}</option>
+                                {% endfor %}
                             </select></td>
                         <td width="8%"><input type="text" class="form-control" id="value_length" name="value_length[]"></td>
                         <td width="8%"><input type="text" class="form-control" id="value_width" name="value_width[]"></td>
@@ -121,7 +127,7 @@
                         <td width="10%"><select class="form-control" id="sel1" name="unit_dim[]"> <!--select trzeba zaczytać dane z tab JEDN z value z jedn_wym="X"-->
                                 <option value="mm">mm</option>
                             </select></td>
-                        <td width="5%" id="sum_DSW" name="value_capacit[]">0</td>
+                        <td width="7%"><input class="form-control" id="sum_DSW" name="value_capacit[]" value="0"></td>
                         <td width="8%" name="j_obj[]">cm3</td> <!-- zaadowanie do pola j_obj w tab MWYM-->
                         <td width="40%"><input type="text" class="form-control" id="ean_code" name="ean_code[]"></td>
                     </tr>
@@ -132,7 +138,9 @@
                         <td width="9%"><input type="text" class="form-control" id="weight_net" name="weight_net[]"></td>
                         <td width="9%"><input type="text" class="form-control" id="weight_gross" name="weight_gross[]"></td>
                         <td width="10%"><select class="form-control" id="sel1" name="unit_weight"> <!--select trzeba zaczytać dane z tab JEDN z value z jedn_wag="X"-->
-                                <option value="mg">mg</option>
+                               {%  for unit in unit_weight %}
+                                <option value="{{ unit.value }}">{{ unit.value }}</option>
+                                {% endfor %}
                             </select></td>
                         <td width="8%"><input type="text" class="form-control" id="value_length" name="value_length[]"></td>
                         <td width="8%"><input type="text" class="form-control" id="value_width" name="value_width[]"></td>
@@ -140,7 +148,7 @@
                         <td width="10%"><select class="form-control" id="sel1" name="unit_dim[]"> <!--select trzeba zaczytać dane z tab JEDN z value z jedn_wym="X"-->
                                 <option value="mm">mm</option>
                             </select></td>
-                        <td width="5%" id="sum_DSW" name="value_capacit[]">0</td>
+                          <td width="7%"><input class="form-control" id="sum_DSW" name="value_capacit[]" value="0"></td>
                         <td width="8%" name="j_obj[]">cm3</td> <!-- zaadowanie do pola j_obj w tab MWYM-->
                         <td width="40%"><input type="text" class="form-control" id="ean_code" name="ean_code[]"></td>
                     </tr>

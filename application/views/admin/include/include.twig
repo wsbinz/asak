@@ -18,6 +18,7 @@
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
     <script src="{{ base_url() }}/asset/js/add_product.js"></script>
+
     <body>
     <!-- Fixed navbar -->
         <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -34,7 +35,7 @@
                         <li><a href="{{ base_url() }}admin/product/add_product">Dodanie produktu - pusty formularz</a></li>
                         <li><a href="{{ base_url() }}admin/product/add_product_ref">Dodanie produktu - referencja</a></li>
                         <li><a href="{{ base_url() }}admin/product/edit_product">Edycja produktu</a></li>
-                        <li><a href="#">Wycofanie produktu</a></li>
+                        <li><a href="{{ base_url() }}admin/product/retire_product">Wycofanie produktu</a></li>
                         <li><a href="#">Wyświetlenie produktu</a></li>
                         <li><a href="{{ base_url() }}admin/product/index">Lista produktów</a></li>
                     </ul>
@@ -86,9 +87,10 @@
 <script src="{{ base_url() }}/asset/js/bootstrap.min.js"></script>
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="{{ base_url() }}/asset/js/remove_img.js"></script>
 
 <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-<script src="ie10-viewport-bug-workaround.js"></script>
+
 {% block javascript %}{% endblock %}
 </body>
 </html>
