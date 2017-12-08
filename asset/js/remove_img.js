@@ -41,7 +41,11 @@ $('.remove_img > img').on('click',function(){
         dataType: 'text',
         success: function(html){
 
-          console.log(html);
+            html = JSON.parse(html);
+         if(html.code = 200)
+         {
+             $('.edit_img  img').remove()
+         }
 
         }
 

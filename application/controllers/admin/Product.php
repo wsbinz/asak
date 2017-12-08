@@ -535,9 +535,25 @@ class Product extends Admin_Controller  {
 
     public function remove_img()
     {
+
+
        if(!empty($_POST))
        {
-           print_r($_POST);
+           $photo = $this->Admin_model->get_single("PHOT",array('id_phot' => $_POST['id_img']));
+
+           if($_POST['segment_url'][7] == $photo->nr_mat )
+           {
+               $this->load->helper("file");
+               unlink(FCPATH.$photo->adr_ph);
+               $this->Admin_model->delete('PHOT',array('id_phot'=>$_POST['id_img']));
+               echo json_encode(array("message"=>"Pomyślnie usuięto zdjęcie, a link to $photo->adr_ph","code"=>200));
+
+           }
+           else
+           {
+               echo json_encode(array("message"=>"chciałeś mnie oszukać ?!","code"=>400));
+           }
+
        }
     }
 
