@@ -22,10 +22,7 @@ class Magazine extends Admin_Controller
 
     public function index()
     {
-        $data['validation'] = $this->session->flashdata('alert');
-        $data['post_2'] = $this->session->flashdata('post2');
-        $data['post_1'] = $this->session->flashdata('post1');
-      //  print_r($data);
+
 
     }
 
@@ -42,7 +39,6 @@ class Magazine extends Admin_Controller
                 if(!empty($NazwaMagazynu))
                 {
                 $data = array(
-                    //'id_storage' => 'DEFAULT',
                     'load_group' => $magazyn,
                     'load_group_descr' => $NazwaMagazynu,
                 );
@@ -50,26 +46,24 @@ class Magazine extends Admin_Controller
 
                 $this->Admin_model->create("STORAGE", $data);
                     $this->session->set_flashdata('alert', "Hura dodales magazyn !");
-                    $this->session->set_flashdata('post', $data);
-                    redirect('admin/magazine',$data);
+
                 }
                 else{
                     $this->session->set_flashdata('alert', "Uzupełnij wszystkie pola!");
-                    $this->session->set_flashdata('post2', $magazyn);//a juz wiem :D
-                    redirect('admin/magazine');
+                    $data['post_2'] = $magazyn;
                 }
-
 
             }
             else
             {
                 $this->session->set_flashdata('alert', "Uzupełnij wszystkie pola!");
-                $this->session->set_flashdata('post1', $NazwaMagazynu);
-                redirect('admin/magazine');
+                $data['post_1'] = $NazwaMagazynu;
             }
 
         }
 
+
+        $data['validation'] = $this->session->flashdata('alert');
         $this->twig->display('admin/magazine/add_magazine',$data);
     }
 }
