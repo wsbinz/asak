@@ -1,21 +1,32 @@
 {% extends "admin/include/include.twig" %}
+
 {% block add %}
 
 
-    <form method="post" action ="{{ base_url() }}admin/magazine/add_magazine">
-        <br/><br/><br/><p>
-            <label for="">Magazyn</label>
-            <input type="text" name="magazyn" value="{{ post_2 }}" placeholder="Skrót magazynu (np: MG)">
-        </p>
-        <p>
-            <label for="">Pełna nazwa magazynu</label>
-            <input type="text" name="NazwaMagazynu" value="{{ post_1 }}" placeholder="Magazyn Główny">
-        </p>
-        <input type="submit" name="Przejdz" value="Dodaj"/>
+    <div class="container theme-showcase" role="main"><br/>
+        <div class="jumbotron">
+            <h2>Dodawnie magazynu</h2>
+        </div>
+        <section>
+            <form method="post" action ="{{ base_url() }}admin/magazine/add_magazine">
 
-    </form>
+                <p>
+                    <label for="">Magazyn</label>
+                    <input type="text" name="magazine" value="{{ post_2 }}" placeholder="Skrót magazynu (np: MG)">
+                </p>
+                <p>
+                    <label for="">Pełna nazwa magazynu</label>
+                    <input type="text" name="NameOfMagazin" value="{{ post_1 }}" placeholder="Magazyn Główny">
+                </p>
+
+                <button type="submit" class="btn btn-lg btn-default " >Dodaj</button>
+
+                {{ validation|raw }}
+            </form>
+        </section>
 
 
-    {{ validation|raw }}
+
+    </div>
 
 {% endblock %}
