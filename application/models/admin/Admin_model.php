@@ -50,6 +50,7 @@ class Admin_model extends CI_Model
         $query = $this->db->get_where($table,$where);
         $this->db->get($table);
         return $query->row();
+
     }
 
     public function get_max($table,$max) //zwraca maxymalna wartosc no tutaj tez zwroci jedna wartosc bo maxymalna

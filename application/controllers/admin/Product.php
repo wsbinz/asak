@@ -340,8 +340,15 @@ class Product extends Admin_Controller  {
 
        if(!empty($id))
        {
-           $where = array('id_indk'=>$id);
+
+           if(!is_numeric($id))
+           {
+               $this->session->set_flashdata('alert', "Nie ma takiego produktu");
+               redirect("/account");
+           }
+           $where = array('id_indk'=>(int)$id);
            $data['product'] = $this->Admin_model->get_single("VIEW_CARGO",$where);
+
 
            $where = array('nr_mat'=>$id);
            $data['msize'] = $this->Admin_model->get_where("MSIZE",$where);

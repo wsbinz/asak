@@ -48,11 +48,13 @@ class Magazine extends Admin_Controller
 
                 $this->Admin_model->create("STORAGE", $data);
                     $this->session->set_flashdata('alert', "Dodales magazyn!");
+                    refresh();
 
                 }
                 else{
                     $this->session->set_flashdata('alert', "Uzupełnij wszystkie pola!");
                     $data['post_2'] = $magazine;
+                    refresh();
                 }
 
             }
@@ -60,6 +62,7 @@ class Magazine extends Admin_Controller
             {
                 $this->session->set_flashdata('alert', "Uzupełnij wszystkie pola!");
                 $data['post_1'] = $NameOfMagazin;
+                refresh();
             }
 
         }
@@ -71,11 +74,11 @@ class Magazine extends Admin_Controller
     public function view_magazine()
     {
         $total_rows = $this->Admin_model->num_rows("STORAGE");
-        $start_index = ($this->uri->segment(10)) ? $this->uri->segment(10) : 0 ;
+        $start_index = ($this->uri->segment(4)) ? $this->uri->segment(4) : 0 ;
 
         $config['total_rows'] = $total_rows;
         $config['per_page'] = 10;
-        $config['uri_segment'] = 10;
+        $config['uri_segment'] = 4;
         $config['base_url'] = base_url('admin/magazine/view_magazine');
 
         $config['full_tag_open'] = '<ul class="pagination">';
