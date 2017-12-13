@@ -24,11 +24,11 @@ class Magazine extends Admin_Controller
 
     public function index()
     {
-
+        $this->twig->display('admin/magazine/magazine_geography');
 
     }
 
-    public function add_magazine()
+    public function add_magazine() //dodanie magazynu
     {
         if(!empty($_POST))
         {
@@ -71,7 +71,8 @@ class Magazine extends Admin_Controller
         $data['validation'] = $this->session->flashdata('alert');
         $this->twig->display('admin/magazine/add_magazine',$data);
     }
-    public function view_magazine()
+
+    public function view_magazine()         //wyświetlenie i edycja wszystkich dostępnych magazynów
     {
         $total_rows = $this->Admin_model->num_rows("STORAGE");
         $start_index = ($this->uri->segment(4)) ? $this->uri->segment(4) : 0 ;
@@ -114,6 +115,60 @@ class Magazine extends Admin_Controller
         $data['validation'] = $this->session->flashdata('alert');
         $this->twig->display('site/magazine/list_magazine',$data);
 
+    }
+
+    public function edit_magazine($id)             //edycja magazynu o określonym ID
+    {
+        $where = array('id_storage' => $id);
+
+        $data['storage'] = $this->Admin_model->get_single("STORAGE",$where);
+
+        $data['validation'] = $this->session->flashdata('alert');
+
+        $this->twig->display('admin/magazine/edit_magazine', $data);
+
+    }
+
+    public function save_magazine($id, $magazine , $NameMagazine)             //edycja magazynu o określonym ID
+    {
+        $where = array('id_storage' => $id);
+        $data['load_group']= $magazine;
+        $data['load_group_descr']= $NameMagazine;
+        $data['storage'] = $this->Admin_model->update("STORAGE",$data,$where);
+
+
+        //load_group_descr load_group
+        /*
+         * public function update($table,$data,$where) //update w bazie
+            {
+                $this->db->where($where);
+                $this->db->update($table,$data);
+            }
+        */
+    }
+
+    public function delete_magazine($id)             //Usunięcie magazynu o określonym ID
+    {
+
+        $where = array('id_storage' => $id);
+
+        $data['storage'] = $this->Admin_model->get_single("STORAGE",$where);
+
+        $data['validation'] = $this->session->flashdata('alert');
+
+
+        $this->twig->display('admin/magazine/delete_magazine', $data);
+
+    }
+
+    public function pernament_delete($id)
+    {
+        $where = array('id_storage' => $id);
+
+        $data['storage'] = $this->Admin_model->delete("STORAGE",$where);
+        redirect('admin/magazine/view_magazine');
+       // $data['validation'] = $this->session->flashdata('alert');
+        //$this->twig->display('site/magazine/list_magazine',$data);
     }
 
 }

@@ -9,9 +9,6 @@
             <h2>Wyswietlanie magazynów</h2> <!--do wladowania numer produktu -->
         </div>
 
-        {% autoescape %}
-            {{ validation|raw }}
-        {% endautoescape %}
 
         <table class="table table-hover">
             <thead>
@@ -30,22 +27,32 @@
                     <td width=20%>{{ STORAGE.load_group }}</td>
                     <td width=50%>{{ STORAGE.load_group_descr}}</td>
                     <td width=10%>
-                        <a href="{{ base_url() }}admin/product/show/{{ indk.nr_mat }}"><button type="button" class="btn btn-default">Przejdź</button></a>
+                        {% if check_group(['admin','moderator']) %}
+                        <a href="{{ base_url() }}admin/magazine/edit_magazine/{{ STORAGE.id_storage }}"><button type="button" class="btn btn-default">Edytuj</button></a>
+                        {% endif %}
                     </td>
                     <td>
                         {% if check_group(['admin','moderator']) %}
-                        <a href="{{ base_url() }}admin/product/edit_product/{{ indk.nr_mat }}"><button type="button" class="btn btn-warning">Edytuj</button></a>
+                            {#{{ STORAGE.id_storage }}#}
+                        <a href="{{ base_url() }}admin/magazine/delete_magazine/{{ STORAGE.id_storage }}"><button type="button" class="btn btn-warning" name="id">Usuń</button></a>
                         {% endif %}
                     </td>
                 </tr>
             {% endfor %}
             </tbody>
         </table>
-
+        {{ validation|raw }}
         <nav aria-label="Page navigation example">
             {{ links|raw }}
         </nav>
 
+        <br/>
+
+        <form method="post" action ="{{ base_url() }}admin/magazine/">
+            <button type="submit" class="btn btn-lg btn-default " >Wróć</button>
+        </form>
+
+        <br/>
 
 
     </div>

@@ -21,8 +21,18 @@
 
                 <button type="submit" class="btn btn-lg btn-default " >Dodaj</button>
 
-                {{ validation|raw }}
+
             </form>
+
+            <br/>
+
+            <form method="post" action ="{{ base_url() }}admin/magazine/">
+                <button type="submit" class="btn btn-lg btn-default " >Wróć</button>
+            </form>
+
+            <br/>
+
+            {{ validation|raw }}<br/>
         </section>
 
 

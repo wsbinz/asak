@@ -1,0 +1,38 @@
+{% extends "admin/include/include.twig" %}
+
+{% block add %}
+
+    <div class="container theme-showcase" role="main"><br/>
+        <div class="jumbotron">
+            <h2>Usuwanie magazynu</h2>
+        </div>
+        <h2>Czy napewno chcesz usunąć magazyn {{ storage.load_group }}, {{ storage.load_group_descr }} o numerze:  {{ storage.id_storage }}</h2>
+        <table class="table table-hover">
+            <thead>
+
+
+            </thead>
+
+            <tbody>
+                <tr>
+                    <td>
+                <form method="post" action ="{{ base_url() }}admin/magazine/view_magazine">
+                    <button type="submit" class="btn btn-lg btn-default " >Nie</button>
+                </form>
+                    </td>
+
+                    <td width=90%>
+                <form method="post" action ="{{ base_url() }}admin/magazine/pernament_delete/{{ storage.id_storage }}">
+                    <button type="submit" class="btn btn-warning">Tak</button>
+                </form>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+
+
+
+    </div>
+
+{% endblock %}
