@@ -31,7 +31,7 @@
 $('.remove_img > img').on('click',function(){
 
     var segment_url = $(location).attr('href').split("/");
-    console.log(this.id);
+    console.log(segment_url);
 
 
     $.ajax({
@@ -41,11 +41,12 @@ $('.remove_img > img').on('click',function(){
         dataType: 'text',
         success: function(html){
 
-            html = JSON.parse(html);
+           // html = JSON.parse(html);
          if(html.code = 200)
          {
-             $('.edit_img  img').remove()
+            // $('.edit_img  img').remove()
          }
+         console.log(html);
 
         }
 
