@@ -119,32 +119,34 @@ class Magazine extends Admin_Controller
 
     public function edit_magazine($id)             //edycja magazynu o określonym ID
     {
-        $where = array('id_storage' => $id);
+        if(is_numeric($id)) {
 
-        $data['storage'] = $this->Admin_model->get_single("STORAGE",$where);
+            $where = array('id_storage' => $id);
 
-        $data['validation'] = $this->session->flashdata('alert');
+            $data['storage'] = $this->Admin_model->get_single("STORAGE", $where);
 
-        $this->twig->display('admin/magazine/edit_magazine', $data);
+            $data['validation'] = $this->session->flashdata('alert');
+
+            $this->twig->display('admin/magazine/edit_magazine', $data);
+        }
+        else
+        {
+            $this->session->set_flashdata('alert', "Podany magazyn nie istnieje !");
+            //refresh();
+           redirect(base_url("admin/magazine/view_magazine"));
+        }
 
     }
 
     public function save_magazine($id)             //edycja magazynu o określonym ID
     {
         $where = array('id_storage' => $id);
-        $data['load_group']= $magazine;
-        $data['load_group_descr']= $NameMagazine;
+        $data['load_group']= $this->input->post('magazine',true);
+        $data['load_group_descr']= $this->input->post('NameOfMagazin',true);
         $data['storage'] = $this->Admin_model->update("STORAGE",$data,$where);
+        $this->session->set_flashdata('alert', "Magazyn edytowany pomyślnie !");
+        redirect(base_url("admin/magazine/view_magazine"));
 
-
-        //load_group_descr load_group
-        /*
-         * public function update($table,$data,$where) //update w bazie
-            {
-                $this->db->where($where);
-                $this->db->update($table,$data);
-            }
-        */
     }
 
     public function delete_magazine($id)             //Usunięcie magazynu o określonym ID
