@@ -1,0 +1,26 @@
+{% extends "admin/include/include.twig" %}
+
+{% block add %}
+
+
+    <div class="container theme-showcase" role="main"><br/>
+        <div class="jumbotron">
+            <h2>Geografia magazynu</h2>
+        </div>
+
+            <form method="post" action ="{{ base_url() }}admin/magazine/add_magazine">
+                <button type="submit" class="btn btn-lg btn-default " >Dodaj magazyn</button>
+            </form>
+
+            <br/>
+
+            <form method="post" action ="{{ base_url() }}admin/magazine/view_magazine">
+                <button type="submit" class="btn btn-lg btn-default " >Wyświetl magazyny</button>
+            </form>
+
+
+
+
+    </div>
+
+{% endblock %}

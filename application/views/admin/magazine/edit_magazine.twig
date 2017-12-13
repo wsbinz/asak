@@ -8,7 +8,8 @@
             <h2>Edycja magazynu</h2>
         </div>
         <section>
-            <form method="post" action ="{{ base_url() }}admin/magazine/save_magazine/{{storage.id_storage}}">
+            {#<form method="post" action ="{{ base_url() }}admin/magazine/add_magazine">#}
+
                 <p>
                     <label for="">Magazyn</label>
                     <input type="text" name="magazine" value="{{storage.load_group}}">
@@ -19,9 +20,12 @@
                 </p>
             <tr>
                 <td>
+                    <form method="post" action ="{{ base_url() }}admin/magazine/save_magazine/{{storage.id_storage}}/{{storage.load_group|trim(" ", "right")}}/{{storage.load_group_descr|trim(" ", "right")}}">
                         <button type="submit" class="btn btn-lg btn-default " >Zapisz</button>
                     </form>
                 </td>
+
+            {#</form>#}
 
                 <td>
             <form method="post" action ="{{ base_url() }}admin/magazine/view_magazine">
