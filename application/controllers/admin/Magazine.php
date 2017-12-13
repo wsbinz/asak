@@ -173,4 +173,27 @@ class Magazine extends Admin_Controller
         //$this->twig->display('site/magazine/list_magazine',$data);
     }
 
+/*$wys = 222.6;
+$pol_wys = 8.6;
+
+$max = $wys/$pol_wys;
+echo $max;
+
+$regal = array("a"=>0, "b"=>0);
+$pom = 0;
+
+for ($i=0; $i<=9; $i++)
+{
+$regal["b"] = 0;
+for ($j = 0; $j<=9; $j++)
+{
+echo  $regal["a"];
+echo  $regal["b"]++."<br>";
+$pom++;
+if($pom>=$max)
+exit();
+}
+$regal["a"]++;
+}*/
+
 }
