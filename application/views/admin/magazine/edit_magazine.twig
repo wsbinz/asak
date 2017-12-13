@@ -20,7 +20,7 @@
                 </p>
             <tr>
                 <td>
-                    <form method="post" action ="{{ base_url() }}admin/magazine/save_magazine/{{storage.id_storage}}/{{storage.load_group}}/{{storage.load_group_descr}}">
+                    <form method="post" action ="{{ base_url() }}admin/magazine/save_magazine/{{storage.id_storage}}/{{storage.load_group|trim(" ", "right")}}/{{storage.load_group_descr|trim(" ", "right")}}">
                         <button type="submit" class="btn btn-lg btn-default " >Zapisz</button>
                     </form>
                 </td>
