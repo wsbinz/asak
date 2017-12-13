@@ -129,7 +129,7 @@ class Magazine extends Admin_Controller
 
     }
 
-    public function save_magazine($id, $magazine , $NameMagazine)             //edycja magazynu o określonym ID
+    public function save_magazine($id)             //edycja magazynu o określonym ID
     {
         $where = array('id_storage' => $id);
         $data['load_group']= $magazine;
