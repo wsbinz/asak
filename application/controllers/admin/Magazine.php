@@ -173,6 +173,7 @@ class Magazine extends Admin_Controller
         //$this->twig->display('site/magazine/list_magazine',$data);
     }
 
+    //Algorytm do regałów/półek
 /*$wys = 222.6;
 $pol_wys = 8.6;
 
