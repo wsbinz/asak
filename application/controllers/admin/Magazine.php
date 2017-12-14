@@ -28,14 +28,13 @@ class Magazine extends Admin_Controller
 
     }
 
-    public function add_magazine() //dodanie magazynu i generowanie regałó
+    public function add_magazine() //dodanie magazynu
     {
         if(!empty($_POST))
         {
 
             $magazine = $this->input->post('magazine',true);
             $NameOfMagazin = $this->input->post('NameOfMagazin',true);
-            $countRack = $this->input->post('countRack',true);
 
             if(!empty($magazine))
             {
@@ -46,50 +45,10 @@ class Magazine extends Admin_Controller
                     'load_group_descr' => $NameOfMagazin,
                 );
 
-                    if(is_numeric($countRack))          //generowanie regałów
-                    {
-                        $max= $countRack;
 
-
-                        $regal = array("a"=>0, "b"=>0);
-                        $pom = 0;
-
-                        for ($i=0; $i<=9; $i++)
-                        {
-                            $regal["b"] = 0;
-                            for ($j = 0; $j<=9; $j++)
-                            {
-                                //echo $regal["a"];
-                                $data = array(
-                                'load_group'=>$magazine,
-                                'shel_descr' =>$regal["a"].$regal["b"],
-                                'shel_result' =>$magazine."-".$regal["a"].$regal["b"]);
-                                $this->Admin_model->create("STOR_SHELVES", $data);
-                                $regal["a"];
-                                //echo $regal["b"]++."<br>";
-                                $regal["b"]++."<br>";
-                                $pom++;
-                                if($pom>=$max)
-                                    break;
-                            }
-                            $regal["a"]++;
-                            if($pom>=$max)
-                                break;
-                            else continue;
-                        }
-
-                            $this->session->set_flashdata('alert',"Magazyn został dodany i wygenerowano $countRack regałów !");
-                    }
-                    else
-                    {
-                        $this->Admin_model->create("STORAGE", $data);
-                        $this->session->set_flashdata('alert', "Dodales magazyn! Nie wygenerowano żadnych regałów, wartość musi być liczbą i musi się mieścić w wartość 0 - 99");
-                        refresh();
-                    }
-
-
-
-
+                $this->Admin_model->create("STORAGE", $data);
+                    $this->session->set_flashdata('alert', "Dodales magazyn!");
+                    refresh();
 
                 }
                 else{
@@ -115,8 +74,6 @@ class Magazine extends Admin_Controller
 
     public function view_magazine()         //wyświetlenie i edycja wszystkich dostępnych magazynów
     {
-        set_time_limit(120);
-
         $total_rows = $this->Admin_model->num_rows("STORAGE");
         $start_index = ($this->uri->segment(4)) ? $this->uri->segment(4) : 0 ;
 
@@ -198,16 +155,11 @@ class Magazine extends Admin_Controller
         $where = array('id_storage' => $id);
 
         $data['storage'] = $this->Admin_model->get_single("STORAGE",$where);
-        if(!empty($data['storage']))
-            {
-                $data['validation'] = $this->session->flashdata('alert');
-                $this->twig->display('admin/magazine/delete_magazine', $data);
-            }
-        else
-            {
-                $this->session->set_flashdata('alert', "Brak podanego ID magazynu !");
-                redirect('admin/magazine/view_magazine');
-            }
+
+        $data['validation'] = $this->session->flashdata('alert');
+
+
+        $this->twig->display('admin/magazine/delete_magazine', $data);
 
     }
 
@@ -221,10 +173,28 @@ class Magazine extends Admin_Controller
         //$this->twig->display('site/magazine/list_magazine',$data);
     }
 
-    private function generate_rack($countRack)
-    {
+    //Algorytm do regałów/półek
+/*$wys = 222.6;
+$pol_wys = 8.6;
 
+$max = $wys/$pol_wys;
+echo $max;
 
-    }
+$regal = array("a"=>0, "b"=>0);
+$pom = 0;
+
+for ($i=0; $i<=9; $i++)
+{
+$regal["b"] = 0;
+for ($j = 0; $j<=9; $j++)
+{
+echo  $regal["a"];
+echo  $regal["b"]++."<br>";
+$pom++;
+if($pom>=$max)
+exit();
+}
+$regal["a"]++;
+}*/
 
 }
