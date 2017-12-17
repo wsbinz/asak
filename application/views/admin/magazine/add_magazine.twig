@@ -7,23 +7,42 @@
         <div class="jumbotron">
             <h2>Dodawnie magazynu</h2>
         </div>
-        <section>
             <form method="post" action ="{{ base_url() }}admin/magazine/add_magazine">
 
-                <p>
-                    <label for="">Magazyn</label>
-                    <input type="text" name="magazine" value="{{ post_2 }}" placeholder="Skrót magazynu (np: MG)">
-                </p>
-                <p>
-                    <label for="">Pełna nazwa magazynu</label>
-                    <input type="text" name="NameOfMagazin" value="{{ post_1 }}" placeholder="Magazyn Główny">
-                </p>
+                    <div class="row">
+                        <div class="col-md-6" style="border: 1px solid lightgrey">
 
-                <p>
-                    <label for ="">Ilość regałów do dodania</label>
-                    <input type="text" name="countRack" value="{{ post_3 }}" placeholder="0">
+                                <font color="#808080">Pola obowiązkowe</font>
+                            <br/><br/>
+                        <p>
+                            <label for="">Magazyn</label>
+                            <input type="text" name="magazine" value="{{ post_2 }}" placeholder="Skrót magazynu (np: MG)">
+                        </p>
+                        <p>
+                            <label for="">Pełna nazwa magazynu</label>
+                            <input type="text" name="NameOfMagazin" value="{{ post_1 }}" placeholder="Magazyn Główny">
+                        </p>
+                        </div>
 
-                </p>
+
+
+                        <div class="col-md-6" style="border: 1px solid lightgrey">
+
+                                <font color="#808080">Pola opcjonalne</font>
+                            <br/><br/>
+
+                            <p>
+                                <label for ="">Ilość regałów do dodania</label>
+                                <input type="text" name="countRack" value="{{ post_3 }}" placeholder="0">
+                            </p>
+                            <p>
+                                <label for ="">Maksymalna wysokość regałów</label>
+                                <input type="text" name="highRack" value="{{ post_4 }}" placeholder="0">
+                            </p>
+                        </div>
+                    </div>
+                <br/>
+
 
                 <button type="submit" class="btn btn-lg btn-default " >Dodaj</button>
 
@@ -39,10 +58,9 @@
             <br/>
 
             {{ validation|raw }}<br/>
-        </section>
-
-
 
     </div>
+
+
 
 {% endblock %}

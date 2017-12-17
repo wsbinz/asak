@@ -28,7 +28,7 @@ public function index()
 
 }
 
-    public function add_magazine() //dodanie regały
+    public function add_rack() //dodanie regały
     {
         if(!empty($_POST))
         {
