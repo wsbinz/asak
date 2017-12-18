@@ -1,4 +1,21 @@
-{{ validation|raw }}
+{% extends "admin/include/include.twig" %}
+{% block add %}
+
+
+<div style="margin-top: 20px"></div>
+
+<div class="container">
+
+    {% if validation is empty %}
+
+    {% else %}
+        <div class="alert alert-success">
+            <strong>
+                {{ validation|raw }}
+            </strong>
+        </div>
+    {% endif %}
+
 
 <form method="POST" action="{{ base_url() }}admin/group/add_group">
     <div class="form-group">
@@ -9,5 +26,8 @@
         <label for="exampleInputPassword1">Alias</label>
         <input type="text" class="form-control" name="alias" id="exampleInputPassword1" placeholder="alias">
     </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <button type="submit" class="btn btn-primary">Dodaj grupe</button>
 </form>
+</div>
+
+{% endblock %}

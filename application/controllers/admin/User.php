@@ -84,6 +84,7 @@ class User extends Admin_Controller {
                 $mail = mail($do,$subject, $message, $mailheaders);
 
                 $this->session->set_flashdata('alert',"Użytkownik został dodany !");
+                redirect("admin/user");
             }
             else
             {
@@ -149,7 +150,7 @@ class User extends Admin_Controller {
                     $this->Admin_model->update('GROUPS_USERS',$data_group,$where);
                 }
                 $this->session->set_flashdata('alert',"Użytkownik został edytowany !");
-                refresh();
+                redirect('admin/user');
             }
             else
             {
@@ -176,6 +177,15 @@ class User extends Admin_Controller {
         $this->twig->display('admin/user/edit',$data);
     }
 
+    public function delete($id)
+    {
+        $where = array('id' =>$id);
+        $data['user'] = $this->Admin_model->delete("USERS",$where); //Pobieranie danych uzytkownika
+
+        $this->session->set_flashdata('alert',"Użytkownik został usunięty !");
+        redirect('admin/user');
+
+    }
 
     public function edit_email($email)
     {

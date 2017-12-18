@@ -1,13 +1,32 @@
-{{ validation|raw }}
+{% extends "admin/include/include.twig" %}
+{% block add %}
 
-<form method="POST" action="{{ base_url() }}admin/group/edit_group/{{ group.id }}">
-    <div class="form-group">
-        <label for="exampleInputEmail1">Nazwa Grupy</label>
-        <input type="text" class="form-control" id="exampleInputEmail1" name="group_name" aria-describedby="emailHelp" placeholder="nazwa grup" value="{{ group.group_name }}">
-    </div>
-    <div class="form-group">
-        <label for="exampleInputPassword1">Alias</label>
-        <input type="text" class="form-control" name="alias" id="exampleInputPassword1" placeholder="alias" value="{{ group.alias }}">
-    </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
-</form>
+
+<div style="margin-top: 20px"></div>
+
+<div class="container">
+
+    {% if validation is empty %}
+
+    {% else %}
+        <div class="alert alert-success">
+            <strong>
+                {{ validation|raw }}
+            </strong>
+        </div>
+    {% endif %}
+
+    <form method="POST" action="{{ base_url() }}admin/group/edit_group/{{ group.id }}">
+        <div class="form-group">
+            <label for="exampleInputEmail1">Nazwa Grupy</label>
+            <input type="text" class="form-control" id="exampleInputEmail1" name="group_name" aria-describedby="emailHelp" placeholder="nazwa grup" value="{{ group.group_name }}">
+        </div>
+        <div class="form-group">
+            <label for="exampleInputPassword1">Alias</label>
+            <input type="text" class="form-control" name="alias" id="exampleInputPassword1" placeholder="alias" value="{{ group.alias }}">
+        </div>
+        <button type="submit" class="btn btn-primary">Edytuj</button>
+    </form>
+</div>
+
+{% endblock %}

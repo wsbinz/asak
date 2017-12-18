@@ -28,6 +28,7 @@ class Group extends Admin_Controller
         $groups = $this->Admin_model->get('GROUPS');
         $data['groups'] = $groups;
 
+        $data['validation']= $this->session->flashdata('alert');
         $this->twig->display('admin/groups/index',$data);
     }
 
@@ -58,6 +59,7 @@ class Group extends Admin_Controller
 
 
                 $this->session->set_flashdata('alert',"Grupa została dodana !");
+                redirect("admin/group");
             }
             else
             {
@@ -89,6 +91,7 @@ class Group extends Admin_Controller
                 $this->Admin_model->update('GROUPS',$data,$where);
 
                 $this->session->set_flashdata('alert',"Grupa została edytowana !");
+                redirect("admin/group");
             }
             else
             {
@@ -100,6 +103,16 @@ class Group extends Admin_Controller
         $data['validation']= $this->session->flashdata('alert');
         $this->twig->display('admin/groups/edit',$data);
 
+    }
+
+    public function delete($id)
+    {
+        $where = array("id" => $id);
+        $this->Admin_model->delete('GROUPS',$where);
+        $where = array("id_groups" => $id);
+        $this->Admin_model->delete('GROUPS_USERS',$where);
+        $this->session->set_flashdata('alert',"Grupa została usunięta !");
+        redirect("admin/group");
     }
 
     public function edit_alias($alias)

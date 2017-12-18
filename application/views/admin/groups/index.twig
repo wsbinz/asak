@@ -1,13 +1,41 @@
 {% extends "admin/include/include.twig" %}
+{% block add %}
 
-{% block body %}
 
-    {{ validation|raw }}
+    <div style="margin-top: 20px"></div>
 
-        {% for group in groups %}
+    <div class="container">
 
-            <p>{{ group.group_name }}</p>
+        {% if validation is empty %}
 
-        {% endfor %}
+        {% else %}
+            <div class="alert alert-success">
+                <strong>
+                    {{ validation|raw }}
+                </strong>
+            </div>
+        {% endif %}
 
-{% endblock %}
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Nazwa Grupy</th>
+                <th>Akcja</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for group in groups %}
+                <tr>
+                    <th scope="row">{{ loop.index }}</th>
+                    <td>{{ group.group_name }}</td>
+                    <td>
+                        <a a href="{{ base_url() }}admin/group/edit_group/{{ group.id }}"><button class="btn btn-primary">Edytuj</button></a>
+                        <a href="{{ base_url() }}admin/group/delete/{{ group.id }}"><button class="btn btn-danger">Usuń</button></a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock add %}

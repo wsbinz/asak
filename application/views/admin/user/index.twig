@@ -1,34 +1,56 @@
+{% extends "admin/include/include.twig" %}
+{% block add %}
 
-{% autoescape %}
-    {{ validation|raw }}
-{% endautoescape %}
 
-<table class="table table-sm">
-    <thead>
-    <tr>
-        <th>#</th>
-        <th>Imię</th>
-        <th>E-mail</th>
-        <th>Grupa</th>
-    </tr>
-    </thead>
-    <tbody>
-    {% for user in users %}
-    <tr>
-        <th scope="row">{{ loop.index }}</th>
-        <td>{{ user.username }}</td>
-        <td>{{ user.email }}</td>
+<div style="margin-top: 20px"></div>
 
-        {% for group_user in groups_users %}
+    <div class="container">
 
-            {% if group_user.id_users == user.id %}
+        {% if validation is empty %}
 
-                <td>{{ group[group_user.id_groups ] }}</td>
+            {% else %}
+                <div class="alert alert-success">
+                    <strong>
+                        {{ validation|raw }}
+                    </strong>
+                </div>
+        {% endif %}
 
-            {% endif %}
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Imię</th>
+                <th>E-mail</th>
+                <th>Grupa</th>
+                <th>Akcja</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for user in users %}
+            <tr>
+                <th scope="row">{{ loop.index }}</th>
+                <td>{{ user.username }}</td>
+                <td>{{ user.email }}</td>
 
-        {% endfor %}
-    </tr>
-    {% endfor %}
-    </tbody>
-</table>
+                {% for group_user in groups_users %}
+
+                    {% if group_user.id_users == user.id %}
+
+                        <td>{{ group[group_user.id_groups ] }} </td>
+                    {% endif %}
+
+                {% endfor %}
+
+                <td>
+                    <a href="{{ base_url() }}admin/user/edit_user/{{ user.id }}"><button class="btn btn-primary">Edytuj</button></a>
+                    <a href="{{ base_url() }}admin/user/delete/{{ user.id }}"><button class="btn btn-danger" id="{{ user.id }}">Usuń</button></a>
+                </td>
+
+
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock add %}
