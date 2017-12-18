@@ -30,13 +30,13 @@
         <!-- Grupa towarowa -->
         <div class="row">
             <div class="col-md-12">
-                <h4>grupa towarowa - tutaj nie wiem co z tym gównem !</h4>
+                <h4>grupa towarowa - {{ product.gr_zalad }} !</h4>
             </div>
         </div>
         <!-- Nazwa marketingowa rozwinięta -->
         <div class="row">
             <div class="col-md-12">
-                <h4>{{ product.mat_nazwd }}</h4>
+                <h4>Nazwa marketingowa: {{ product.mat_nazwd }}</h4>
             </div>
         </div>
         <!-- Struktura + zdjęcie -->
@@ -65,15 +65,15 @@
                         <td>{{ msizee.value_struct}}</td>
                         <td>{{ msizee.weight_gross }}</td>
                         <td>{{ msizee.value_length }}x{{ msizee.value_width }}x{{ msizee.value_height }}</td>
-                        <td>100cm3</td>
-                        <td>1234567898</td>
+                        <td>{{ msizee.value_capacit }} cm3</td>
+                        <td>{{ msizee.ean_code }}</td>
                     </tr>
                     {% endfor %}
                     </tbody>
                 </table>
             </div>
             <div class="col-md-6">
-                <img src="card.jpg" class="img-thumbnail" >
+               {# <img src="card.jpg" class="img-thumbnail" >#}
             </div>
         </div>
         <!-- Informacje dodatkowe -->

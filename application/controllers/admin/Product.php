@@ -171,6 +171,7 @@ class Product extends Admin_Controller  {
                     'prod_hier' => $this->input->post('prod_hier', true),
                     'id_vend' => $kod[0],
                     'id_vendrefund' => $kod_refund[0],
+                    'retire' => 0,
                 );
 
 
@@ -183,21 +184,13 @@ class Product extends Admin_Controller  {
 
                 //Tabela NAZW
                 $data = array(
-                    'name_short' => $this->input->post('name_short', true),
-                    'name_long' => $this->input->post('name_long', true),
+                    'name_short' => strtolower($this->input->post('name_short', true)),
+                    'name_long' => strtolower($this->input->post('name_long', true)),
                     'nr_mat' => $nr_mat,
                     'lang' => "PL",
                 );
 
                 $this->Admin_model->create("MNAME", $data);
-
-
-                //Tabela STORAGE  - grupa zaladunkowa
-                $data = array(
-                    'load_group' => $this->input->post('load_group', true),
-                    'load_group_descr' => "dodatki",
-                );
-                $this->Admin_model->create("STORAGE", $data);
 
                 //Tabela MWYM
             for($i=0; $i<4; $i++) {
@@ -224,7 +217,7 @@ class Product extends Admin_Controller  {
             //Upload IMG
                 if(!empty($_FILES))
                 {
-                    $move = true;
+                    $move = false;
                     foreach ($_FILES as $file) {
                         $tempFile = $file['tmp_name'];
                         $fileName = $file['name'];
@@ -249,6 +242,11 @@ class Product extends Admin_Controller  {
                     } else {
                         $duplicate = true;
                         $this->session->set_flashdata('alert', "Taki plik już istnieje !");
+                        $where = array("nr_mat" => $nr_mat);
+                        $this->Admin_model->delete("MSIZE",$where);
+                        $this->Admin_model->delete("MNAME",$where);
+                        $this->Admin_model->delete("INDK",$where);
+
                     }
 
                     if($move == true)
@@ -260,6 +258,7 @@ class Product extends Admin_Controller  {
 
                         );
                         $this->Admin_model->create("PHOT", $data);
+                        $this->session->set_flashdata('alert', "Pomyślnie dadano!");
                     }
 
                 }
@@ -269,7 +268,7 @@ class Product extends Admin_Controller  {
                 }
 
 
-                $this->session->set_flashdata('alert', "Pomyślnie dadano!");
+
                 redirect('admin/product');
             }
             else {
@@ -282,6 +281,8 @@ class Product extends Admin_Controller  {
         $variable['dost'] = $this->Admin_model->get('VEND');
         $variable['dost_zwrot'] = $this->Admin_model->get('VEND_REFUND');
         $variable['pkwiu'] = $this->Admin_model->get('PKWI');
+        $variable['load_group'] = $this->Admin_model->get('STORAGE');
+        $variable['gr_tow'] = $this->Admin_model->get('PROD');
         $variable['unit_weight'] = $this->Admin_model->get_where('UNITS', array('unit_weight' => '1'));
         $variable['validation'] = $this->session->flashdata('alert');
         $this->twig->display('admin/product/add_product',$variable);

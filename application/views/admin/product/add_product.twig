@@ -31,7 +31,7 @@
         </div>
         <div class="form-group">
             <label for="gr_tow">Opis grupy towarowej:</label>
-            <input type="text" class="form-control" id="gr_tow" name="prod_descr"> <!-- wybór z listy prod_hier z tabeli GRTW-->
+            <input type="text" class="form-control" id="gr_tow_desc" name="prod_descr" readonly> <!-- wybór z listy prod_hier z tabeli GRTW-->
         </div>
         <!-- Nazwa marketingowa rozwinięta -->
         <div class="form-group">
@@ -71,10 +71,10 @@
                     <tbody class="section_2">
                     <tr class="SZT">
                         <td width="8%"><input type="text" class="form-control" name="unit_structure[]" id="unit_structure" value="SZT"></td> <!--tab MWYM pole unit_structure -->
-                        <td width="8%"><input type="text" class="form-control" id="value_struct" name="value_struct[]" value="1" disabled></td>
+                        <td width="8%"><input type="text" class="form-control" id="value_struct" name="value_struct[]" value="1" readonly></td>
                         <td width="9%"><input type="text" class="form-control" id="weight_net" name="weight_net[]"></td>
                         <td width="9%"><input type="text" class="form-control" id="weight_gross" name="weight_gross[]"></td>
-                        <td width="10%"><select class="form-control" id="sel1" name="unit_weight"> <!--select trzeba zaczytać dane z tab JEDN z value z jedn_wag="X"-->
+                        <td width="10%"><select class="form-control" id="sel1" name="unit_weight[]"> <!--select trzeba zaczytać dane z tab JEDN z value z jedn_wag="X"-->
                                 {%  for unit in unit_weight %}
                                 <option value="{{ unit.value }}">{{ unit.value }}</option>
                                 {% endfor %}
@@ -95,7 +95,7 @@
                         <td width="8%"><input type="text" class="form-control" id="value_struct" name="value_struct[]" value="1"></td>
                         <td width="9%"><input type="text" class="form-control" id="weight_net" name="weight_net[]"></td>
                         <td width="9%"><input type="text" class="form-control" id="weight_gross" name="weight_gross[]"></td>
-                        <td width="10%"><select class="form-control" id="sel1" name="unit_weight"> <!--select trzeba zaczytać dane z tab JEDN z value z jedn_wag="X"-->
+                        <td width="10%"><select class="form-control" id="sel1" name="unit_weight[]"> <!--select trzeba zaczytać dane z tab JEDN z value z jedn_wag="X"-->
                                {%  for unit in unit_weight %}
                                 <option value="{{ unit.value }}">{{ unit.value }}</option>
                                 {% endfor %}
@@ -116,7 +116,7 @@
                         <td width="8%"><input type="text" class="form-control" id="value_struct" name="value_struct[]" value="1"></td>
                         <td width="9%"><input type="text" class="form-control" id="weight_net" name="weight_net[]"></td>
                         <td width="9%"><input type="text" class="form-control" id="weight_gross" name="weight_gross[]"></td>
-                        <td width="10%"><select class="form-control" id="sel1" name="unit_weight"> <!--select trzeba zaczytać dane z tab JEDN z value z jedn_wag="X"-->
+                        <td width="10%"><select class="form-control" id="sel1" name="unit_weight[]"> <!--select trzeba zaczytać dane z tab JEDN z value z jedn_wag="X"-->
                                 {%  for unit in unit_weight %}
                                 <option value="{{ unit.value }}">{{ unit.value }}</option>
                                 {% endfor %}
@@ -137,7 +137,7 @@
                         <td width="8%"><input type="text" class="form-control" id="value_struct" name="value_struct[]" value="1"></td>
                         <td width="9%"><input type="text" class="form-control" id="weight_net" name="weight_net[]"></td>
                         <td width="9%"><input type="text" class="form-control" id="weight_gross" name="weight_gross[]"></td>
-                        <td width="10%"><select class="form-control" id="sel1" name="unit_weight"> <!--select trzeba zaczytać dane z tab JEDN z value z jedn_wag="X"-->
+                        <td width="10%"><select class="form-control" id="sel1" name="unit_weight[]"> <!--select trzeba zaczytać dane z tab JEDN z value z jedn_wag="X"-->
                                {%  for unit in unit_weight %}
                                 <option value="{{ unit.value }}">{{ unit.value }}</option>
                                 {% endfor %}
@@ -193,7 +193,7 @@
                     </tr>
                     <tr>
                         <td>Opis PKWIU:</td>
-                        <td id="desc_code_pkwiu">opis kodu</td> <!-- opis zaczytany na bazie selecta pkwui_kod z tab PKWI -->
+                        <td id="desc_code_pkwiu"></td> <!-- opis zaczytany na bazie selecta pkwui_kod z tab PKWI -->
                     </tr>
                     <tr>
                         <td>Stawka VAT</td>
@@ -334,9 +334,9 @@
             $( "#kod_pkwiu" ).autocomplete({
               source: availableTags
             });
-            desc();
+            desc('kod_pkwiu');
           } );
-                function desc() {
+                function desc(id) {
                   $("#kod_pkwiu").on('change',function() {
                        var code =  $( "#kod_pkwiu" ).val();
                        {% for pkwi in pkwiu %}
@@ -348,5 +348,45 @@
                       {% endfor %}
                     });
                 }
+
+
+            $( function() {
+                var load_group = [
+                  {% for load_groups in load_group %}
+                  "{{ load_groups.load_group|raw|trim(' ','right') }}",
+                  {% endfor %}
+                ];
+                $( "#load_group" ).autocomplete({
+                  source: load_group
+
+                });
+          } );
+
+
+                 $( function() {
+                var gr_tow = [
+                 {% for gr_towa in gr_tow %}
+                  "{{ gr_towa.prod_hier|raw|trim(' ','right') }}",
+                  {% endfor %}
+                ];
+                $( "#gr_tow" ).autocomplete({
+                  source: gr_tow
+                });
+                desc_gr_tow()
+          } );
+
+                function desc_gr_tow() {
+                  $("#gr_tow").on('change',function() {
+                       var code =  $( "#gr_tow" ).val();
+                       {% for gr_towa in gr_tow %}
+                        var group = "{{ gr_towa.prod_hier|raw|trim(' ','right') }}";
+                               if(group == code)
+                               {
+                                   $('#gr_tow_desc').val("{{ gr_towa.prod_descr|raw|trim(' ','right') }}");
+                               }
+                      {% endfor %}
+                    });
+                }
+
         </script>
 {% endblock %}

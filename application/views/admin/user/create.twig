@@ -24,7 +24,7 @@
         <label for="user_group">Grupa użytkownika</label>
         <select class="form-control" name="group">
             {% for groups in group %}
-                <option value="{{ groups.id }}">{{ groups.name }}</option>
+                <option value="{{ groups.id }}">{{ groups.group_name }}</option>
             {% endfor %}
         </select>
     </div>

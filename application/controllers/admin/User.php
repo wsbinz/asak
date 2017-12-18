@@ -56,7 +56,17 @@ class User extends Admin_Controller {
                     'activation_code' => $activation_code,
                 );
                 //Tworzenie uzytkownika w bazie
-                $user = $this->Admin_model->create('users',$data);
+                $user = $this->Admin_model->create('USERS',$data);
+
+                //Pobieranie id uzytkownika
+                $where = array('email' => $data['email']);
+                $user_id = $this->Admin_model->get_single("USERS",$where);
+
+                $data_group = array(
+                    'id_groups' => $this->input->post('group',true),
+                    'id_users' => $user_id->id,
+                );
+                $this->Admin_model->create('GROUPS_USERS',$data_group); //Dodawanie go do grupy.
 
                 //Wysyłanie meila do uzytkownika
                 $do = $_POST['email'];
@@ -82,6 +92,10 @@ class User extends Admin_Controller {
 
 
         }
+        //Pobieranie grup
+        $data['group'] = $this->Admin_model->get("GROUPS");
+        //$groups_user = $this->Admin_model->get("GROUPS_USERS");
+
 
         $data['validation']= $this->session->flashdata('alert');
         $this->twig->display('admin/user/create',$data);

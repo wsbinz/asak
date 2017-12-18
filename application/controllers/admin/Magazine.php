@@ -63,7 +63,8 @@ class Magazine extends Admin_Controller
                                 $data = array(
                                 'load_group'=>$magazine,
                                 'shel_descr' =>$regal["a"].$regal["b"],
-                                'shel_result' =>$magazine."-".$regal["a"].$regal["b"]);
+                                'shel_result' =>$magazine."-".$regal["a"].$regal["b"]
+                                );
                                 $this->Admin_model->create("STOR_SHELVES", $data);
                                 $regal["a"];
                                 //echo $regal["b"]++."<br>";
