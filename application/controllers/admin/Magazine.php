@@ -36,78 +36,139 @@ class Magazine extends Admin_Controller
             $magazine = $this->input->post('magazine',true);
             $NameOfMagazin = $this->input->post('NameOfMagazin',true);
             $countRack = $this->input->post('countRack',true);
-
+            $highRack = $this->input->post('highRack',true);
+            $auxiliary = "A"; //pomocnicza
             if(!empty($magazine))
             {
-                if(!empty($NameOfMagazin))
+
+                $where = array('load_group' => $magazine);
+                $data['storage'] = $this->Admin_model->get_single("STORAGE", $where);
+
+                if(!empty($data['storage']))
                 {
-                $data = array(
-                    'load_group' => $magazine,
-                    'load_group_descr' => $NameOfMagazin,
-                );
+                    $this->session->set_flashdata('alert', "Podane oznaczenie magazynu już istnieje w bazie!");
+                    $data['validation'] = $this->session->flashdata('alert');
+                    $data['post_1'] = $magazine;
+                    $data['post_2'] = $magazine;
+                    $data['post_3'] = $countRack;
+                    $data['post_4'] = $highRack;
+                    $this->twig->display('admin/magazine/add_magazine', $data);
+                }
 
-                    if(is_numeric($countRack))          //generowanie regałów
+                else if (!empty($NameOfMagazin))
+                {
+
+                    if ((!empty($countRack)) && (!empty($highRack)))
                     {
-                        $max= $countRack;
-
-
-                        $regal = array("a"=>0, "b"=>0);
-                        $pom = 0;
-
-                        for ($i=0; $i<=9; $i++)
+                        if ((is_numeric($countRack)) && (is_numeric($highRack)))          //generowanie regałów
                         {
-                            $regal["b"] = 0;
-                            for ($j = 0; $j<=9; $j++)
-                            {
-                                //echo $regal["a"];
+                            if (($countRack <= 100)&&($countRack > 0)) {
+                                $max = $countRack;
+                                $auxiliary ="B";
+
+                                $regal = array("a" => 0, "b" => 0);
+                                $pom = 0;
+
+                                for ($i = 0; $i <= 9; $i++) {
+                                    $regal["b"] = 0;
+                                    for ($j = 0; $j <= 9; $j++) {
+                                        //echo $regal["a"];
+                                        $data = array(
+                                            'load_group' => $magazine,
+                                            'shel_descr' => $regal["a"] . $regal["b"],
+                                            'shel_result' => $magazine . "-" . $regal["a"] . $regal["b"],
+                                            'shel_max_h' =>$highRack);
+
+                                        $this->Admin_model->create("STOR_SHELVES", $data);
+                                        $regal["a"];
+                                        //echo $regal["b"]++."<br>";
+                                        $regal["b"]++;
+                                        $pom++;
+                                        if ($pom >= $max)
+                                            break;
+                                    }
+                                    $regal["a"]++;
+                                    if ($pom >= $max)
+                                        break;
+                                    else continue;
+                                }
+
                                 $data = array(
-                                'load_group'=>$magazine,
-                                'shel_descr' =>$regal["a"].$regal["b"],
-                                'shel_result' =>$magazine."-".$regal["a"].$regal["b"]
+                                    'load_group' => $magazine,
+                                    'load_group_descr' => $NameOfMagazin,
                                 );
-                                $this->Admin_model->create("STOR_SHELVES", $data);
-                                $regal["a"];
-                                //echo $regal["b"]++."<br>";
-                                $regal["b"]++;
-                                $pom++;
-                                if($pom>=$max)
-                                    break;
+
+                                $this->Admin_model->create("STORAGE", $data);
+                                $this->session->set_flashdata('alert', "Magazyn został dodany oraz wygenerowano $countRack regałów");
+
                             }
-                            $regal["a"]++;
-                            if($pom>=$max)
-                                break;
-                            else continue;
+
+                            else {
+                                $this->session->set_flashdata('alert', "Ilość dopuszczalnych regałów w jednej strefie magazynowej musi wynosić od 1-100.");
+                                $data['post_1'] = $NameOfMagazin;
+                                $data['post_2'] = $magazine;
+                                $data['post_3'] = $countRack;
+                                $data['post_4'] = $highRack;
+                                $this->twig->display('admin/magazine/add_magazine', $data);
+                                $auxiliary ="B";
+
+                            }
+                        } else {
+                            $this->session->set_flashdata('alert', "Ilość i wysokość regałów musi być wartością numeryczną!");
+                            //refresh();
+                            $data['post_1'] = $NameOfMagazin;
+                            $data['post_2'] = $magazine;
+                            $data['post_3'] = $countRack;
+                            $data['post_4'] = $highRack;
+                            $this->twig->display('admin/magazine/add_magazine', $data);
+                            $auxiliary ="B";
                         }
 
-                            $this->session->set_flashdata('alert',"Magazyn został dodany i wygenerowano $countRack regałów !");
+
                     }
-                    else
-                    {
+                        if($auxiliary=="B")
+                        {
+                            $data['post_1'] = $NameOfMagazin;
+                            $data['post_2'] = $magazine;
+                            $data['post_3'] = $countRack;
+                            $data['post_4'] = $highRack;
+                            $this->twig->display('admin/magazine/add_magazine', $data);
+                        }
+                        else{
+                        $data = array(
+                            'load_group' => $magazine,
+                            'load_group_descr' => $NameOfMagazin,
+                        );
+
                         $this->Admin_model->create("STORAGE", $data);
-                        $this->session->set_flashdata('alert', "Dodales magazyn! Nie wygenerowano żadnych regałów, wartość musi być liczbą i musi się mieścić w wartość 0 - 99");
-                        refresh();
+                        $this->session->set_flashdata('alert', "Magazyn został dodany!");
+                        }
+
+                    } else {
+                        $this->session->set_flashdata('alert', "Uzupełnij wszystkie pola!");
+                        $data['post_2'] = $magazine;
+                        $data['post_3'] = $countRack;
+                        $data['post_4'] = $highRack;
+                        $this->twig->display('admin/magazine/add_magazine', $data);
+
                     }
-
-
-
-
-
-                }
-                else{
-                    $this->session->set_flashdata('alert', "Uzupełnij wszystkie pola!");
-                    $data['post_2'] = $magazine;
-                    refresh();
-                }
-
             }
             else
             {
                 $this->session->set_flashdata('alert', "Uzupełnij wszystkie pola!");
                 $data['post_1'] = $NameOfMagazin;
-                refresh();
+                $data['post_3'] = $countRack;
+                $data['post_4'] = $highRack;
+                $this->twig->display('admin/magazine/add_magazine', $data);
+                    //refresh();
             }
 
+
         }
+        else
+            {
+
+            }
 
 
         $data['validation'] = $this->session->flashdata('alert');
