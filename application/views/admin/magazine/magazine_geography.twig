@@ -8,7 +8,10 @@
         <div class="jumbotron">
             <h2>Geografia magazynu</h2>
         </div>
-
+    <div class="row">
+    <div class="col-md-4" style="border: 1px solid lightgrey">
+        <font color="#808080">Magazyny</font>
+        <br/>
             <form method="post" action ="{{ base_url() }}admin/magazine/add_magazine">
                 <button type="submit" class="btn btn-lg btn-default " >Dodaj magazyn</button>
             </form>
@@ -17,8 +20,40 @@
 
             <form method="post" action ="{{ base_url() }}admin/magazine/view_magazine">
                 <button type="submit" class="btn btn-lg btn-default " >Wyświetl magazyny</button>
-            </form>
 
+            </form>
+        <br/>
+    </div>
+
+        <div class="col-md-4" style="border: 1px solid lightgrey">
+            <font color="#808080">Regały</font>
+            <br/>
+        <form method="post" action ="{{ base_url() }}admin/Rack/add_rack">
+            <button type="submit" class="btn btn-lg btn-default " >Dodaj regał</button>
+        </form>
+            <br/>
+            <form method="post" action ="{{ base_url() }}admin/rack/view_rack">
+                <button type="submit" class="btn btn-lg btn-default " >Wyświetl regały</button>
+                <br/>
+            </form>
+            <br/>
+    </div>
+
+
+        <div class="col-md-4" style="border: 1px solid lightgrey">
+            <font color="#808080">Półki</font>
+            <br/>
+            <form method="post" action ="{{ base_url() }}admin/Rack/">
+                <button type="submit" class="btn btn-lg btn-default " >Dodaj półkę</button>
+            </form>
+            <br/>
+            <form method="post" action ="{{ base_url() }}admin/magazine/">
+                <button type="submit" class="btn btn-lg btn-default " >Wyświetl półki</button>
+                <br/>
+            </form>
+            <br/>
+        </div>
+    </div>
 
 
 

@@ -1,0 +1,64 @@
+{% extends "admin/include/include.twig" %}
+{% block add %}
+
+
+    <br/>
+    <div class="container theme-showcase" role="main">
+
+        <div class="jumbotron">
+            <h2>Wyswietlanie regałów</h2>
+        </div>
+
+
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>Numer:</th>
+                <th>Przynależność do strefy Magazynowej:</th>
+                <th>Numer regału:</th>
+                <th>Miejsce magazynowe:</th>
+                <th>Maksymalna wysokość:</th>
+                <th><th>
+                <th><th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for STOR_SHELVES in views %}
+                <tr>
+                    <td width=10%>{{ loop.index }}</td>
+                    <td width=20%>{{ STOR_SHELVES.load_group }}</td>
+                    <td width=20%>{{ STOR_SHELVES.shel_descr}}</td>
+                    <td width=20%>{{ STOR_SHELVES.shel_result }}</td>
+                    <td width=20%>{{ STOR_SHELVES.shel_max_h}}</td>
+                    <td width=10%>
+                        {% if check_group(['admin','moderator']) %}
+                            <a href="{{ base_url() }}admin/magazine/edit_magazine/{{ STORAGE.id_storage }}"><button type="button" class="btn btn-default">Edytuj</button></a>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if check_group(['admin','moderator']) %}
+                            {#{{ STORAGE.id_storage }}#}
+                            <a href="{{ base_url() }}admin/magazine/delete_magazine/{{ STORAGE.id_storage }}"><button type="button" class="btn btn-warning" name="id">Usuń</button></a>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        {{ validation|raw }}
+        <nav aria-label="Page navigation example">
+            {{ links|raw }}
+        </nav>
+
+        <br/>
+
+        <form method="post" action ="{{ base_url() }}admin/magazine/">
+            <button type="submit" class="btn btn-lg btn-default " >Wróć</button>
+        </form>
+
+        <br/>
+
+
+    </div>
+
+{% endblock %}

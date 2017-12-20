@@ -9,18 +9,18 @@
         </div>
             <form method="post" action ="{{ base_url() }}admin/magazine/add_magazine">
 
-                    <div class="row">
-                        <div class="col-md-6" style="border: 1px solid lightgrey">
 
+                            <div class="row">
+                                <div class="col-md-6" style="border: 1px solid lightgrey">
                                 <font color="#808080">Pola obowiązkowe</font>
                             <br/><br/>
                         <p>
                             <label for="">Magazyn</label>
-                            <input type="text" name="magazine" value="{{ post_2 }}" placeholder="Skrót magazynu (np: MG)">
+                            <input type="text" name="magazine" class="form-control" value="{{ post_2 }}" placeholder="Skrót magazynu (np: MG)">
                         </p>
                         <p>
                             <label for="">Pełna nazwa magazynu</label>
-                            <input type="text" name="NameOfMagazin" value="{{ post_1 }}" placeholder="Magazyn Główny">
+                            <input type="text" class="form-control" name="NameOfMagazin" value="{{ post_1 }}" placeholder="Magazyn Główny">
                         </p>
                         </div>
 
@@ -33,11 +33,11 @@
 
                             <p>
                                 <label for ="">Ilość regałów do dodania</label>
-                                <input type="text" name="countRack" value="{{ post_3 }}" placeholder="0">
+                                <input type="text" class="form-control" name="countRack" value="{{ post_3 }}" placeholder="0">
                             </p>
                             <p>
-                                <label for ="">Maksymalna wysokość regałów</label>
-                                <input type="text" name="highRack" value="{{ post_4 }}" placeholder="0">
+                                <label for ="">Maksymalna wysokość regałów [m]</label>
+                                <input type="text" class="form-control" name="highRack" value="{{ post_4 }}" placeholder="0">
                             </p>
                         </div>
                     </div>

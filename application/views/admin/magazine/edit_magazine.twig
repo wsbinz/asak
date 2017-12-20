@@ -13,18 +13,19 @@
 
             <p>
                     <label for="">Magazyn</label>
-                    <input type="text" name="magazine" value="{{storage.load_group|trim(" ","right")}}">
+                    <input type="text" class="form-control" name="magazine" value="{{storage.load_group|trim(" ","right")}}">
                 </p>
+                <br/>
                 <p>
                     <label for="">Pełna nazwa magazynu</label>
-                    <input type="text" name="NameOfMagazin" value="{{storage.load_group_descr|trim(" ","right")}}">
+                    <input type="text" class="form-control" name="NameOfMagazin" value="{{storage.load_group_descr|trim(" ","right")}}">
                 </p>
             <tr>
                 <td>
                     <button type="submit" class="btn btn-lg btn-default " >Zapisz</button>
                 </td>
             </form>
-
+                <br/>
                 <td>
             <form method="post" action ="{{ base_url() }}admin/magazine/view_magazine">
                 <button type="submit" class="btn btn-lg btn-default " >Zaniechaj</button>
