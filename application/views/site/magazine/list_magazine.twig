@@ -28,17 +28,27 @@
                     <td width=50%>{{ STORAGE.load_group_descr}}</td>
                     <td width=10%>
                         {% if check_group(['admin','moderator']) %}
-                        <a href="{{ base_url() }}admin/magazine/edit_magazine/{{ STORAGE.id_storage }}"><button type="button" class="btn btn-default">Edytuj</button></a>
+                            <a href="{{ base_url() }}admin/magazine/edit_magazine/{{ STORAGE.id_storage }}"><button type="button" class="btn btn-default">Edytuj</button></a>
                         {% endif %}
                     </td>
                     <td>
                         {% if check_group(['admin','moderator']) %}
                             {#{{ STORAGE.id_storage }}#}
-                        <a href="{{ base_url() }}admin/magazine/delete_magazine/{{ STORAGE.id_storage }}"><button type="button" class="btn btn-warning" name="id">Usuń</button></a>
+                            <a href="{{ base_url() }}admin/magazine/delete_magazine/{{ STORAGE.id_storage }}"><button type="button" class="btn btn-warning" name="id">Usuń</button></a>
                         {% endif %}
                     </td>
                 </tr>
             {% endfor %}
+            {##}{# test#}
+            {#{% for STOR_SHELVES in views %}#}
+                {#<tr>#}
+                    {#<td width=10%>{{ loop.index }}</td>#}
+                    {#<td width=20%>{{ STOR_SHELVES.load_group }}</td>#}
+                    {#<td width=20%>{{ STOR_SHELVES.shel_descr}}</td>#}
+
+                {#</tr>#}
+            {#{% endfor %}#}
+            {##}
             </tbody>
         </table>
         {{ validation|raw }}

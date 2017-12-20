@@ -276,11 +276,26 @@ class Magazine extends Admin_Controller
     public function pernament_delete($id)
     {
         $where = array('id_storage' => $id);
+        $data['storage'] = $this->Admin_model->get_single("STORAGE",$where);
+
+        $sec= json_encode($data['storage']);                     //
+        $sec = json_decode($sec, true);                    //
+        $third = $sec['load_group'];                             //
+        $where2 = array('load_group'=> $third);                  //
+
+
+        $data['stor_shelves'] = $this->Admin_model->delete("STOR_SHELVES",$where2);
+
+
+        $this->twig->display('site/magazine/list_magazine',$data);
+
 
         $data['storage'] = $this->Admin_model->delete("STORAGE",$where);
         redirect('admin/magazine/view_magazine');
-       // $data['validation'] = $this->session->flashdata('alert');
-        //$this->twig->display('site/magazine/list_magazine',$data);
+
+
+
+
     }
 
 /*$wys = 222.6;
