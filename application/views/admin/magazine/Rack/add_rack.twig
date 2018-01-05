@@ -12,7 +12,7 @@
 
                         <label for="">Magazyn</label>
 
-            <select class="form-control" id="sel1" name="storage">
+            <select class="form-control" id="sel1" name="storage" >
             {%  for storage in load_group %}
                 <option value="{{storage.load_group|trim(" ","right")}}">{{ storage.load_group|trim(" ","right") }}</option>
             {% endfor %}

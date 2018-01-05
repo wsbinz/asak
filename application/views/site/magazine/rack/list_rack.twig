@@ -30,17 +30,17 @@
                     <td width=20%>{{ STOR_SHELVES.shel_descr}}</td>
                     <td width=20%>{{ STOR_SHELVES.shel_result }}</td>
                     <td width=20%>{{ STOR_SHELVES.shel_max_h}}</td>
-                    <td width=10%>
+                    <td width=20%>
                         {% if check_group(['admin','moderator']) %}
-                            <a href="{{ base_url() }}admin/magazine/edit_magazine/{{ STORAGE.id_storage }}"><button type="button" class="btn btn-default">Edytuj</button></a>
+                            <a href="{{ base_url() }}admin/rack/edit_rack/{{ STOR_SHELVES.id_stor_shelve }}"><button type="button" class="btn btn-default">Edytuj</button></a>
                         {% endif %}
                     </td>
-                    <td>
-                        {% if check_group(['admin','moderator']) %}
+                    {#<td>#}
+                        {#{% if check_group(['admin','moderator']) %}#}
                             {#{{ STORAGE.id_storage }}#}
-                            <a href="{{ base_url() }}admin/magazine/delete_magazine/{{ STORAGE.id_storage }}"><button type="button" class="btn btn-warning" name="id">Usuń</button></a>
-                        {% endif %}
-                    </td>
+                            {#<a href="{{ base_url() }}admin/magazine/delete_magazine/{{ STORAGE.id_storage }}"><button type="button" class="btn btn-warning" name="id">Usuń</button></a>#}
+                        {#{% endif %}#}
+                    {#</td>#}
                 </tr>
             {% endfor %}
             </tbody>

@@ -28,35 +28,55 @@ public function index()
 
 }
 
-    public function add_rack() //dodanie regały
+    public function add_rack() //dodanie regału
     {
-
-
-
         if(!empty($_POST))
         {
             $count = $this->input->post('count',true);
             $storage = $this->input->post('storage',true);
             $highRack = $this->input->post('highRack',true);
             $data['post_1'] = $count;
+            $data['post_2'] = $highRack;
+            $where = array('load_group' => $storage);
+            $rows = $this->Admin_model->num_rows_where("STOR_SHELVES",$where);
 
+            $len = strlen($rows);
+            $arr = array();
+            for($i=0; $i<$len;$i++){
+                $arr[] = substr($rows, $i, 1);
+            }
 
+            $len = strlen($count);
+            $arra = array();
+            for($i=0; $i<$len;$i++){
+                $arra[] = substr($count, $i, 1);
+            }
+
+            if($rows>9)
+                {
+                    $rows1 = $arr[0];
+                    $rows2 = $arr[1];
+                }
+
+            else
+                {
+                    $rows1 = $arr[0];
+                    $rows2 = 0;
+                }
 
             if((!empty($count))&&(!empty($highRack)))               //generowanie regałów
             {
                 if ((is_numeric($count))&&(is_numeric($highRack)))
                     {
-                        if (($count <= 100)&&($count > 0))
+                        if (($count <= 100)&&($count > 0)&&($count+$rows<100))
                             {
-                                $max = $count;
-
-                                $regal = array("a" => 0, "b" => 0);
-                                $pom = 0;
+                                $regal = array("a" => $rows1, "b" => $rows2);
+                                $pom1 = $rows1;
+                                $pom2 = $rows2;
+                                $pom3 = $count;
 
                                 for ($i = 0; $i <= 9; $i++) {
-                                    $regal["b"] = 0;
                                     for ($j = 0; $j <= 9; $j++) {
-                                        //echo $regal["a"];
                                         $data = array(
                                             'load_group' => $storage,
                                             'shel_descr' => $regal["a"] . $regal["b"],
@@ -65,21 +85,33 @@ public function index()
 
 
                                         $this->Admin_model->create("STOR_SHELVES", $data);
-                                        $regal["a"];
-                                        //echo $regal["b"]++."<br>";
                                         $regal["b"]++;
-                                        $pom++;
-                                        if ($pom >= $max)
+                                        $pom2++;
+                                        $pom3--;
+                                        if ($regal["b"] >= 10)
+                                        {
+                                            $regal["b"]=0;
                                             break;
+                                        }
+
+                                        else if($pom3==0)
+                                        {
+                                            break;
+                                        }
                                     }
+                                    $pom1++;
                                     $regal["a"]++;
-                                    if ($pom >= $max)
+                                    if ($pom1 >= 9)
                                         break;
+                                    else if($pom3==0)
+                                    {
+                                        break;
+                                    }
                                     else continue;
 
 
                                 }
-                                $this->session->set_flashdata('alert', "W magazynie $storage, ilość regałów wygenerowanych:  $count");
+                                $this->session->set_flashdata('alert', "W magazynie $storage, ilość regałów wygenerowanych:  $count maksymalnej wysokości:  $highRack");
                                 $this->twig->display('admin/magazine/rack/add_rack', $data);
                             }
 
@@ -87,7 +119,9 @@ public function index()
                             {
                                 $data['post_1'] = $count;
                                 $data['post_2'] = $highRack;
-                                $this->session->set_flashdata('alert', "Ilość dopuszczalnych regałów w jednej strefie magazynowej musi wynosić od 1-100.");
+                                $false= $count + $rows - 100;
+                                $this->session->set_flashdata('alert', "Ilość dopuszczalnych regałów w jednej strefie magazynowej musi wynosić od 1-100.<br/>
+                                Przekroczyłeś daną ilość o: $false");
                                 $this->twig->display('admin/magazine/rack/add_rack', $data);
                             }
                     }
@@ -128,7 +162,7 @@ public function index()
         $config['total_rows'] = $total_rows;
         $config['per_page'] = 10;
         $config['uri_segment'] = 4;
-        $config['base_url'] = base_url('admin/magazine/rack/view_rack');
+        $config['base_url'] = base_url('admin/rack/view_rack');
 
         $config['full_tag_open'] = '<ul class="pagination">';
         $config['full_tag_close'] = '</ul>';
@@ -165,9 +199,37 @@ public function index()
 
     }
 
+    public function edit_rack($id)             //edycja regału o określonym ID
+    {
+        if(is_numeric($id)) {
 
+            $where = array('id_stor_shelve' => $id);
 
+            $data['stor_shelves'] = $this->Admin_model->get_single("STOR_SHELVES", $where);
 
+            $data['validation'] = $this->session->flashdata('alert');
+
+            $this->twig->display('admin/magazine/rack/edit_rack', $data);
+        }
+        else
+        {
+            $this->session->set_flashdata('alert', "Podany magazyn nie istnieje !");
+            //refresh();
+            redirect(base_url('admin/magazine/rack/edit_rack'));
+        }
+
+    }
+
+    public function save_rack($id)             //edycja regału o określonym ID
+    {
+        $where = array('id_stor_shelve' => $id);
+        $data['shel_result']= $this->input->post('rack',true);
+        $data['shel_max_h']= $this->input->post('highRack',true);
+        $data['stor_shelves'] = $this->Admin_model->update("STOR_SHELVES",$data,$where);
+        $this->session->set_flashdata('alert', "Regał edytowany pomyślnie !");
+        redirect(base_url("admin/rack/view_rack"));
+
+    }
 
 
 

@@ -1,0 +1,40 @@
+{% extends "admin/include/include.twig" %}
+
+{% block add %}
+
+
+<div class="container theme-showcase" role="main"><br/>
+    <div class="jumbotron">
+        <h2>Edytowanie regału</h2>
+    </div>
+    <form method="post" action ="{{ base_url() }}admin/rack/save_rack/{{stor_shelves.id_stor_shelve|trim(" ","right")}}">
+        <p>
+            <label for="">Regał</label>
+            <input type="text" class="form-control" readonly="readonly" name="rack" value="{{stor_shelves.shel_result|trim(" ","right")}}">
+        </p>
+        <p>
+            <label for="">Wysokość regału</label>
+            <input type="text" class="form-control" name="highRack" value="{{stor_shelves.shel_max_h|trim(" ","right")}}">
+        </p>
+        <td>
+            <button type="submit" class="btn btn-lg btn-default " >Zapisz</button>
+        </td>
+
+    </form>
+
+
+    <br/>
+
+    <form method="post" action ="{{ base_url() }}admin/rack/view_rack">
+        <button type="submit" class="btn btn-lg btn-default " >Zaniechaj</button>
+    </form>
+
+    <br/>
+
+    {{ validation|raw }}<br/>
+
+</div>
+
+
+
+{% endblock %}

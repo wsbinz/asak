@@ -75,5 +75,12 @@ class Admin_model extends CI_Model
         return $query->num_rows();
     }
 
+    public function num_rows_where($table, $where='') //Pobiera liczbe wierszy z tabeli z warunkiem zapytania
+    {
+        $this->db->where($where);
+        $query = $this->db->get($table);
+        return $query->num_rows();
+    }
+
 }
 
