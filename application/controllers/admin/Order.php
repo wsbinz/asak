@@ -10,7 +10,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Order extends Admin_Controller
 {
-
     public function __construct()
     {
         parent::__construct();
@@ -20,12 +19,67 @@ class Order extends Admin_Controller
         $this->load->library('pagination');
     }
 
-
     public function index()
     {
         $data['dost'] = $this->Admin_model->get('VEND');
+        if(!empty($_POST))
+        {
+            $numer = $this->input->post('nr_docum',true);
+            $typ = $this->input->post('docum_type',true);
+            $dost = $this->input->post('vend_name',true);
+            $desc = $this->input->post('docum_desc',true);
+            if(!empty($numer))
+            {
+                $where = array('nr_docum' => $numer);
+                $data['docum_head'] = $this->Admin_model->get_single("DOCUM_HEAD", $where);
+                if(!empty($data['docum_head']))
+                {
+                    $this->session->set_flashdata('alert', "Dokument o takim numerze już istnieje w bazie!");
+                    $data['validation'] = $this->session->flashdata('alert');
+                    $data['1'] = $numer;
+                    $data['2'] = $typ;
+                    $data['3'] = $dost;
+                    $data['4'] = $desc;
+                    $this->twig->display('admin/product/order_products', $data);
+                }
+                else if (!empty($typ))
+                {
+                    $data = array(
+                        'nr_docum' => $numer,
+                        'docum_type' => $typ,
+                        'vend_name' => $dost,
+                        'docum_desc' => $desc,
+                    );
+					$this->Admin_model->create("DOCUM_HEAD", $data);
+                    $this->session->set_flashdata('alert', "Dokument został dodany!");
+				}
+                else
+                {
+                    $this->session->set_flashdata('alert', "Uzupełnij wszystkie pola!");
+                    $data['1'] = $numer;
+                    $data['3'] = $dost;
+                    $data['4'] = $desc;
+                    $this->twig->display('admin/product/order_products', $data);
+                }
+            }
+            else
+            {
+                $this->session->set_flashdata('alert', "Uzupełnij wszystkie pola!");
+                $data['2'] = $typ;
+                $data['3'] = $dost;
+                $data['4'] = $desc;
+                $this->twig->display('admin/product/order_products', $data);
+            }
+        }
+        else
+        {
+            $data['validation'] = $this->session->flashdata('alert');
+            $this->twig->display('admin/product/order_products',$data);
+        }
+    }
+    public function order()
+    {
         $data['indk_mwym'] = $this->Admin_model->get("MNAME");
-
 
         $zam = $this->input->post('zam',true);
 
@@ -33,11 +87,12 @@ class Order extends Admin_Controller
         {
             if (is_numeric($zam))
             {
-                if (($zam > 0))
+                if (($zam >= 0))
                 {
                     $data = array(
-                        'nr_mat' => $nr_mat,
-                        'ilosc' => $zam,
+                        //'nr_docum' => $?,
+                        //'nr_mat' => $?,
+                        'docum_value' => $zam,
                     );
 
                     $this->Admin_model->create("DOCUM_ITEM", $data);
@@ -46,26 +101,19 @@ class Order extends Admin_Controller
                 }
 
                 else {
-                    $this->session->set_flashdata('alert', "Ilość zamawianego towaru musi być równa lub większa od zera!");
+                    $this->session->set_flashdata('alert', "Liczba zamawianego towaru musi być równa lub większa od zera!");
                     $data['ilosc'] = $zam;
-                    $this->twig->display('admin/product/order_products', $data);
+                    $this->twig->display('admin/product/order_products_cd', $data);
                 }
             } else {
-                $this->session->set_flashdata('alert', "Ilość do zamówienia musi być wartością numeryczną!");
+                $this->session->set_flashdata('alert', "Liczba do zamówienia musi być wartością numeryczną!");
                 $data['ilosc'] = $zam;
-                $this->twig->display('admin/product/order_products', $data);
+                $this->twig->display('admin/product/order_products_cd', $data);
             }
-
-
         }
 
         $data['validation'] = $this->session->flashdata('alert');
-        $this->twig->display('admin/product/order_products', $data);
-
-        /*$where = array('nr_mat'=>$nr_mat);
-        $data['sdas'] = $this->Admin_model->get_where('STOR_AMOUNTS',$where);
-        $where = array('nr_mat'=>46);
-        $data['msize'] = $this->Admin_model->get_where("MSIZE",$where);*/
+        $this->twig->display('admin/product/order_products_cd', $data);
     }
 
     public function pz()
@@ -79,9 +127,6 @@ class Order extends Admin_Controller
         $config['uri_segment'] = 4;
         $config['base_url'] = base_url('admin/order/pz');
 
-        /*        $config['num_links'] = 2;
-                $config['use_page_numbers'] = TRUE;
-                $config['reuse_query_string'] = TRUE;*/
 
         $config['full_tag_open'] = '<ul class="pagination">';
         $config['full_tag_close'] = '</ul>';
