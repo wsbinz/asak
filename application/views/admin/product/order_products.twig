@@ -17,13 +17,13 @@
                 <h3>Numer:</h3>
             </div>
 
-            <input type="text" class="form-control" name="numer" value="{{ 1 }}" style="width: 10%;">
+            <input type="text" class="form-control" name="nr_docum" value="{{ 1 }}" style="width: 10%;">
 
             <div class="page-header">
                 <h3>Typ dokumentu:</h3>
             </div>
 
-            <select class="form-control" name="typ" value="{{ 2 }}" style="width: 10%;"> <!--tab MWYM pole unit_structure -->
+            <select class="form-control" name="docum_type" value="{{ 2 }}" style="width: 10%;"> <!--tab MWYM pole unit_structure -->
                     <option value="PZ">PZ</option>
             </select>
 
@@ -31,7 +31,7 @@
                 <h3>Wybierz Dostawcę:</h3>
             </div>
 
-            <select class="form-control" name="dost" value="{{ 3 }}" style="width: 10%;"> <!--tab MWYM pole unit_structure -->
+            <select class="form-control" name="vend_name" value="{{ 3 }}" style="width: 10%;"> <!--tab MWYM pole unit_structure -->
 
                 {% for dostawca in dost %}
                     <option value="{{ dostawca.id_vend }}">{{ dostawca.vend_name }}</option>
@@ -43,7 +43,7 @@
                 <h3>Nazwa dokumentu:</h3>
             </div>
 
-            <input type="text" class="form-control" name="desc" value="{{ 4 }}" style="width: 30%;">
+            <input type="text" class="form-control" name="docum_desc" value="{{ 4 }}" style="width: 30%;">
 
 
 
