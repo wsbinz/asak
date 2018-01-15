@@ -1,0 +1,48 @@
+{% extends "admin/include/include.twig" %}
+
+{% block add %}
+
+
+    <div class="container theme-showcase" role="main"><br/>
+        <div class="jumbotron">
+            <h2>Generowanie półek dla {{ post_2 }}</h2>
+        </div>
+        <form method="post" action ="{{ base_url() }}admin/shelf/add_shelf_finally/">
+
+
+                {%  for i in 0..(post_1-1)  %}
+
+                    {#	STOR_SHELVES#}
+                    <label for="">Wysokość półki {{i}}:</label><br/>
+                    <input type="text" class="form-control" name="counter_{{i}}" placeholder="0 - 100"><br/>
+                {% endfor %}
+            <br/>
+
+            {#<label for="">Ilość półek w regale do wygenerowania</label><br/>#}
+            {#<input type="text" class="form-control" name="count" value="{{ post_1 }}" placeholder="0 - 100"><br/>#}
+
+            {#<label for="">Maksymalna wysokość regałów</label><br/>#}
+            {#<input type="text" class="form-control" name="highRack" value="{{ post_2 }}" placeholder="0"><br/>#}
+
+
+
+            <button type="submit" class="btn btn-lg btn-default " >Dodaj</button>
+
+
+        </form>
+
+        <br/>
+
+        <form method="post" action ="{{ base_url() }}admin/magazine/">
+            <button type="submit" class="btn btn-lg btn-default " >Wróć</button>
+        </form>
+
+        <br/>
+
+        {{ validation|raw }}<br/>
+
+    </div>
+
+
+
+{% endblock %}

@@ -21,12 +21,12 @@ class Rack extends Admin_Controller
 
 
 
-public function index()
-{
+    public function index()
+    {
 
-    $this->twig->display('admin/magazine/magazine_geography');
+        $this->twig->display('admin/magazine/magazine_geography');
 
-}
+    }
 
     public function add_rack() //dodanie regału
     {

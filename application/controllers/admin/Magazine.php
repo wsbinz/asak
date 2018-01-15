@@ -279,7 +279,7 @@ class Magazine extends Admin_Controller
         $data['storage'] = $this->Admin_model->get_single("STORAGE",$where);
 
         $sec= json_encode($data['storage']);                     //
-        $sec = json_decode($sec, true);                    //
+        $sec = json_decode($sec, true);                    // Usuwanie regałów
         $third = $sec['load_group'];                             //
         $where2 = array('load_group'=> $third);                  //
 
