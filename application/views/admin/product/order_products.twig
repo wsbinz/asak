@@ -2,23 +2,36 @@
 
 {% block body %}
 
-
     <div class="container theme-showcase" role="main">
         <!-- Szary Panel -->
         <div class="jumbotron">
             <h2>Zamówienie</h2> <!--do wladowania numer produktu -->
         </div>
-        <form method="post" action ="{{ base_url() }}admin/product/order_products">
+        <form method="post" action ="{{ base_url() }}admin/order/order">
 
             {% autoescape %}
                 {{ validation|raw }}
             {% endautoescape %}
 
             <div class="page-header">
+                <h3>Numer:</h3>
+            </div>
+
+            <input type="text" class="form-control" name="nr_docum" value="{{ 1 }}" style="width: 10%;">
+
+            <div class="page-header">
+                <h3>Typ dokumentu:</h3>
+            </div>
+
+            <select class="form-control" name="docum_type" value="{{ 2 }}" style="width: 10%;"> <!--tab MWYM pole unit_structure -->
+                    <option value="PZ">PZ</option>
+            </select>
+
+            <div class="page-header">
                 <h3>Wybierz Dostawcę:</h3>
             </div>
 
-            <select class="form-control" name="select_vend" style="width: 50%;"> <!--tab MWYM pole unit_structure -->
+            <select class="form-control" name="vend_name" value="{{ 3 }}" style="width: 10%;"> <!--tab MWYM pole unit_structure -->
 
                 {% for dostawca in dost %}
                     <option value="{{ dostawca.id_vend }}">{{ dostawca.vend_name }}</option>
@@ -26,47 +39,16 @@
 
             </select>
 
+            <div class="page-header">
+                <h3>Nazwa dokumentu:</h3>
+            </div>
+
+            <input type="text" class="form-control" name="docum_desc" value="{{ 4 }}" style="width: 30%;">
 
 
-            <table class="table table-hover">
-                <thead>
-                <tr>
-                    <th>Numer:</th>
-                    <th>Nazwa:</th>
-                    <th>Nr mat:</th>
-                    <th>Ilość w KAR:</th>
-                    <th>Stan w mag.</th>
-                    <th>Ilość do zamówienia:<th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for indk in indk_mwym %}
-                <tr>
-                    <td width=10%>{{ loop.index }}</td>
-                    <td width=40%>{{ indk.name_short }}</td>
-                    <td width=20%>{{ indk.nr_mat}}</td>
-                    <td width=10%>{{ indk.unit_structure }}</td>   <!-- do zassania dane  value... z tabeli MSIZE dla danego nr_mat oraz unit_structure = KAR  -->
-                    <td width=10%>{{ indk.mat_amount }}</td>
-                    <td width=10%><input type="text" class="form-control" id="" name="zam" value="{{ ilosc }}"></td> <!-- tab.
-                    </td> <!-- Przjscie do wyswietlenia produktu z danego numeru -->
-                </tr>
 
-                {% endfor %}
-                </tbody>
-            </table>
-
-            <table class="table table-hover">
-                <thead>
-                    <th></th>
-                </thead>
-                <tbody>
-                </tbody>
-            </table>
-
-
-            <button type="submit" class="btn btn-lg btn-default btn-end">Wyślij</button>
+            <button type="submit" class="btn btn-lg btn-default btn-end">Dalej</button>
         </form>
-        <button type="submit" class="btn btn-lg btn-default btn-end">Wygeneruj do pdf</button>
         <nav aria-label="Page navigation example">
         {{ links|raw }}
         </nav>
