@@ -16,63 +16,30 @@ class Order extends Admin_Controller
         $this->load->helper('My');
         $this->load->library('pagination');
     }
-    public function index()
+    public function order_products()
     {
+        if(!empty($_POST)) {
+
+            $data = array(
+                'nr_docum' => $this->input->post('nr_docum', true),
+                'docum_type' => $this->input->post('docum_type', true),
+                'vend_name' => $this->input->post('vend_name', true),
+                'docum_desc' => $this->input->post('docum_desc', true),
+            );
+            $this->Admin_model->create("DOCUM_HEAD", $data);
+
+            $data = array(
+                //'value_sign' => $this->input->post('value_sign', true),
+            );
+
+            $this->Admin_model->create("DOCUM_ITEM", $data);
+        }
+
+        $data['docum_type'] = $this->Admin_model->get("DOCUM_HEAD");
+        $data['zam'] = $this->Admin_model->get("VIEW_ORDER");
         $data['dost'] = $this->Admin_model->get('VEND');
-        if(!empty($_POST))
-        {
-            $nr_docum = $this->input->post('nr_docum',true);
-            $docum_type = $this->input->post('docum_type',true);
-            $vend_name = $this->input->post('vend_name',true);
-            $docum_desc = $this->input->post('docum_desc',true);
-            if(!empty($numer))
-            {
-                $where = array('nr_docum' => $numer);
-                $data['docum_head'] = $this->Admin_model->get_single("DOCUM_HEAD", $where);
-                if(!empty($data['docum_head']))
-                {
-                    $this->session->set_flashdata('alert', "Dokument o takim numerze już istnieje w bazie!");
-                    $data['validation'] = $this->session->flashdata('alert');
-                    $data['1'] = $nr_docum;
-                    $data['2'] = $docum_type;
-                    $data['3'] = $vend_name;
-                    $data['4'] = $docum_desc;
-                    $this->twig->display('admin/product/order_products', $data);
-                }
-                else if (!empty($typ))
-                {
-                    $data = array(
-                        'nr_docum' => $nr_docum,
-                        'docum_type' => $docum_type,
-                        'vend_name' => $vend_name,
-                        'docum_desc' => $docum_desc,
-                    );
-                    $this->Admin_model->create("DOCUM_HEAD", $data);
-                    $this->session->set_flashdata('alert', "Dokument został dodany!");
-                }
-                else
-                {
-                    $this->session->set_flashdata('alert', "Uzupełnij wszystkie pola!");
-                    $data['1'] = $nr_docum;
-                    $data['3'] = $docum_type;
-                    $data['4'] = $docum_desc;
-                    $this->twig->display('admin/product/order_products', $data);
-                }
-            }
-            else
-            {
-                $this->session->set_flashdata('alert', "Uzupełnij wszystkie pola!");
-                $data['2'] = $docum_type;
-                $data['3'] = $vend_name;
-                $data['4'] = $docum_desc;
-                $this->twig->display('admin/product/order_products', $data);
-            }
-        }
-        else
-        {
-            $data['validation'] = $this->session->flashdata('alert');
-            $this->twig->display('admin/product/order_products',$data);
-        }
+        $data['validation'] = $this->session->flashdata('alert');
+        $this->twig->display('admin/product/order_products',$data);
     }
     public function order()
     {
@@ -132,11 +99,25 @@ class Order extends Admin_Controller
         $config['cur_tag_close'] = '</a></li>';
         $config['num_tag_open'] = '<li class="page-item">';
         $config['num_tag_close'] = '</li>';
-        $data['indk_doc'] = $this->Admin_model->get("DOCUM_HEAD",$config['per_page'],$start_index);
+        $data['views'] = $this->Admin_model->get("DOCUM_HEAD",$config['per_page'],$start_index);
         $this->pagination->initialize($config);
         $data['links'] = $this->pagination->create_links();
         $data['validation'] = $this->session->flashdata('alert');
         $this->twig->display('site/product/list_pz',$data);
+    }
+    public function show($id)
+    {
+        if(is_numeric($id)) {
+            $where = array('nr_docum' => $id);
+            $data['docum_item'] = $this->Admin_model->get_single("DOCUM_ITEM", $where);
+            $data['validation'] = $this->session->flashdata('alert');
+            $this->twig->display('admin/product/show', $data);
+        }
+        else
+        {
+            $this->session->set_flashdata('alert', "Podany dokument nie istnieje !");
+            redirect(base_url("admin/product/pz"));
+        }
     }
     public function pdf()
     {
