@@ -5,7 +5,7 @@
     <div class="container theme-showcase" role="main">
         <!-- Szary Panel -->
         <div class="jumbotron">
-            <h2>Zamówienie</h2> <!--do wladowania numer produktu -->
+            <h2>Podgląd zamówienia</h2> <!--do wladowania numer produktu -->
         </div>
         <form method="post" action ="{{ base_url() }}admin/order/order_products">
 
@@ -14,21 +14,7 @@
             {% endautoescape %}
 
             <div class="page-header">
-                <h3>Numer:  </h3>
-                <input type="text" class="form-control" name="nr_docum" style="width: 10%;">
-
-            </div>
-            <!--
-                        <div class="page-header">
-                            <h3>Typ dokumentu:</h3>
-                        </div>
-
-                        <select class="form-control" name="docum_type" style="width: 10%;"> <!--tab MWYM pole unit_structure
-                                <option value="PZ">PZ</option>
-                        </select>
-            -->
-            <div class="page-header">
-                <h3>Wybierz Dostawcę:</h3>
+                <h3>Wybierz zamówienie</h3>
             </div>
 
             <select class="form-control" name="vend_name" style="width: 10%;"> <!--tab MWYM pole unit_structure -->
