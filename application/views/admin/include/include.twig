@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
+
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -44,35 +45,78 @@
                         <li><a href="{{ base_url() }}admin/product/add_product_ref">Dodanie produktu - referencja</a></li>
                         <li><a href="{{ base_url() }}admin/product/edit_product">Edycja produktu</a></li>
                         <li><a href="{{ base_url() }}admin/product/retire_product">Wycofanie produktu</a></li>
-                        <li><a href="#">Wyświetlenie produktu</a></li>
                         <li><a href="{{ base_url() }}admin/product/index">Lista produktów</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Logistyka<span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li class="dropdown-header">Magazyn</li>
-                        <li><a href="{{ base_url() }}admin/magazine/">Geografia magazynu</a></li>
-                        <li class="dropdown-header">Zamówienia</li>
-                        <li><a href="{{ base_url() }}admin/order/order_products">Zamówienie</a></li>
-                        <li><a href="#">Edycja</a></li>
-                        <li><a href="#">Podgląd</a></li>
-                        <li class="dropdown-header">WZ</li>
-                        <li><a href="#">Tworzenie</a></li>
-                        <li><a href="#">Edycja</a></li>
-                        <li><a href="{{ base_url() }}admin/order/pz/">Lista PZ</a></li>
-                    </ul>
-                </li>
-                <li><a href="#Raporty">Raporty</a></li>
-                <li><a href="#kontakt">Kontakt</a></li>
-                <li><a href="#kontakt">FAQ</a></li>
-                   {% if logged_in() == 0 %}
-                <li><a href="{{ base_url() }}account/login">Zaloguj</a></li>
-                   {% else %}
-                 <li><a href="{{ base_url() }}account/logout">Wyloguj</a></li>
-                  {% endif %}
-            </ul>
 
+                            <ul class="dropdown-menu multi-level">
+                                <li class="dropdown-header">Geografia magzynu</li>
+
+                                    <li  class="dropdown-submenu">
+
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Grupy załadunkowe</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="#">Dodaj</a></li>
+                                            <li><a href="#">Wyświetl</a></li>
+                                        </ul>
+                                    </li>
+
+                                    <li  class="dropdown-submenu">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Regały</a>
+                                            <ul class="dropdown-menu">
+                                               <li><a href="#">Dodaj</a></li>
+                                               <li><a href="#">Wyświetl</a></li>
+                                            </ul>
+                                    </li>
+
+                                    <li  class="dropdown-submenu">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Półki</a>
+                                            <ul class="dropdown-menu">
+                                                <li><a href="#">Dodaj</a></li>
+                                                <li><a href="#">Wyświetl</a></li>
+                                            </ul>
+                                    </li>
+
+                                <li class="divider"></li>
+                                <li class="dropdown-header">Zamówienia</li>
+                                <li><a href="{{ base_url() }}admin/order/order_products">Tworzenie</a></li>
+                                <li><a href="#">Edycja</a></li>
+                                <li><a href="#">Podgląd</a></li>
+
+                                <li class="divider"></li>
+                                <li class="dropdown-header">Przyjęcie zamówienia</li>
+                                <li><a href="#">Tworzenie</a></li>
+                                <li><a href="#">Edycja</a></li>
+                                <li><a href="{{ base_url() }}admin/order/pz/">Lista PZ</a></li>
+
+                                <li class="divider"></li>
+                                <li class="dropdown-header">Wydanie zewnętrzne</li>
+                                <li><a href="#">Tworzenie</a></li>
+                                <li><a href="#">Edycja</a></li>
+                                <li><a href="">Lista WZ</a></li>
+
+
+                            </ul>
+
+                      <li class="dropdown">
+                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Raporty <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                             <li><a href="">Eksport do pliku</a></li>
+                             <li><a href="">Stany magazynowe</a></li>
+                            </ul>
+                     </li>
+
+
+                    <li><a href="#kontakt">FAQ</a></li>
+                    {% if logged_in() == 0 %}
+                        <li><a href="{{ base_url() }}account/login">Zaloguj</a></li>
+                    {% else %}
+                        <li><a href="{{ base_url() }}account/logout">Wyloguj</a></li>
+                    {% endif %}
+
+                </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Uzytkownicy | Grupy <span class="caret"></span></a>
@@ -85,6 +129,8 @@
                     </li>
                     <li><a href="">Moje konto</a></li>
                 </ul>
+
+                -->
         </div><!--/.nav-collapse -->
     </div>
 </nav>
