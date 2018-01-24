@@ -77,35 +77,100 @@ class Shelf extends Admin_Controller
 
 
     }
-    public function generating()
+    public function generatnig()
     {
+        $count = $this->input->post('count',true);
+        $shelf = $this->input->post('shelf',true);
+        $data['post_1'] = $count;
+        $data['post_2'] = $shelf;
         if(!empty($_POST))
         {
+
+
         $data['validation'] = $this->session->flashdata('alert');
         $this->twig->display('admin/magazine/shelf/generating',$data);
         }
 
     }
 
-    public function add_shelf_finally()
+    public function add_shelf_finally($id)
     {
         set_time_limit(120);
-        //$count = $this->input->post('count',true);
-        //$data['post_1'] = $count;
-        //print_r($count);
-        echo "<br/>Adam<br/>";
 
-//        if(!empty($_POST))
-//        {
-            for ($i=0; $i<3; $i++)   //tymczasowo jest ustalone na 3 indeksy, potem domyślnie będzie ilościowa liczba
+        $data['post_1'] = $this->input->post('param1',true);
+        $data['post_2'] = $this->input->post('param2',true);
+        $rack = $data['post_2'];
+        $where = array('shel_result' => $data['post_2']);
+        $data['shel_max_h'] = $this->Admin_model->get_single("STOR_SHELVES",$where);
+        $sec= json_encode($data['shel_max_h']);
+        $sec = json_decode($sec, true);
+        $shel_max_h = $sec['shel_max_h'];           //maksymalna wysokość
+        $shel_width = $sec['shel_width'];           //szerokość
+        $shel_length = $sec['shel_length'];         //długość
+
+        $cou= ((int)$shel_width * (int)$shel_length);
+
+        $rows1=0;
+        $rows2=0;
+
+            for ($i=0; $i<$id; $i++)   //tymczasowo jest ustalone na 3 indeksy, potem domyślnie będzie ilościowa liczba
             {
-                (int) $counter_[$i] = $this->input->post("counter_$i",true);
-                echo "<br/>"+ $counter_[$i];
+                (int) $counter[$i] = $this->input->post("counter_$i",true);
+                if ((is_numeric($counter[$i]))&&(($counter[$i])<99999)&&(($counter[$i])>=1))
+                    {
+                        $regal = array("a" => $rows1, "b" => $rows2);
+
+                        $seco = (int)$counter[$i] * (int)$cou * 2;
+                        $data = array(
+                            'stor_height'=> $counter[$i],
+                            'stor_capacity' => $seco,
+                            'shel_result' => $rack,
+                            'stor_shelve' => $regal["a"].$regal["b"],
+                            'stor_result' => $rack."-".$regal["a"].$regal["b"]
+                            );
+
+
+
+                        $rows2++;
+//                        echo $regal["a"].$regal["b"];
+//                        echo '<br/>';
+                        $this->Admin_model->create("STOR_SIZE", $data);
+                        if($rows2==10)
+                        {
+                            $rows2=0;
+                            $rows1++;
+                        }
+
+//                        echo $counter[$i];
+//                        echo "<br>";
+                    }
+                else if(empty($counter[$i]))
+                    {
+
+                        $this->session->set_flashdata('alert', "Wszystkie wartości muszą być uzupełnione");
+                        $data['validation'] = $this->session->flashdata('alert');
+                        //redirect(base_url('admin/magazine/rack/add_shelf'));
+
+                    }
+
+                else
+                    {
+                        $counter[$i]='';
+                        $this->session->set_flashdata('alert', "Ilość półek musi być wartością numeryczną, w zakresie od 1-99999");
+                        $data['validation'] = $this->session->flashdata('alert');
+                    }
+
+//                echo $counter[$i];
+//                echo "<br>";
             }
-//
+            $data['counter'] = $counter;
+            $this->twig->display('admin/magazine/shelf/generating',$data);
+//        for ($i=0; $i<$id; $i++)
+//        if ((is_numeric($counter[$i]))&&(($counter[$i])<99999)&&(($counter[$i])>=1))
+//        {
+//            echo $counter[$i];
+//            echo "<br>";
 //        }
-
-
 
     }
 

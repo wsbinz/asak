@@ -6,18 +6,20 @@
     <div class="container theme-showcase" role="main"><br/>
         <div class="jumbotron">
             <h2>Generowanie półek dla {{ post_2 }}</h2>
-        </div>
-        <form method="post" action ="{{ base_url() }}admin/shelf/add_shelf_finally/">
 
+        </div>
+        <form method="post" action ="{{ base_url() }}admin/shelf/add_shelf_finally/{{ post_1 }}">
+            <input type="hidden" value="{{ post_2 }}" name='param2'>
+            <input type="hidden" value="{{ post_1 }}" name='param1'>
 
                 {%  for i in 0..(post_1-1)  %}
 
                     {#	STOR_SHELVES#}
                     <label for="">Wysokość półki {{i}}:</label><br/>
-                    <input type="text" class="form-control" name="counter_{{i}}" placeholder="0 - 100"><br/>
+                    <input type="text" class="form-control" name="counter_{{i}}" placeholder="1 - 99999 [mm] " value='{{ counter[i] }}'><br/>
                 {% endfor %}
             <br/>
-
+            {#<label class="hidden" name="count" value="{{ post_1 }}">{{ post_1 }}</label>#}
             {#<label for="">Ilość półek w regale do wygenerowania</label><br/>#}
             {#<input type="text" class="form-control" name="count" value="{{ post_1 }}" placeholder="0 - 100"><br/>#}
 
