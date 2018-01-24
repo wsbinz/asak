@@ -72,3 +72,13 @@ function check_group($alias_group)
 
 
 }
+
+function fileLog($status='',$wiadomosc='TESTOWA WIADOMOSC')
+{
+    if(write_file(BASEPATH.'../asset/log/log1.txt',$wiadomosc))
+    {
+
+    }
+
+    print_r(BASEPATH.'../asset/log/log1.txt');
+}

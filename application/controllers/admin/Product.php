@@ -25,6 +25,8 @@ class Product extends Admin_Controller  {
     public function index($id='')
     {
 
+        fileLog();
+
         echo check_group(array('admin','moderator'));
 
         if(logged_in()!= 1)
