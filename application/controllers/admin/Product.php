@@ -272,6 +272,9 @@ class Product extends Admin_Controller  {
                 redirect('admin/product');
             }
             else {
+                $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+                $variable['post'] = $_POST;
+                print_r($variable['post']);
                 $this->session->set_flashdata('alert', validation_errors());
             }
         }
