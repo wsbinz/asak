@@ -272,12 +272,11 @@ class Product extends Admin_Controller  {
                 redirect('admin/product');
             }
             else {
-                print_r($_POST);
+                $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
                 $variable['post'] = $_POST;
+                print_r($variable['post']);
                 $this->session->set_flashdata('alert', validation_errors());
-
             }
-
         }
 
 
@@ -289,7 +288,6 @@ class Product extends Admin_Controller  {
         $variable['gr_tow'] = $this->Admin_model->get('PROD');
         $variable['unit_weight'] = $this->Admin_model->get_where('UNITS', array('unit_weight' => '1'));
         $variable['validation'] = $this->session->flashdata('alert');
-
         $this->twig->display('admin/product/add_product',$variable);
     }
 
@@ -340,7 +338,7 @@ class Product extends Admin_Controller  {
 
        if(!check_group(array('admin','moderator')))
        {
-           $this->session->set_flashdata('alert', "Nie masz uprawnien do tej sekcji");
+           $this->session->set_flashdata('alert', "Nie możesz edytować produktów");
            redirect('account');
        }
 
@@ -427,6 +425,9 @@ class Product extends Admin_Controller  {
                    $where = array('nr_mat' => $id);
                    $this->Admin_model->update("INDK", $data,$where); //Tworzenie wpisu do INDK
 
+/*                   $max = "nr_mat";
+                   $nr_mat = $this->Admin_model->get_max("INDK", $max); //Pobieranie ostatniego ID z tabeli INDK
+                   $nr_mat = $nr_mat[0] -> nr_mat;*/
                    $this->db->trans_complete();//Zakończenie tranzakcji
 
                    //Tabela NAZW
@@ -439,6 +440,13 @@ class Product extends Admin_Controller  {
                    $where = array('nr_mat' => $id);
                    $this->Admin_model->update("MNAME", $data,$where);
 
+
+/*                   //Tabela STORAGE  - grupa zaladunkowa
+                   $data = array(
+                       'load_group' => $this->input->post('load_group', true),
+                       'load_group_descr' => "dodatki",
+                   );
+                   $this->Admin_model->update("STORAGE", $data,$where);*/
 
                    //Tabela MWYM
                    $where = array('nr_mat' => $id);
