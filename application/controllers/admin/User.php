@@ -41,6 +41,12 @@ class User extends Admin_Controller {
     public function create_user()
     {
 
+        if(!check_group(array('admin','uzytkownik','moderator')))
+        {
+            $this->session->set_flashdata('alert', "Nie masz dostępu do tej częsci serwisu");
+            redirect('account');
+        }
+
         $activation_code = random_string();
         if(!empty($_POST)){
 
