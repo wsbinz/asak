@@ -35,8 +35,14 @@ class Rack extends Admin_Controller
             $count = $this->input->post('count',true);
             $storage = $this->input->post('storage',true);
             $highRack = $this->input->post('highRack',true);
+            $widthRack = $this->input->post('widthRack',true);
+            $lengthRack = $this->input->post('lengthRack',true);
+
             $data['post_1'] = $count;
             $data['post_2'] = $highRack;
+            $data['post_3'] = $widthRack;
+            $data['post_4'] = $lengthRack;
+
             $where = array('load_group' => $storage);
             $rows = $this->Admin_model->num_rows_where("STOR_SHELVES",$where);
 
@@ -66,7 +72,7 @@ class Rack extends Admin_Controller
 
             if((!empty($count))&&(!empty($highRack)))               //generowanie regałów
             {
-                if ((is_numeric($count))&&(is_numeric($highRack)))
+                if ((is_numeric($count))&&(is_numeric($highRack))&&(is_numeric($widthRack))&&(is_numeric($lengthRack)))
                     {
                         if (($count <= 100)&&($count > 0)&&($count+$rows<100))
                             {
@@ -81,7 +87,10 @@ class Rack extends Admin_Controller
                                             'load_group' => $storage,
                                             'shel_descr' => $regal["a"] . $regal["b"],
                                             'shel_result' => $storage . "-" . $regal["a"] . $regal["b"],
-                                            'shel_max_h' => $highRack);
+                                            'shel_max_h' => $highRack,
+                                            'shel_width'=> $widthRack,
+                                            'shel_length'=> $lengthRack
+                                        );
 
 
                                         $this->Admin_model->create("STOR_SHELVES", $data);
@@ -119,6 +128,8 @@ class Rack extends Admin_Controller
                             {
                                 $data['post_1'] = $count;
                                 $data['post_2'] = $highRack;
+                                $data['post_3'] = $widthRack;
+                                $data['post_4'] = $lengthRack;
                                 $false= $count + $rows - 100;
                                 $this->session->set_flashdata('alert', "Ilość dopuszczalnych regałów w jednej strefie magazynowej musi wynosić od 1-100.<br/>
                                 Przekroczyłeś daną ilość o: $false");
@@ -130,6 +141,8 @@ class Rack extends Admin_Controller
                     {
                         $data['post_1'] = $count;
                         $data['post_2'] = $highRack;
+                        $data['post_3'] = $widthRack;
+                        $data['post_4'] = $lengthRack;
                         $this->session->set_flashdata('alert', "Ilość i wysokość regałów musi być wartością numeryczną!");
                         $this->twig->display('admin/magazine/rack/add_rack', $data);
 
@@ -139,6 +152,8 @@ class Rack extends Admin_Controller
                 {
                     $data['post_1'] = $count;
                     $data['post_2'] = $highRack;
+                    $data['post_3'] = $widthRack;
+                    $data['post_4'] = $lengthRack;
                     $this->session->set_flashdata('alert', 'Pole "Ilość regałów" i "Maksymalna wysokość" nie może być puste!');
                     $this->twig->display('admin/magazine/rack/add_rack', $data);
                 }
