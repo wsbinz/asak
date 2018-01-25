@@ -25,9 +25,7 @@ class Product extends Admin_Controller  {
     public function index($id='')
     {
 
-        fileLog();
-
-        echo check_group(array('admin','moderator'));
+        check_group(array('admin','moderator'));
 
         if(logged_in()!= 1)
         {
@@ -270,13 +268,13 @@ class Product extends Admin_Controller  {
                 }
 
 
-
+                fileLog("Pomyślnie dodano produkt o numerze:".$nr_mat." Nazwa produktu to: ".strtolower($this->input->post('name_short', true),'Success'));
                 redirect('admin/product');
             }
             else {
                 $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
                 $variable['post'] = $_POST;
-                print_r($variable['post']);
+                fileLog('Żle wypełnił formularz dodawania produktu. Treść błędu: '.validation_errors(),"Error");
                 $this->session->set_flashdata('alert', validation_errors());
             }
         }

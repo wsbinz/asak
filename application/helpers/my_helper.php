@@ -73,12 +73,29 @@ function check_group($alias_group)
 
 }
 
-function fileLog($status='',$wiadomosc='TESTOWA WIADOMOSC')
+function fileLog($wiadomosc='',$status='')
 {
-    if(write_file(BASEPATH.'../asset/log/log1.txt',$wiadomosc))
-    {
+    $template = 'Użytkownik o id: '.$_SESSION['id'].' Wykonał akcję: '."\n".$wiadomosc;
 
+    $t = array(
+      "Status" => $status,
+      "Log" => $template,
+      "Data" => date('d.m.Y H:i:s')
+    );
+
+    $result = print_r($t,true);
+
+    if(!file_exists(BASEPATH.'../asset/log'))
+    {
+        mkdir("asset/log",755);
     }
 
-    print_r(BASEPATH.'../asset/log/log1.txt');
+    if(!write_file(BASEPATH.'../asset/log/log1.txt',$result,'a+'))
+    {
+        if(write_file(BASEPATH.'../asset/log/log1.txt',date('d.m.Y H:i:s')." => Nie udało się zapisać logu",'a+'));
+    };
+
+
+
+
 }
