@@ -11,3 +11,13 @@ to_do list:
     - raportowka
     - dopisac do bazy pole indeks - dostawca
     
+    
+    
+##Jak dodawać logi do serwisu
+    -Aby dodać log nalezy umieścić w danym miejscu funkcję fileLog();
+    - Jako parametry przyjmuje $wiadomość oraz $status ( np. 'Error','Success','Info' )
+    We wiadomości wpiszcie tylko potrzebne informację np o utworzeniu WZ o numerze $numer_wz
+    Lub 'Utworzono regał o $numer_regału. Reszta czyli informację o uzytkowniku i dacie są robione automatycznie.
+    Pozdro
+    Przykład mojego użycia w produktach:
+     fileLog("Pomyślnie dodano produkt o numerze:".$nr_mat." Nazwa produktu to: ".strtolower($this->input->post('name_short', true),'Success'));
