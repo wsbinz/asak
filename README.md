@@ -5,19 +5,19 @@
 W powyższym zdjęciu dodał bym właśnie okiengo do zarządzania kontem uzytkownika.
 
 ##Uwagi od Adi
-to_do list:
-    - ekran pierwszy
-    - ektran przed referencje z szukajka
-    - raportowka
-    - dopisac do bazy pole indeks - dostawca
+to_do list: <br>
+    - ekran pierwszy<br>
+    - ektran przed referencje z szukajka<br>
+    - raportowka<br>
+    - dopisac do bazy pole indeks - dostawca<br>
     
     
     
-##Jak dodawać logi do serwisu
-    -Aby dodać log nalezy umieścić w danym miejscu funkcję fileLog();
-    - Jako parametry przyjmuje $wiadomość oraz $status ( np. 'Error','Success','Info' )
-    We wiadomości wpiszcie tylko potrzebne informację np o utworzeniu WZ o numerze $numer_wz
-    Lub 'Utworzono regał o $numer_regału. Reszta czyli informację o uzytkowniku i dacie są robione automatycznie.
-    Pozdro
-    Przykład mojego użycia w produktach:
+#Jak dodawać logi do serwisu
+    Aby dodać log nalezy umieścić w danym miejscu funkcję fileLog();<br>
+    Jako parametry przyjmuje $wiadomość oraz $status ( np. 'Error','Success','Info' )<br>
+    We wiadomości wpiszcie tylko potrzebne informację np o utworzeniu WZ o numerze $numer_wz<br>
+    Lub 'Utworzono regał o $numer_regału. Reszta czyli informację o uzytkowniku i dacie są robione automatycznie.<br>
+    Pozdro<br>
+    Przykład mojego użycia w produktach:<br>
      fileLog("Pomyślnie dodano produkt o numerze:".$nr_mat." Nazwa produktu to: ".strtolower($this->input->post('name_short', true),'Success'));
