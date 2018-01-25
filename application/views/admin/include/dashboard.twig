@@ -3,7 +3,7 @@
 
 {% block dashboard %}
 
-<div class="container theme-showcase" role="main">
+<div class="container" >
     <!-- Szary Panel -->
     <div class="jumbotron">
         <h2>Pulpit</h2>
@@ -13,9 +13,8 @@
     {% endautoescape %}
     <div class="row">
         <div class="col-lg-4">
-            <h2>To_do list:</h2>
-            <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-            <p><a class="btn btn-primary" href="#" role="button">View details &raquo;</a></p>
+            {% block calendar %}
+            {% endblock %}
         </div>
         <div class="col-lg-4">
             <h2>Log</h2>
@@ -26,5 +25,7 @@
 
     </div>
 </div>
+
+
 
 {% endblock %}

@@ -1,0 +1,21 @@
+{% extends "admin/include/dashboard.twig" %}
+
+
+
+{% block calendar %}
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+
+            $('#calendar').fullCalendar({
+
+            });
+
+        });
+
+    </script>
+                <h1>Kalendarz ToDo</h1>
+
+                <div id="calendar">
+                </div>
+{% endblock %}

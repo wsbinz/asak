@@ -8,6 +8,9 @@ class Account extends My_Controller {
     {
         parent::__construct();
         $this->load->model('site/Site_model');
+        $this->load->model('site/Calendar_model');
+
+
     }
 
     public function index()
@@ -18,7 +21,7 @@ class Account extends My_Controller {
         }
 
         $data['validation'] = $this->session->flashdata('alert');
-        $this->twig->display('admin/include/dashboard',$data);
+        $this->twig->display('admin/calendar/index',$data);
     }
 
     public function login()
