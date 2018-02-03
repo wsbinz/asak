@@ -14,7 +14,6 @@
 
             <select class="form-control" id="sel1" name="shelf" >
                 {%  for stor_shelves in shel_result	 %}
-                    {#	STOR_SHELVES#}
                     <option value="{{stor_shelves.shel_result|trim(" ","right")}}">{{ stor_shelves.shel_result|trim(" ","right") }}</option>
                 {% endfor %}
             </select>
@@ -22,10 +21,6 @@
 
             <label for="">Ilość półek w regale do wygenerowania</label><br/>
             <input type="text" class="form-control" name="count" value="{{ post_1 }}" placeholder="0 - 100"><br/>
-
-            {#<label for="">Maksymalna wysokość regałów</label><br/>#}
-            {#<input type="text" class="form-control" name="highRack" value="{{ post_2 }}" placeholder="0"><br/>#}
-
 
 
             <button type="submit" class="btn btn-lg btn-default " >Dodaj</button>

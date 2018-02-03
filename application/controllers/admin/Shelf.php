@@ -113,64 +113,77 @@ class Shelf extends Admin_Controller
         $rows1=0;
         $rows2=0;
 
-            for ($i=0; $i<$id; $i++)   //tymczasowo jest ustalone na 3 indeksy, potem domyślnie będzie ilościowa liczba
+        $test=0;
+        $pomo=0;
+        for ($i=0; $i<$id; $i++)                       //sprawdaznie czy suma maksymalna półek jest mniejsza lub równa wszystkich półek
+        {
+
+
+            (int) $counter[$i] = $this->input->post("counter_$i",true);
+            $pomo+=$counter[$i];
+
+            if($pomo<=$shel_max_h)
             {
-                (int) $counter[$i] = $this->input->post("counter_$i",true);
-                if ((is_numeric($counter[$i]))&&(($counter[$i])<99999)&&(($counter[$i])>=1))
-                    {
+                $test =0;
+            }
+
+            else $test=1;
+        }
+            if($test==0) {
+                for ($i = 0; $i < $id; $i++)   //tymczasowo jest ustalone na 3 indeksy, potem domyślnie będzie ilościowa liczba
+                {
+                    (int)$counter[$i] = $this->input->post("counter_$i", true);
+                    if ((is_numeric($counter[$i])) && (($counter[$i]) < 99999) && (($counter[$i]) >= 1)) {
                         $regal = array("a" => $rows1, "b" => $rows2);
 
-                        $seco = (int)$counter[$i] * (int)$cou * 2;
+                        $seco = (int)$counter[$i] * (int)$cou;
                         $data = array(
-                            'stor_height'=> $counter[$i],
+                            'stor_height' => $counter[$i],
+                            'stor_width_shel' => $shel_width,
+                            'stor_length' => $shel_length,
                             'stor_capacity' => $seco,
                             'shel_result' => $rack,
-                            'stor_shelve' => $regal["a"].$regal["b"],
-                            'stor_result' => $rack."-".$regal["a"].$regal["b"]
-                            );
-
-
+                            'stor_shelve' => $regal["a"] . $regal["b"],
+                            'stor_result' => $rack . "-" . $regal["a"] . $regal["b"]
+                        );
 
                         $rows2++;
-//                        echo $regal["a"].$regal["b"];
-//                        echo '<br/>';
                         $this->Admin_model->create("STOR_SIZE", $data);
-                        if($rows2==10)
-                        {
-                            $rows2=0;
+                        if ($rows2 == 10) {
+                            $rows2 = 0;
                             $rows1++;
                         }
 
-//                        echo $counter[$i];
-//                        echo "<br>";
-                    }
-                else if(empty($counter[$i]))
-                    {
+
+                    } else if (empty($counter[$i])) {
 
                         $this->session->set_flashdata('alert', "Wszystkie wartości muszą być uzupełnione");
                         $data['validation'] = $this->session->flashdata('alert');
                         //redirect(base_url('admin/magazine/rack/add_shelf'));
 
-                    }
-
-                else
-                    {
-                        $counter[$i]='';
+                    } else {
+                        $counter[$i] = '';
                         $this->session->set_flashdata('alert', "Ilość półek musi być wartością numeryczną, w zakresie od 1-99999");
                         $data['validation'] = $this->session->flashdata('alert');
                     }
 
-//                echo $counter[$i];
-//                echo "<br>";
+
+                }
+
+
+                $data['counter'] = $counter;
+                $this->session->set_flashdata('alert', "Półki wygenerowane!");
+                $data['shel_result'] = $this->Admin_model->get("STOR_SHELVES");
+                $this->twig->display('admin/magazine/shelf/add_shelf', $data);
             }
-            $data['counter'] = $counter;
-            $this->twig->display('admin/magazine/shelf/generating',$data);
-//        for ($i=0; $i<$id; $i++)
-//        if ((is_numeric($counter[$i]))&&(($counter[$i])<99999)&&(($counter[$i])>=1))
-//        {
-//            echo $counter[$i];
-//            echo "<br>";
-//        }
+        else
+            {
+                $data['counter'] = $counter;
+                $this->session->set_flashdata('alert', "Suma wysokości półek musi być mniejsza równa od maksymalnej wysokości tj: ". $shel_max_h ." !");
+                $data['shel_result'] = $this->Admin_model->get("STOR_SHELVES");
+                redirect(base_url('admin/shelf/add_shelf'));
+                $this->twig->display('admin/magazine/shelf/add_shelf',$data);
+            }
 
     }
 
