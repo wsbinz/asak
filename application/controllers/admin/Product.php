@@ -20,6 +20,7 @@ class Product extends Admin_Controller  {
         $this->load->helper('My');
         $this->load->library('image_lib');
         $this->load->library('pagination');
+        $this->load->library('form_validation');
     }
 
     public function index($id='')
@@ -107,8 +108,6 @@ class Product extends Admin_Controller  {
 
     public function add_product()
     {
-
-       $create_date = time();
 
         if(!empty($_POST)) {
 
@@ -264,14 +263,24 @@ class Product extends Admin_Controller  {
                 }
                 else
                 {
+                    $variable['post'] = $_POST;
+                    $this->twig->display('admin/product/add_product',$variable);
                     $this->session->set_flashdata('alert', "Nie przesłano pliku");
                 }
+                if ($duplicate==true)
+                {
+                    $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+                    $variable['post'] = $_POST;
+                    fileLog('Żle wypełnił formularz dodawania produktu. Treść błędu: '.validation_errors(),"Error");
 
-
-                fileLog("Pomyślnie dodano produkt o numerze:".$nr_mat." Nazwa produktu to: ".strtolower($this->input->post('name_short', true),'Success'));
-                redirect('admin/product');
+                }
+                else {
+                    fileLog("Pomyślnie dodano produkt o numerze:" . $nr_mat . " Nazwa produktu to: " . strtolower($this->input->post('name_short', true), 'Success'));
+                    redirect('admin/product');
+                }
             }
             else {
+                print_r($_POST);
                 $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
                 $variable['post'] = $_POST;
                 fileLog('Żle wypełnił formularz dodawania produktu. Treść błędu: '.validation_errors(),"Error");
@@ -287,6 +296,7 @@ class Product extends Admin_Controller  {
         $variable['load_group'] = $this->Admin_model->get('STORAGE');
         $variable['gr_tow'] = $this->Admin_model->get('PROD');
         $variable['unit_weight'] = $this->Admin_model->get_where('UNITS', array('unit_weight' => '1'));
+        $variable['unit_dim'] = $this->Admin_model->get_where('UNITS', array('unit_dim' => '1'));
         $variable['validation'] = $this->session->flashdata('alert');
         $this->twig->display('admin/product/add_product',$variable);
     }

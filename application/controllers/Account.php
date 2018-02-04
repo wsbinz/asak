@@ -141,4 +141,102 @@ class Account extends My_Controller {
 
     }
 
+    public function forgot_password()
+    {
+        if(!empty($_POST)){
+
+            if($this->form_validation->run('site_user_forgot')==TRUE)
+            {
+
+                $email = $this->input->post('email',true);
+
+                $where = array('email'=>$email);
+                $user = $this->Site_model->get_single('users',$where);
+
+                if(!empty($user))
+                {
+
+                    $reset_password_code = random_string(); // tworzenie unikalnego kodu do resetowania
+
+                    $where = array('email'=>$email);
+                    $data = array('reset_password_code'=>$reset_password_code);
+                    $this->Site_model->m_update("users",$data,$where); //model od update użytkownika
+
+                    //Wysyłka e-mail potwierdzającego rejestracje
+                    $subject = 'Reset hasła';
+                    $message = '<p>Witaj ' . $user->username.'. Aby zresetować konto kliknij w poniższy link:'
+                        .base_url('account/reset-password/'.$reset_password_code ).'</p>';
+
+
+                    $result = $this->email
+                        ->from('sebamanczak2@gmail.com')
+                        ->to($email)
+                        ->subject($subject)
+                        ->message($message)
+                        ->send();
+
+                    $this->session->set_flashdata('alert',"Sprawdź swoją skrzynkę odbiorczą");
+                }
+                else
+                {
+                    $this->session->set_flashdata('alert',"Adres e-mail nie istnieje !");
+                }
+
+
+            }
+            else
+            {
+                $this->session->set_flashdata('alert',validation_errors());
+                redirect($this->uri->uri_string(),'refresh');
+            }
+        }
+
+        $data['validation']= $this->session->flashdata('alert');
+
+        $this->twig->display('site/forgot_password',$data);
+
+    }
+
+    public function reset_password($reset_password_code)
+    {
+        $this->session->set_flashdata('alert',"");
+        $where = array('reset_password_code'=>$reset_password_code);
+        $user = $this->Site_model->get_single('users',$where);
+
+        if(!empty($user))
+        {
+            if(!empty($_POST))
+            {
+
+                if ($this->form_validation->run('site_user_reset')==TRUE)
+                {
+                    $this->session->set_flashdata('alert',''); //Resetowanie informacji o walidacji
+
+                    $data = array(
+                        'password' => password_hash($this->input->post("password",true),PASSWORD_DEFAULT),
+                        'reset_password_code' => '',
+                    );
+
+                    $where = array('id'=>$user->id);
+                    $this->Site_model->m_update("users",$data,$where); //model od update użytkownika`
+                    $this->session->set_flashdata('alert','Hasło zostało zmienione poprawnie :)');
+                    redirect('/');
+                }
+                else
+                {
+                    $this->session->set_flashdata('alert',validation_errors());
+                }
+
+            }
+            $data_code['code'] = $reset_password_code;
+            $data_code['validation']= $this->session->flashdata('alert');
+            $this->twig->display('site/reset_password',$data_code);
+        }
+        else
+        {
+            $this->session->set_flashdata('alert',"Podany kod nie istnieje !");
+            redirect('/');
+        }
+    }
+
 }
