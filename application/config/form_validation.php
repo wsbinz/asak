@@ -21,6 +21,28 @@ $config = array(
         )
     ),
 
+    'site_user_forgot' => array(
+        array(
+            'field' => 'email',
+            'label' => 'Adres Email',
+            'rules' => 'trim|required|valid_email'
+        ),
+    ),
+
+    'site_user_reset'=> array(
+
+        array(
+            'field'=>'password',
+            'label' => 'Nowe Hasło',
+            'rules' => 'trim|required|min_length[5]'
+        ),
+        array(
+            'field'=>'password_retry',
+            'label' => 'Powtórz nowe hasło',
+            'rules' => 'trim|required|matches[password]'
+        ),
+    ),
+
     'admin_user_create'=> array(
         array(
             'field'=>'username',

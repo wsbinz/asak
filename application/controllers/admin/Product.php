@@ -37,7 +37,7 @@ class Product extends Admin_Controller  {
         $start_index = ($this->uri->segment(4)) ? $this->uri->segment(4) : 0 ;
 
         $config['total_rows'] = $total_rows;
-        $config['per_page'] = 4;
+        $config['per_page'] = 25;
         $config['uri_segment'] = 4;
         $config['base_url'] = base_url('admin/product/index');
 
@@ -370,6 +370,7 @@ class Product extends Admin_Controller  {
            $data['pkwiu'] = $this->Admin_model->get('PKWI');
            $data['dost'] = $this->Admin_model->get('VEND');
            $data['dost_zwrot'] = $this->Admin_model->get('VEND_REFUND');
+           $data['load_group'] = $this->Admin_model->get('STORAGE');
 
            if(!empty($data['product']))
            {

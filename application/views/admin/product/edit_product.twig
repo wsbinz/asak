@@ -117,7 +117,19 @@
                         <td>Grupa załadunkowa w magazynie:</td>
                         <td>
                             <div class="form-group">
+                                {#
                                 <input type="text" class="form-control" id="load_group" name="load_group" value="{{ product.gr_zalad }}"> <!-- TAB: INDK  gr_zalad select? -->
+
+                                #}
+                                <select class="form-control" id="load_group" name="load_group">
+                                    {%  for load in load_group %}
+                                    {% if product.gr_zalad|trim == load.load_group|trim %}
+                                        <option selected value="{{ load.load_group }}">{{ load.load_group_descr }}</option>
+                                       {% else %}
+                                       <option value="{{ load.load_group }}">{{ load.load_group_descr }}</option>
+                                       {% endif %}
+                                    {% endfor %}
+                                </select>
                             </div>
                         </td>
                     </tr>
