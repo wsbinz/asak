@@ -59,7 +59,7 @@ class Order extends Admin_Controller
         $data['zam'] = $this->Admin_model->get("VIEW_ORDER");
         $data['dost'] = $this->Admin_model->get('VEND');
         $data['validation'] = $this->session->flashdata('alert');
-        $this->twig->display('admin/product/order_products',$data);
+        $this->twig->display('admin/docs/view_order',$data);
     }
     public function zm()
     {
@@ -174,6 +174,19 @@ class Order extends Admin_Controller
         $data['indk_mwym'] = $this->Admin_model->get("MNAME");
         $data['validation'] = $this->session->flashdata('alert');
         $this->twig->display('admin/docs/create_wz',$data);
+    }
+    public function show($id)
+    {
+        $where = array('nr_docum' => $id);
+        $data['docum_item'] = $this->Admin_model->get_single("DOCUM_ITEM",$where);
+        $data['zam'] = $this->Admin_model->get("DOCUM_ITEM",$where);
+
+        if(empty($data['docum_item']))
+        {
+            $this->session->set_flashdata('alert', "Podany dokument nie istnieje !");
+            redirect('account');
+        }
+        $this->twig->display('admin/docs/view_docum',$data);
     }
     public function pdf()
     {
