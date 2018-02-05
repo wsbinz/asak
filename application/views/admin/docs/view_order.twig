@@ -14,22 +14,28 @@
             {% endautoescape %}
 
             <div class="page-header">
-                <h3>Wybierz zamówienie</h3>
+                <div class="row">
+                    <div class="col-sm-4"><h3>Numer:</h3></div>
+                    <div class="col-sm-4"><h3>Wybierz Dostawcę:</h3></div>
+                    <div class="col-sm-4"><h3>Nazwa dokumentu:</h3></div>
+                </div>
             </div>
-
-            <select class="form-control" name="vend_name" style="width: 10%;"> <!--tab MWYM pole unit_structure -->
-
-                {% for dostawca in dost %}
-                    <option value="{{ dostawca.id_vend }}">{{ dostawca.vend_name }}</option>
-                {% endfor %}
-
-            </select>
 
             <div class="page-header">
-                <h3>Nazwa dokumentu:</h3>
-            </div>
+                <div class="row">
+                    <div class="col-sm-4"><input type="text" class="form-control" name="docum_desc" style="width: 100px"></div>
+                    <div class="col-sm-4">
+                        <select class="form-control" name="vend_name" style="width: 150px"> <!--tab MWYM pole unit_structure -->
 
-            <input type="text" class="form-control" name="docum_desc" style="width: 30%;">
+                            {% for dostawca in dost %}
+                                <option value="{{ dostawca.id_vend }}">{{ dostawca.vend_name }}</option>
+                            {% endfor %}
+
+                        </select>
+                    </div>
+                    <div class="col-sm-4"><input type="text" class="form-control" name="docum_desc" style="width:  200px"></div>
+                </div>
+            </div>
 
             <table class="table table-hover">
                 <thead>

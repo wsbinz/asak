@@ -87,10 +87,12 @@ class User extends Admin_Controller {
                 $subject = "Aktywacja konta w serwisie ASAK";
                 $do = (string)$data['email'];
 
-                $mail = mail($do,$subject, $message, $mailheaders);
 
-                $this->session->set_flashdata('alert',"Użytkownik został dodany !");
-                redirect("admin/user");
+
+                if(mail($do,$subject, $message, $mailheaders)) {
+                    $this->session->set_flashdata('alert', "Użytkownik został dodany !");
+                    redirect("admin/user");
+                }
             }
             else
             {
