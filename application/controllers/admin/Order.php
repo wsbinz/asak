@@ -24,7 +24,7 @@ class Order extends Admin_Controller
 
             if (is_numeric($docum_value))
             {
-                if ($docum_value >= 0)
+                if (($docum_value >= 0)&&($docum_value <=100))
                 {
                     $data = array(
                         'nr_docum' => $this->input->post('nr_docum', true),
@@ -36,7 +36,7 @@ class Order extends Admin_Controller
 
                     $data = array(
                         'nr_docum' => $this->input->post('nr_docum', true),
-                        'docum_type' => "Zm",
+                        'docum_type' => 'ZM',
                         'vend_name' => $this->input->post('vend_name', true),
                         'docum_desc' => $this->input->post('docum_desc', true),
                     );
@@ -46,7 +46,7 @@ class Order extends Admin_Controller
                 }
                 else
                 {
-                    $this->session->set_flashdata('alert', "Liczba zamawianego towaru musi być równa lub większa od zera!");
+                    $this->session->set_flashdata('alert', "Liczba zamawianego towaru musi być w przedziale od 0 do 100!");
                 }
             }
             else
@@ -93,19 +93,87 @@ class Order extends Admin_Controller
         $data['validation'] = $this->session->flashdata('alert');
         $this->twig->display('site/docs/list_order',$data);
     }
-    public function show($id)
+    public function pz()
     {
-        if(is_numeric($id)) {
-            $where = array('nr_docum' => $id);
-            $data['docum_item'] = $this->Admin_model->get_single("DOCUM_ITEM", $where);
-            $data['validation'] = $this->session->flashdata('alert');
-            $this->twig->display('admin/order/show', $data);
+        if(!empty($_POST)) {
+
+            $mat_amount = $this->input->post('mat_amount',true);
+
+            if (is_numeric($mat_amount))
+            {
+                $data = array(
+                    'nr_mat' => $this->input->post('nr_mat', true),
+                    'mat_amount' => $this->input->post('mat_amount', true),
+                );
+                $this->Admin_model->update("STOR_AMOUNTS", $data,$where);
+
+                $data = array(
+                    'nr_docum' => $this->input->post('nr_docum', true),
+                    'nr_mat' => $this->input->post('nr_mat', true),
+                    'docum_value' => mat_amount,
+                    //'value_sign' => $this->input->post('value_sign', true),
+                );
+                $this->Admin_model->create("DOCUM_ITEM", $data);
+
+                $data = array(
+                    'nr_docum' => $this->input->post('nr_docum', true),
+                    'docum_type' => 'PZ',
+                );
+                $this->Admin_model->create("DOCUM_HEAD", $data);
+
+                $this->session->set_flashdata('alert', "Utworzono dokument PZ");
+            }
+            else
+            {
+                $this->session->set_flashdata('alert', "Liczba przyjmowanego towaru musi być wartością numeryczną!");
+            }
+
+
         }
-        else
-        {
-            $this->session->set_flashdata('alert', "Podany dokument nie istnieje !");
-            redirect(base_url("admin/order/view_order"));
+        $data['indk_mwym'] = $this->Admin_model->get("MNAME");
+        $data['validation'] = $this->session->flashdata('alert');
+        $this->twig->display('admin/docs/create_pz',$data);
+    }
+    public function wz()
+    {
+        if(!empty($_POST)) {
+
+            $mat_amount = $this->input->post('mat_amount',true);
+
+            if (is_numeric($mat_amount))
+            {
+                $data = array(
+                    'nr_mat' => $this->input->post('nr_mat', true),
+                    'mat_amount' => $this->input->post('mat_amount', true),
+                );
+                $this->Admin_model->update("STOR_AMOUNTS", $data,$where);
+
+                $data = array(
+                    'nr_docum' => $this->input->post('nr_docum', true),
+                    'nr_mat' => $this->input->post('nr_mat', true),
+                    'docum_value' => mat_amount,
+                    //'value_sign' => $this->input->post('value_sign', true),
+                );
+                $this->Admin_model->create("DOCUM_ITEM", $data);
+
+                $data = array(
+                    'nr_docum' => $this->input->post('nr_docum', true),
+                    'docum_type' => 'WZ',
+                );
+                $this->Admin_model->create("DOCUM_HEAD", $data);
+
+                $this->session->set_flashdata('alert', "Utworzono dokument WZ");
+            }
+            else
+            {
+                $this->session->set_flashdata('alert', "Liczba wydawanego towaru musi być wartością numeryczną!");
+            }
+
+
         }
+        $data['indk_mwym'] = $this->Admin_model->get("MNAME");
+        $data['validation'] = $this->session->flashdata('alert');
+        $this->twig->display('admin/docs/create_wz',$data);
     }
     public function pdf()
     {
