@@ -5,33 +5,35 @@
 <!-- nasza nakładka CSS -->
 <link rel="stylesheet" href="{{ base_url() }}/asset/css/theme.css" crossorigin="anonymous">
 
+
+
 <div class ="container">
 <form class="form-signin" action="{{ base_url() }}account/login" method="POST" id="add_user">
 
-    <h2 class="h_middle">ASAK Logowanie</h2>
+    <h2 class="h_middle">Moje konto</h2>
+
+    <div class="form-group">
+        <label for="email" class="form-signin-heading">Użytkownik</label>
+        <input type="email" class="form-control" id="email" name="email" placeholder="User">
+    </div>
 
     <div class="form-group">
         <label for="email" class="form-signin-heading">Adres e-mail</label>
         <input type="email" class="form-control" id="email" name="email" placeholder="Email">
     </div>
+
     <div class="form-group">
         <label for="password" class="form-signin-heading">Hasło</label>
         <input type="password" class="form-control" id="password" name="password" placeholder="Hasło">
     </div>
 
-    <div class="checkbox">
-
-        {% autoescape %}
-            {{ validation|raw }}
-        {% endautoescape %}
-        <label>
-            <input type="checkbox" value="1" name="remember_me"> Zapamiętaj mnie
-        </label>
-        <div class="form-group">
-            <a href="{{ base_url() }}account/forgot_password">Zapomniałem hasła</a>
-        </div>
+    <div class="form-group">
+        <label for="password" class="form-signin-heading">Powtórz hasło</label>
+        <input type="password" class="form-control" id="password" name="password" placeholder="Hasło">
     </div>
-    <button type="submit" class="btn btn-lg btn-primary btn-block">Wyślij</button>
+
+    <button type="submit" class="btn btn-lg btn-primary btn-block">Zmień</button>
+    <button type="submit" class="btn btn-lg btn-primary btn-block">Powrót</button>
 
 </form>
 </div>

@@ -12,15 +12,25 @@
 
     <title>Moduł produktowy ASAK</title>
     <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" href="{{ base_url() }}/asset/css/bootstrap.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ base_url() }}asset/css/bootstrap.css" crossorigin="anonymous">
     <!-- nasza nakładka CSS -->
-    <link rel="stylesheet" href="{{ base_url() }}/asset/css/theme.css" crossorigin="anonymous">
-    <link rel="stylesheet" href="{{ base_url() }}/asset/css/preloader.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ base_url() }}asset/css/theme.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ base_url() }}asset/css/preloader.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ base_url() }}asset/css/fullcalendar.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ base_url() }}asset/css/fullcalendar.print.css" crossorigin="anonymous">
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="{{ base_url() }}asset/js/jquery.min.js"></script>
+{#
     <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
-    <script src="{{ base_url() }}/asset/js/add_product.js"></script>
+#}
+    <script src="{{ base_url() }}asset/js/add_product.js"></script>
+    <script src="{{ base_url() }}asset/js/moment.min.js"></script>
+    <script src="{{ base_url() }}asset/js/fullcalendar.js"></script>
+    <script src="{{ base_url() }}asset/js/gcal.js"></script>
 
-    <body>
+
+
+<body>
     <!-- Fixed navbar -->
         <nav class="navbar navbar-inverse navbar-fixed-top">
 
@@ -37,7 +47,7 @@
             <div id="navbar" class="navbar-collapse collapse">
 
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="admin">Pulpit</a></li>
+                    <li class="active"><a href="{{ base_url() }}">Pulpit</a></li>
                     <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Produkty <span class="caret"></span></a>
                     <ul class="dropdown-menu">
@@ -58,43 +68,40 @@
 
                                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Grupy załadunkowe</a>
                                         <ul class="dropdown-menu">
-                                            <li><a href="#">Dodaj</a></li>
-                                            <li><a href="#">Wyświetl</a></li>
+                                            <li><a href="{{ base_url() }}admin/magazine/add_magazine">Dodaj</a></li>
+                                            <li><a href="{{ base_url() }}admin/magazine/view_magazine">Wyświetl</a></li>
                                         </ul>
                                     </li>
 
                                     <li  class="dropdown-submenu">
                                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Regały</a>
                                             <ul class="dropdown-menu">
-                                               <li><a href="#">Dodaj</a></li>
-                                               <li><a href="#">Wyświetl</a></li>
+                                               <li><a href="{{ base_url() }}admin/Rack/add_rack">Dodaj</a></li>
+                                               <li><a href="{{ base_url() }}admin/Rack/view_rack">Wyświetl</a></li>
                                             </ul>
                                     </li>
 
                                     <li  class="dropdown-submenu">
                                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Półki</a>
                                             <ul class="dropdown-menu">
-                                                <li><a href="#">Dodaj</a></li>
-                                                <li><a href="#">Wyświetl</a></li>
+                                                <li><a href="{{ base_url() }}admin/Shelf/add_shelf">Dodaj</a></li>
+                                                <li><a href="{{ base_url() }}admin/Shelf/view_shelf">Wyświetl</a></li>
                                             </ul>
                                     </li>
 
                                 <li class="divider"></li>
                                 <li class="dropdown-header">Zamówienia</li>
                                 <li><a href="{{ base_url() }}admin/order/order_products">Tworzenie</a></li>
-                                <li><a href="#">Edycja</a></li>
                                 <li><a href="{{ base_url() }}admin/order/zm">Podgląd</a></li>
 
                                 <li class="divider"></li>
-                                <li class="dropdown-header">Przyjęcie zamówienia</li>
-                                <li><a href="#">Tworzenie</a></li>
-                                <li><a href="#">Edycja</a></li>
-                                <li><a href="{{ base_url() }}admin/order/pz/">Lista PZ</a></li>
+                                <li class="dropdown-header">Przyjęcie zewnętrzne</li>
+                                <li><a href="{{ base_url() }}admin/order/pz"">Tworzenie</a></li>
+                                <li><a href="#">Lista PZ</a></li>
 
                                 <li class="divider"></li>
                                 <li class="dropdown-header">Wydanie zewnętrzne</li>
-                                <li><a href="#">Tworzenie</a></li>
-                                <li><a href="#">Edycja</a></li>
+                                <li><a href="{{ base_url() }}admin/order/wz"">Tworzenie</a></li>
                                 <li><a href="">Lista WZ</a></li>
 
 
@@ -123,7 +130,7 @@
                         <ul class="dropdown-menu">
                             <li><a href="{{ base_url() }}admin/user/create_user">Dodaj użytkownika</a></li>
                             <li><a href="{{ base_url() }}admin/user/index">Zarządzaj użytkownikami</a></li>
-                            <li><a href="{{ base_url() }}admin/group/add_group">Dodaj Grupe</a></li>
+                            {#<li><a href="{{ base_url() }}admin/group/add_group">Dodaj Grupe</a></li>#}
                             <li><a href="{{ base_url() }}admin/group">Zarzadzaj grupami</a></li>
                         </ul>
                     </li>
@@ -143,19 +150,20 @@
 {% block dashboard %}{% endblock %}
 
 
-
-
 <!-- Bootstrap core JavaScript
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
+{#
 <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+#}
 <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
 <script src="{{ base_url() }}/asset/js/bootstrap.min.js"></script>
+{#
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+#}
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="{{ base_url() }}/asset/js/remove_img.js"></script>
-
 <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 
 {% block javascript %}{% endblock %}

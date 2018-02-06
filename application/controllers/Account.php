@@ -8,6 +8,10 @@ class Account extends My_Controller {
     {
         parent::__construct();
         $this->load->model('site/Site_model');
+        $this->load->model('site/Calendar_model');
+        $this->load->library('form_validation');
+
+
     }
 
     public function index()
@@ -18,7 +22,7 @@ class Account extends My_Controller {
         }
 
         $data['validation'] = $this->session->flashdata('alert');
-        $this->twig->display('admin/include/dashboard',$data);
+        $this->twig->display('admin/calendar/index',$data);
     }
 
     public function login()
@@ -109,7 +113,7 @@ class Account extends My_Controller {
     {
         session_destroy();
         delete_cookie("remember_me");
-        redirect('login');
+        redirect('account/login');
     }
 
     public function active_account($activation_code)
@@ -136,6 +140,112 @@ class Account extends My_Controller {
             echo "<a href=".base_url()."account/login>Zaloguj się</a>";
         }
 
+    }
+
+    public function forgot_password()
+    {
+        if(!empty($_POST)){
+
+            if($this->form_validation->run('site_user_forgot')==TRUE)
+            {
+
+                $email = $this->input->post('email',true);
+
+                $where = array('email'=>$email);
+                $user = $this->Site_model->get_single('USERS',$where);
+
+                if(!empty($user))
+                {
+
+                    $reset_password_code = random_string(); // tworzenie unikalnego kodu do resetowania
+
+                    $where = array('email'=>$email);
+                    $data = array('reset_password_code'=>$reset_password_code);
+                    $this->Site_model->update("USERS",$data,$where); //model od update użytkownika
+
+                    //Wysyłanie meila do uzytkownika
+                    $do = $_POST['email'];
+                    $from = "biuro@ts3-tnt.pl <biuro@ts3-tnt.pl>";
+                    $mailheaders="From: $from\n";
+                    $mailheaders.="Reply-To: $from\n";
+                    $mailheaders.="X-Mailer: PHP\n";
+                    $mailheaders.="MIME-version: 1.0\n";
+                    $mailheaders.="Content-type: text/html; charset=utf-8";
+                    $message = '<p>Witaj ' . $user->username.'. Aby zmienić hasło w poniższy link:'
+                        .base_url('account/reset_password/'.$reset_password_code ).'</p>';
+                    $subject = "Zmiana hasła w serwisie ASAK";
+                    $do = (string)$user->email;
+
+
+
+                    if(mail($do,$subject, $message, $mailheaders)) {
+                        $this->session->set_flashdata('alert',"Sprawdź swoją skrzynkę odbiorczą");
+                        redirect('account/login');
+                    }
+
+
+
+                }
+                else
+                {
+                    $this->session->set_flashdata('alert',"Adres e-mail nie istnieje !");
+                }
+
+
+            }
+            else
+            {
+                $this->session->set_flashdata('alert',validation_errors());
+                redirect($this->uri->uri_string(),'refresh');
+            }
+        }
+
+        $data['validation']= $this->session->flashdata('alert');
+
+        $this->twig->display('site/account/forgot_password',$data);
+
+    }
+
+    public function reset_password($reset_password_code)
+    {
+        //$this->session->set_flashdata('alert',"");
+        $where = array('reset_password_code'=>$reset_password_code);
+        $user = $this->Site_model->get_single('USERS',$where);
+
+        if(!empty($user))
+        {
+            if(!empty($_POST))
+            {
+
+                if ($this->form_validation->run('site_user_reset')==TRUE)
+                {
+                    $this->session->set_flashdata('alert',''); //Resetowanie informacji o walidacji
+
+                    $data = array(
+                        'password' => password_hash($this->input->post("password",true),PASSWORD_DEFAULT),
+                        'reset_password_code' => '',
+                    );
+
+                    $where = array('id'=>$user->id);
+                    $this->Site_model->update("USERS",$data,$where); //model od update użytkownika
+                    $this->session->set_flashdata('alert','Hasło zostało zmienione poprawnie :)');
+                    redirect('account/login');
+                }
+                else
+                {
+                    $this->session->set_flashdata('alert',validation_errors());
+                }
+
+            }
+            $data_code['code'] = $reset_password_code;
+            $data_code['validation']= $this->session->flashdata('alert');
+            $this->twig->display('site/account/reset_password',$data_code);
+        }
+        else
+        {
+            $this->session->set_flashdata('alert',"Podany kod nie istnieje !");
+            redirect('account/login');
+        }
     }
 
 }

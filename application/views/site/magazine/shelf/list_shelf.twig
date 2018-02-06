@@ -34,7 +34,7 @@
                     <td width=10%>{{ STOR_SIZE.stor_shelve }}</td>
                     <td width=20%>{{ STOR_SIZE.stor_result}}</td>
                     <td width=10%>{{ STOR_SIZE.stor_height}}</td>
-                    <td width=10%>{{ STOR_SIZE.stor_width }}</td>
+                    <td width=10%>{{ STOR_SIZE.stor_width_shel }}</td>
                     <td width=10%>{{ STOR_SIZE.stor_length }}</td>
                     <td width=10%>{{ STOR_SIZE.stor_capacity}}</td>
 
@@ -44,12 +44,7 @@
                             <a href="{{ base_url() }}admin/rack/edit_rack/{{ STOR_SHELVES.id_stor_shelve }}"><button type="button" class="btn btn-default">Edytuj</button></a>
                         {% endif %}
                     </td>
-                    {#<td>#}
-                    {#{% if check_group(['admin','moderator']) %}#}
-                    {#{{ STORAGE.id_storage }}#}
-                    {#<a href="{{ base_url() }}admin/magazine/delete_magazine/{{ STORAGE.id_storage }}"><button type="button" class="btn btn-warning" name="id">Usuń</button></a>#}
-                    {#{% endif %}#}
-                    {#</td>#}
+
                 </tr>
             {% endfor %}
             </tbody>

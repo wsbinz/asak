@@ -1,0 +1,52 @@
+{% extends "admin/include/include.twig" %}
+
+{% block body %}
+
+    <div class="container theme-showcase" role="main">
+        <!-- Szary Panel -->
+        <div class="jumbotron">
+            <h2>WZ</h2> <!--do wladowania numer produktu -->
+        </div>
+        <form method="post" action ="{{ base_url() }}admin/order/wz">
+
+            {% autoescape %}
+                {{ validation|raw }}
+            {% endautoescape %}
+
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th>Numer:</th>
+                    <th>Nazwa:</th>
+                    <th>Nr mat:</th>
+                    <th>Wydano:<th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for indk in indk_mwym %}
+                    <tr>
+                        <td width=10%>{{ loop.index }}</td>
+                        <td width=40%>{{ indk.name_short }}</td>
+                        <td width=20%>{{ indk.nr_mat}}</td>
+                        <td width=10%><input type="text" class="form-control" id="" name="mat_amount" ></td> <!-- tab.
+                    </td> <!-- Przjscie do wyswietlenia produktu z danego numeru -->
+                    </tr>
+
+                {% endfor %}
+                </tbody>
+            </table>
+
+            <button type="submit" class="btn btn-lg btn-default btn-end">Potwierdź</button>
+        </form>
+        <nav aria-label="Page navigation example">
+            {{ links|raw }}
+        </nav>
+        {#        <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                    <li class="page-item">{{ links|raw }}</li>
+                </ul>
+                </nav>#}
+
+    </div>
+{% endblock %}
+

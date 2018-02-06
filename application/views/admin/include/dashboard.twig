@@ -3,7 +3,7 @@
 
 {% block dashboard %}
 
-<div class="container theme-showcase" role="main">
+<div class="container" >
     <!-- Szary Panel -->
     <div class="jumbotron">
         <h2>Pulpit</h2>
@@ -13,18 +13,24 @@
     {% endautoescape %}
     <div class="row">
         <div class="col-lg-4">
-            <h2>To_do list:</h2>
-            <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-            <p><a class="btn btn-primary" href="#" role="button">View details &raquo;</a></p>
+            {% block calendar %}
+            {% endblock %}
         </div>
         <div class="col-lg-4">
             <h2>Log</h2>
-            <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-            <p><a class="btn btn-primary" href="#" role="button">View details &raquo;</a></p>
+            <p>Użytkownik: adrian wprowadził zmianę na produkcie numer 64 w dniu 22-11-2017</p>
+            <p>Użytkownik: adam wycofał produkt numer  02 w dniu 01-12-2017</p>
+            <p>Użytkownik: adrian wprowadził zmianę na produkcie numer 03 w dniu 01-12-2017</p>
+            <p>Użytkownik: adrian wprowadził zmianę na produkcie numer 54 w dniu 05-01-2018</p>
+            <p>Użytkownik: seba wprowadził produkt numer  69 w dniu 10-01-2018</p>
+            <p>Użytkownik: kamil wprowadził zmianę na produkcie numer 12 w dniu 10-01-2018</p>
+            <p>Użytkownik: kamil wycofał produkt numer 06 w dniu 20-01-2018</p>
+            <p>Użytkownik: seba wprowadził produkt numer 80 w dniu 21-01-2018</p>
         </div>
-
 
     </div>
 </div>
+
+
 
 {% endblock %}

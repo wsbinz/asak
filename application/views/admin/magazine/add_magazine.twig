@@ -10,9 +10,6 @@
             <form method="post" action ="{{ base_url() }}admin/magazine/add_magazine">
 
 
-                            <div class="row">
-                                <div class="col-md-6" style="border: 1px solid lightgrey">
-                                <font color="#808080">Pola obowiązkowe</font>
                             <br/><br/>
                         <p>
                             <label for="">Magazyn</label>
@@ -22,25 +19,7 @@
                             <label for="">Pełna nazwa magazynu</label>
                             <input type="text" class="form-control" name="NameOfMagazin" value="{{ post_1 }}" placeholder="Magazyn Główny">
                         </p>
-                        </div>
 
-
-
-                        <div class="col-md-6" style="border: 1px solid lightgrey">
-
-                                <font color="#808080">Pola opcjonalne</font>
-                            <br/><br/>
-
-                            <p>
-                                <label for ="">Ilość regałów do dodania</label>
-                                <input type="text" class="form-control" name="countRack" value="{{ post_3 }}" placeholder="0">
-                            </p>
-                            <p>
-                                <label for ="">Maksymalna wysokość regałów [m]</label>
-                                <input type="text" class="form-control" name="highRack" value="{{ post_4 }}" placeholder="0">
-                            </p>
-                        </div>
-                    </div>
                 <br/>
 
 
