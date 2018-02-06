@@ -77,7 +77,7 @@ $db['default'] = array(
 	'dsn'	=> 'pgsql:host=ts3-tnt.pl;port=5432;dbname=wsb_inz',
 	'hostname' => 'ts3-tnt.pl',
 	'username' => 'postgres',
-	'password' => 'Mn*fD72Ad^',
+	'password' => '',
 	'database' => 'wsb_inz',
 	'dbdriver' => 'pdo',
 	'dbprefix' => '',

@@ -28,7 +28,7 @@ class Order extends Admin_Controller
                 {
                     $data = array(
                         'nr_docum' => $this->input->post('nr_docum', true),
-                        'nr_mat' => $this->input->post('nr_mat', true),
+                        //'nr_mat' => $this->input->post('nr_mat', true),
                         'docum_value' => $docum_value,
                         //'value_sign' => $this->input->post('value_sign', true),
                     );
