@@ -43,6 +43,7 @@ class Order extends Admin_Controller
                     $this->Admin_model->create("DOCUM_HEAD", $data);
 
                     $this->session->set_flashdata('alert', "Zamówienie zostało wysłane");
+                    redirect('account');
                 }
                 else
                 {
@@ -178,12 +179,12 @@ class Order extends Admin_Controller
     public function show($id)
     {
         $where = array('nr_docum' => $id);
-        $data['docum_item'] = $this->Admin_model->get_single("DOCUM_ITEM",$where);
         $data['zam'] = $this->Admin_model->get("DOCUM_ITEM",$where);
+        //$data['zam'] = $this->Admin_model->get("DOCUM_ITEM");
 
-        if(empty($data['docum_item']))
+        if(empty($data['zam']))
         {
-            $this->session->set_flashdata('alert', "Podany dokument nie istnieje !");
+            $this->session->set_flashdata('alert', "Podany dokument nie istnieje!");
             redirect('account');
         }
         $this->twig->display('admin/docs/view_docum',$data);
