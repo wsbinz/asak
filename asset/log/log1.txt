@@ -1,0 +1,14 @@
+Array
+(
+    [Status] => 
+    [Log] => Użytkownik o id: 42 Wykonał akcję: 
+Dodano produkt o numerze 15 oraz o nazwie LALAAL
+    [Data] => 25.01.2018 09:57:02
+)
+Array
+(
+    [Status] => 
+    [Log] => Użytkownik o id: 42 Wykonał akcję: 
+Dodano produkt o numerze 15 oraz o nazwie LALAAL
+    [Data] => 25.01.2018 09:57:25
+)
