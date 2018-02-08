@@ -17,6 +17,7 @@
             <thead>
             <tr>
                 <th>Nr:</th>
+                <th>Numer dokumentu:</th>
                 <th>Typ:</th>
                 <th>Nazwa dokumentu:</th>
             </tr>
@@ -25,6 +26,7 @@
             {% for DOCUM_HEAD in views %}
             <tr>
                 <td width=10%>{{ loop.index }}</td>
+                <td width=20%>{{ DOCUM_HEAD.nr_docum }}</td>
                 <td width=20%>{{ DOCUM_HEAD.docum_type }}</td>
                 <td width=10%>{{ DOCUM_HEAD.docum_desc }}</td>
                 <td width=10%>

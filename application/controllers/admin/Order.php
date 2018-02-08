@@ -71,6 +71,9 @@ class Order extends Admin_Controller
 
             if (is_numeric($mat_amount))
             {
+                //$stan = $this->Admin_model->get_where("STOR_AMOUNTS", array('mat_amount' => $nr_mat));
+                //$up = $stan + $mat_amount;
+
                 $data = array(
                     'nr_mat' => $nr_mat,
                     'mat_amount' => $mat_amount,
