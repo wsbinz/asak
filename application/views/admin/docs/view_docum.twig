@@ -7,7 +7,7 @@
         <div class="jumbotron">
             <h2>Podgląd dokumentu</h2> <!--do wladowania numer produktu -->
         </div>
-
+        <form method="post" action ="{{ base_url() }}admin/order/pdf">
 
             {% autoescape %}
                 {{ validation|raw }}
@@ -37,6 +37,7 @@
             </table>
 
         <button type="submit" class="btn btn-lg btn-default btn-end">Wydrukuj</button>
+        </form>
         <nav aria-label="Page navigation example">
         {{ links|raw }}
         </nav>
