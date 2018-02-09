@@ -26,7 +26,7 @@ class Product extends Admin_Controller  {
     public function index($id='')
     {
 
-        check_group(array('admin','moderator'));
+        check_group(array('admin','moderator','uzytkownik'));
 
         if(logged_in()!= 1)
         {
@@ -82,6 +82,12 @@ class Product extends Admin_Controller  {
 
     public function show($id)
     {
+        if(!check_group(array('moderator','admin','uzytkownik')))
+        {
+            $this->session->set_flashdata('alert',"Nie masz dostępu do tej częsci serwisu!");
+            redirect('account');
+        }
+
         $user_arr = array();
 
         $where = array('nr_mat' => $id);
@@ -108,6 +114,12 @@ class Product extends Admin_Controller  {
 
     public function add_product()
     {
+
+        if(!check_group(array('moderator','admin')))
+        {
+            $this->session->set_flashdata('alert',"Nie masz dostępu do tej częsci serwisu!");
+            redirect('account');
+        }
 
         if(!empty($_POST)) {
 
@@ -303,6 +315,12 @@ class Product extends Admin_Controller  {
 
     public function add_product_ref ($id='')
     {
+        if(!check_group(array('moderator','admin')))
+        {
+            $this->session->set_flashdata('alert',"Nie masz dostępu do tej częsci serwisu!");
+            redirect('account');
+        }
+
         if(!empty($id))
         {
             $where = array('id_indk'=>$id);
@@ -342,14 +360,13 @@ class Product extends Admin_Controller  {
         echo json_encode($search);
     }
 
-
    public function edit_product($id='')
    {
 
        if(!check_group(array('admin','moderator')))
        {
            $this->session->set_flashdata('alert', "Nie możesz edytować produktów");
-           redirect('account');
+           redirect('account','refresh');
        }
 
        if(!empty($id))
@@ -371,6 +388,8 @@ class Product extends Admin_Controller  {
            $data['dost'] = $this->Admin_model->get('VEND');
            $data['dost_zwrot'] = $this->Admin_model->get('VEND_REFUND');
            $data['load_group'] = $this->Admin_model->get('STORAGE');
+           $data['gr_tow'] = $this->Admin_model->get('PROD');
+
 
            if(!empty($data['product']))
            {
@@ -422,9 +441,11 @@ class Product extends Admin_Controller  {
 
 
                    //Tabela INDK
+                   $wycof = empty($this->input->post('wycof', true)) ? '1' : '0';
                    $data = array(
                        'load_group' => $this->input->post('load_group', true),
                        'pkwiu_code' => $this->input->post('pkwiu_code', true),
+                       'retire' => $wycof,
                        'tax' => $this->input->post('tax', true),
                        'prod_hier' => $this->input->post('prod_hier', true),
                        'id_vend' => $kod[0],
@@ -532,7 +553,7 @@ class Product extends Admin_Controller  {
                        $this->session->set_flashdata('alert', "Nie przesłano pliku");
                    }
 
-
+                   fileLog("Pomyslnie edytowano produkt o numerze:" . $id . " Nazwa produktu to: " . htmlspecialchars(strtolower($this->input->post('name_short', true))),'Success');
                    $this->session->set_flashdata('alert', "Pomyślnie edytowano produkt!");
                    redirect('admin/product');
                }
@@ -566,7 +587,7 @@ class Product extends Admin_Controller  {
            if(!empty($photo)) {
                if ((int)$_POST['segment_url'][7] == $photo->nr_mat) {
                    $this->load->helper("file");
-                   unlink(FCPATH . $photo->adr_ph);
+                    unlink(FCPATH . $photo->adr_ph);
                    $this->Admin_model->delete('PHOT', array('id_phot' => $_POST['id_img']));
                    echo json_encode(array("message" => "Pomyślnie usuięto zdjęcie, a link to $photo->adr_ph", "code" => 200));
 
@@ -584,6 +605,12 @@ class Product extends Admin_Controller  {
 
    public function retire_product()
    {
+       if(!check_group(array('moderator','admin')))
+       {
+           $this->session->set_flashdata('alert',"Nie masz dostępu do tej częsci serwisu!");
+           redirect('account');
+       }
+
        $retire_product = $this->input->post('retire_product',true);
 
        if(!empty($this->input->post('retire_product',true))) {
@@ -599,14 +626,14 @@ class Product extends Admin_Controller  {
                    $where = array("nr_mat" => $key);
                    $this->Admin_model->update("INDK", $data,$where); //Tworzenie wpisu do INDK
                    $this->session->set_flashdata('alert', "Produkt o id: $key został wycofany.");
+                   fileLog("Pomyslnie wycofany produkt o numerze:" . $key,'Success');
+
+                   redirect('/','refresh');
                }
 
            }
        }
 
-      /* echo "<pre>";
-       print_r($_POST);
-       echo "</pre>";*/
        $data['validation'] = $this->session->flashdata('alert');
        $this->twig->display('admin/product/retire_product',$data);
    }

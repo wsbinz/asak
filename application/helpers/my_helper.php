@@ -75,25 +75,43 @@ function check_group($alias_group)
 
 function fileLog($wiadomosc='',$status='')
 {
-    $template = 'Użytkownik o id: '.$_SESSION['id'].' Wykonał akcję: '."\n".$wiadomosc;
+    $template = 'Użytkownik o nazwie: '.$_SESSION['username'] .'oraz id: '.$_SESSION['id'].' Wykonał akcję: '."\n".$wiadomosc;
+    $array = array();
+    $t =
+         array(
+        "Status" => $status,
+        "Log" => $template,
+        "Data" => date('d.m.Y H:i:s')
 
-    $t = array(
-      "Status" => $status,
-      "Log" => $template,
-      "Data" => date('d.m.Y H:i:s')
     );
 
-    $result = print_r($t,true);
+    if(file_exists(BASEPATH.'../asset/log/log1.json'))
+    {
+       $json = json_decode(file_get_contents(BASEPATH.'../asset/log/log1.json'),true);
+       //unlink(BASEPATH.'../asset/log/log1.json');
+       array_push($json,$t);
+       $result = json_encode($json,JSON_UNESCAPED_UNICODE);
+    }
+    else {
+        array_push($array,$t);
+        $result = json_encode($array,JSON_UNESCAPED_UNICODE);
+    }
+
+
 
     if(!file_exists(BASEPATH.'../asset/log'))
     {
         mkdir("asset/log",755);
     }
 
-    if(!write_file(BASEPATH.'../asset/log/log1.txt',$result,'a+'))
+    $file = fopen(BASEPATH.'../asset/log/log1.json','w');
+    fwrite($file,$result);
+    fclose($file);
+
+/*    if(!fopen(BASEPATH.'../asset/log/log1.txt',$result,'a'))
     {
-        if(write_file(BASEPATH.'../asset/log/log1.txt',date('d.m.Y H:i:s')." => Nie udało się zapisać logu",'a+'));
-    };
+        if(fopen(BASEPATH.'../asset/log/log1.txt',date('d.m.Y H:i:s')." => Nie udało się zapisać logu",'a+'));
+    };*/
 
 
 

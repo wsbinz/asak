@@ -30,6 +30,12 @@ class Rack extends Admin_Controller
 
     public function add_rack() //dodanie regału
     {
+        if(!check_group(array('moderator','admin')))
+        {
+            $this->session->set_flashdata('alert',"Nie masz dostępu do tej częsci serwisu!");
+            redirect('account');
+        }
+
         if(!empty($_POST))
         {
             $count = $this->input->post('count',true);
@@ -169,6 +175,12 @@ class Rack extends Admin_Controller
 
     public function view_rack()         //wyświetlenie i edycja wszystkich dostępnych magazynów
     {
+        if(!check_group(array('moderator','admin','uzytkownik')))
+        {
+            $this->session->set_flashdata('alert',"Nie masz dostępu do tej częsci serwisu!");
+            redirect('account');
+        }
+
         set_time_limit(120);
 
         $total_rows = $this->Admin_model->num_rows("STOR_SHELVES");
@@ -216,6 +228,12 @@ class Rack extends Admin_Controller
 
     public function edit_rack($id)             //edycja regału o określonym ID
     {
+        if(!check_group(array('moderator','admin')))
+        {
+            $this->session->set_flashdata('alert',"Nie masz dostępu do tej częsci serwisu!");
+            redirect('account');
+        }
+
         if(is_numeric($id)) {
 
             $where = array('id_stor_shelve' => $id);
@@ -237,6 +255,13 @@ class Rack extends Admin_Controller
 
     public function save_rack($id)             //edycja regału o określonym ID
     {
+
+        if(!check_group(array('moderator','admin')))
+        {
+            $this->session->set_flashdata('alert',"Nie masz dostępu do tej częsci serwisu!");
+            redirect('account');
+        }
+
         $where = array('id_stor_shelve' => $id);
         $data['shel_result']= $this->input->post('rack',true);
         $data['shel_max_h']= $this->input->post('highRack',true);

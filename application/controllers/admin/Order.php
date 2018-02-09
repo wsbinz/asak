@@ -18,6 +18,12 @@ class Order extends Admin_Controller
     }
     public function order_products()
     {
+        if(!check_group(array('moderator','admin')))
+        {
+            $this->session->set_flashdata('alert',"Nie masz dostępu do tej częsci serwisu!");
+            redirect('account');
+        }
+
         if(!empty($_POST)) {
 
             $docum_value = $this->input->post('docum_value',true);
@@ -64,6 +70,12 @@ class Order extends Admin_Controller
     }
     public function cpz()
     {
+        if(!check_group(array('moderator','admin')))
+        {
+            $this->session->set_flashdata('alert',"Nie masz dostępu do tej częsci serwisu!");
+            redirect('account');
+        }
+
         if(!empty($_POST)) {
 
             $mat_amount = $this->input->post('mat_amount',true);
@@ -116,6 +128,12 @@ class Order extends Admin_Controller
     }
     public function cwz()
     {
+        if(!check_group(array('moderator','admin')))
+        {
+            $this->session->set_flashdata('alert',"Nie masz dostępu do tej częsci serwisu!");
+            redirect('account');
+        }
+
         if(!empty($_POST)) {
 
             $mat_amount = $this->input->post('mat_amount',true);

@@ -38,13 +38,11 @@
                     </div>
                 </div>
             <tr>
-                <td width=5%><input type="checkbox" class="pull-left"></td>
-                <td width=15%>001</td>
-                <td width=80%>sok </td>
+
             </tr>
             </tbody>
         </table>
-        <input type="submit" class="btn btn-primary btn-block" value="Wycofaj"> <!-- przejscie do list product z info error na czerowono ze produkt wycofany oraz w tabeli INDK na danym indeksie uzupenialmy pole wycof -->
+        <input type="submit" style="display:none" class="btn btn-primary btn-block" value="Wycofaj"> <!-- przejscie do list product z info error na czerowono ze produkt wycofany oraz w tabeli INDK na danym indeksie uzupenialmy pole wycof -->
     </section>
 
 </form>
@@ -74,8 +72,9 @@
                            for(var i = 0; i<count; i++)
                                {
                                 $("tbody").append("<tr><td width=5%><input type='checkbox' class='pull-left' name='retire_product["+html[i]['nr_mat']+"]' ></td><td width=15%>"+ html[i]['kod_pkwiu'] +"</td><td width=80%>"+ html[i]['mat_nazwk'] +"</td><td><a href='{{ base_url() }}admin/product/edit_product/"+html[i]['id_indk']+"' </a> </td></tr>");
-                               }
 
+                               }
+                $('input[type=submit]').show();
                         }
 
                     });

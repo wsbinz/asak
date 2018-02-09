@@ -21,10 +21,11 @@
                     {{ product.mat_nazwk }}
                 </h2>
             </div>
-
+            {% if(photo.adr_ph is defined) %}
             <div class="col-md-6">
                 <img width="450" style="position:absolute;" src="{{ base_url(photo.adr_ph|trim(' ','right')) }}">
             </div>
+            {% endif %}
 
         </div>
         <!-- Grupa towarowa -->

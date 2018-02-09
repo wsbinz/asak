@@ -31,8 +31,6 @@
 $('.remove_img > img').on('click',function(){
 
     var segment_url = $(location).attr('href').split("/");
-    console.log(segment_url);
-
 
     $.ajax({
         type: 'POST',
@@ -40,13 +38,10 @@ $('.remove_img > img').on('click',function(){
         data: {id_img: this.id,segment_url: segment_url},
         dataType: 'text',
         success: function(html){
-
-           // html = JSON.parse(html);
          if(html.code = 200)
          {
-            // $('.edit_img  img').remove()
+             $('.edit_img img').remove()
          }
-         console.log(html);
 
         }
 

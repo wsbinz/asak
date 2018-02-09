@@ -124,6 +124,7 @@
                     {% endif %}
 
                 </ul>
+                {% if check_group({'moderator':'admin'}) %}
                 <ul class="nav navbar-nav navbar-right">
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Uzytkownicy | Grupy <span class="caret"></span></a>
@@ -136,6 +137,7 @@
                     </li>
                     <li><a href="">Moje konto</a></li>
                 </ul>
+                {% endif %}
 
                 -->
         </div><!--/.nav-collapse -->

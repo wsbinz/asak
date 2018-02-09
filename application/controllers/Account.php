@@ -21,8 +21,20 @@ class Account extends My_Controller {
             redirect('account/login');
         }
 
+        $log = json_decode(file_get_contents(BASEPATH.'../asset/log/log1.json'),true);
+
+        $data['log'] = array();
+        for ($i=0; $i<count($log); $i++)
+        {
+            if($i <= 6)
+            {
+                array_push($data['log'],$log[$i]);
+            }
+
+        }
+        krsort($data['log']);
         $data['validation'] = $this->session->flashdata('alert');
-        $this->twig->display('admin/calendar/index',$data);
+        $this->twig->display('admin/include/dashboard',$data);
     }
 
     public function login()

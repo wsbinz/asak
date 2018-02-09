@@ -17,6 +17,13 @@
         <div class="progress">
             <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 20%;"><span class="sr-only">20% Complete</span></div>
         </div>
+        {% if(product.wycof==1) %}
+        <div class="checkbox">
+            <label for="name">
+            <input type="checkbox" id="wycof" name="wycof" value="1"> <!-- check z pozycjami mat_nazwk z tabeli NAZW -->
+            Przywróc produkt</label>
+        </div>
+        {% endif %}
 
         <!-- Nazwa towaru -->
         <div class="form-group">
@@ -31,7 +38,7 @@
         </div>
         <div class="form-group">
             <label for="gr_tow">Opis grupy towarowej:</label>
-            <input type="text" class="form-control" id="gr_tow" name="prod_descr"> <!-- wybór z listy prod_hier z tabeli GRTW-->
+            <input type="text" class="form-control" id="gr_tow_desc" name="prod_descr" value="{{ product.prod_desc|trim }}"> <!-- wybór z listy prod_hier z tabeli GRTW-->
         </div>
         <!-- Nazwa marketingowa rozwinięta -->
         <div class="form-group">
@@ -75,7 +82,7 @@
                         <td width="8%"><input type="text" class="form-control" id="value_struct" name="value_struct[]" value="1"></td>
                         <td width="9%"><input type="text" class="form-control" id="weight_net" name="weight_net[]" value="{{  msizee.weight_net }}"></td>
                         <td width="9%"><input type="text" class="form-control" id="weight_gross" name="weight_gross[]" value="{{  msizee.weight_gross }}"></td>
-                        <td width="10%"><select class="form-control" id="sel1" name="unit_weight"> <!--select trzeba zaczytać dane z tab JEDN z value z jedn_wag="X"-->
+                        <td width="10%"><select class="form-control" id="sel1" name="unit_weight[]"> <!--select trzeba zaczytać dane z tab JEDN z value z jedn_wag="X"-->
                                 <option value="mg">mg</option>
                             </select></td>
                         <td width="8%"><input type="text" class="form-control" id="value_length" name="value_length[]" value="{{  msizee.value_length }}"></td>
@@ -150,10 +157,7 @@
                                 <input type="text" class="form-control" id="vat" name="tax" value="{{ product.vat }}"> <!-- TAB: INDK  vat input-->
                             </div></td>
                     </tr>
-                    <tr>
-                        <td>Numer hierarchii produktowej:</td> <!-- tu nie wiem czy tego nie wyjebac-->
-                        <td>Numer prod_hier</td>
-                    </tr>
+
                     </tbody>
                 </table>
             </div>
@@ -165,10 +169,12 @@
                   <output id="filesInfo"></output>
 
             </div>
+            {% if(photo.adr_ph is defined) %}
              <div class="col-md-6 edit_img">
                 <img width="450" style="position:relative;" src="{{ base_url(photo.adr_ph|trim(' ','right')) }}">
                 <div class="remove_img"><img src="{{ base_url() }}asset/img/icon/remove.png" id="{{ photo.id_phot }}"></div>
             </div>
+            {% endif %}
 
         </div>
         <button type="button" class="btn btn-lg btn-default btn-back prev">Wstecz</button>
@@ -305,7 +311,30 @@
                 }
 
 
+                $( function() {
+                var gr_tow = [
+                 {% for gr_towa in gr_tow %}
+                  "{{ gr_towa.prod_hier|raw|trim(' ','right') }}",
+                  {% endfor %}
+                ];
+                $( "#gr_tow" ).autocomplete({
+                  source: gr_tow
+                });
+                desc_gr_tow()
+          } );
 
+                function desc_gr_tow() {
+                  $("#gr_tow").on('change',function() {
+                       var code =  $( "#gr_tow" ).val();
+                       {% for gr_towa in gr_tow %}
+                        var group = "{{ gr_towa.prod_hier|raw|trim(' ','right') }}";
+                               if(group == code)
+                               {
+                                   $('#gr_tow_desc').val("{{ gr_towa.prod_descr|raw|trim(' ','right') }}");
+                               }
+                      {% endfor %}
+                    });
+                }
 
 
         </script>
