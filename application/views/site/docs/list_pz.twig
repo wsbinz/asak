@@ -6,7 +6,7 @@
     <div class="container theme-showcase" role="main">
         <!-- Szary Panel -->
         <div class="jumbotron">
-            <h2>Lista: Zamówień</h2> <!--do wladowania numer produktu -->
+            <h2>Lista: PZ</h2> <!--do wladowania numer produktu -->
         </div>
 
         {% autoescape %}
@@ -19,7 +19,6 @@
                 <th>Nr:</th>
                 <th>Numer dokumentu:</th>
                 <th>Typ:</th>
-                <th>Dostawca:</th>
                 <th>Nazwa dokumentu:</th>
             </tr>
             </thead>
@@ -29,7 +28,6 @@
                 <td width=10%>{{ loop.index }}</td>
                 <td width=20%>{{ DOCUM_HEAD.nr_docum }}</td>
                 <td width=20%>{{ DOCUM_HEAD.docum_type }}</td>
-                <td width=40%>{{ DOCUM_HEAD.vend_name }}</td>
                 <td width=10%>{{ DOCUM_HEAD.docum_desc }}</td>
                 <td width=10%>
                     <a href="{{ base_url() }}admin/order/show/{{ DOCUM_HEAD.nr_docum }}"><button type="button" class="btn btn-default">Podgląd</button></a>
