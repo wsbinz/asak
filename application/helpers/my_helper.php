@@ -75,22 +75,26 @@ function check_group($alias_group)
 
 function fileLog($wiadomosc='',$status='')
 {
+
+    @$oldFile = json_decode(file_get_contents(BASEPATH.'../asset/log/log1.txt'));
+
     $template = 'Użytkownik o id: '.$_SESSION['id'].' Wykonał akcję: '."\n".$wiadomosc;
 
     $t = array(
-      "Status" => $status,
-      "Log" => $template,
-      "Data" => date('d.m.Y H:i:s')
+      "status" => $status,
+      "log" => $template,
+      "data" => date('d.m.Y H:i:s')
     );
-
-    $result = print_r($t,true);
 
     if(!file_exists(BASEPATH.'../asset/log'))
     {
         mkdir("asset/log",755);
     }
 
-    if(!write_file(BASEPATH.'../asset/log/log1.txt',$result,'a+'))
+    array_push($oldFile,$t);
+
+    //file_put_contents(BASEPATH.'../asset/log/log1.txt',json_encode($t));
+    if(!file_put_contents(BASEPATH.'../asset/log/log1.txt',json_encode($oldFile)))
     {
         if(write_file(BASEPATH.'../asset/log/log1.txt',date('d.m.Y H:i:s')." => Nie udało się zapisać logu",'a+'));
     };

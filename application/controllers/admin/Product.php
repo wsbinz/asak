@@ -529,10 +529,11 @@ class Product extends Admin_Controller  {
                    }
                    else
                    {
+                       fileLog("Nie przesłano pliku do  produkt o numerze:" . $id . " Nazwa produktu to: " . strtolower($this->input->post('name_short', true)),'Warning');
                        $this->session->set_flashdata('alert', "Nie przesłano pliku");
                    }
 
-
+                   fileLog("Pomyślnie edytowano produkt o numerze:" . $id . " Nazwa produktu to: " . strtolower($this->input->post('name_short', true)),'Success');
                    $this->session->set_flashdata('alert', "Pomyślnie edytowano produkt!");
                    redirect('admin/product');
                }
@@ -543,6 +544,7 @@ class Product extends Admin_Controller  {
            }
            else
            {
+               fileLog("Użytkowik o id: " . $_SESSION['id'] . " odwołał się do produkty który nie istnieje !", 'Warning');
                $this->session->set_flashdata('alert', "Nie ma takiego produktu");
                redirect('/account');
            }

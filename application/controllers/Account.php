@@ -21,8 +21,13 @@ class Account extends My_Controller {
             redirect('account/login');
         }
 
+        $fileLog = json_decode(file_get_contents(base_url('asset/log/log1.txt')),true);
+
+
+        $data['file'] = $fileLog;
         $data['validation'] = $this->session->flashdata('alert');
-        $this->twig->display('admin/calendar/index',$data);
+        print_r($fileLog);
+        $this->twig->display('admin/include/dashboard',$data);
     }
 
     public function login()
