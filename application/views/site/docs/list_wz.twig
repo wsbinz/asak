@@ -1,0 +1,50 @@
+{% extends "admin/include/include.twig" %}
+
+{% block body %}
+
+
+    <div class="container theme-showcase" role="main">
+        <!-- Szary Panel -->
+        <div class="jumbotron">
+            <h2>Lista: WZ</h2> <!--do wladowania numer produktu -->
+        </div>
+
+        {% autoescape %}
+            {{ validation|raw }}
+        {% endautoescape %}
+
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>Nr:</th>
+                <th>Numer dokumentu:</th>
+                <th>Typ:</th>
+                <th>Nazwa dokumentu:</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for DOCUM_HEAD in views %}
+            <tr>
+                <td width=10%>{{ loop.index }}</td>
+                <td width=20%>{{ DOCUM_HEAD.nr_docum }}</td>
+                <td width=20%>{{ DOCUM_HEAD.docum_type }}</td>
+                <td width=10%>{{ DOCUM_HEAD.docum_desc }}</td>
+                <td width=10%>
+                    <a href="{{ base_url() }}admin/order/show/{{ DOCUM_HEAD.nr_docum }}"><button type="button" class="btn btn-default">Podgląd</button></a>
+                </td>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <nav aria-label="Page navigation example">
+            {{ links|raw }}
+        </nav>
+        {#        <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                    <li class="page-item">{{ links|raw }}</li>
+                </ul>
+                </nav>#}
+
+    </div>
+{% endblock %}
+

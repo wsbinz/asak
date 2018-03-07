@@ -78,11 +78,11 @@ class Admin_Controller extends My_Controller {
         $this->load->library('session');
         $this->load->model('admin/Admin_model');
 
-        if(!check_group(array('moderator','admin')))
+        /*if(!check_group(array('moderator','admin','uzytkownik')))
         {
             $this->session->set_flashdata('alert',"Nie masz dostępu do tej częsci serwisu!");
             redirect('account');
-        }
+        }*/
 
 
     }

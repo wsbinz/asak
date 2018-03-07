@@ -96,13 +96,13 @@
 
                                 <li class="divider"></li>
                                 <li class="dropdown-header">Przyjęcie zewnętrzne</li>
-                                <li><a href="{{ base_url() }}admin/order/pz"">Tworzenie</a></li>
-                                <li><a href="#">Lista PZ</a></li>
+                                <li><a href="{{ base_url() }}admin/order/cpz"">Tworzenie</a></li>
+                                <li><a href="{{ base_url() }}admin/order/pz">Lista PZ</a></li>
 
                                 <li class="divider"></li>
                                 <li class="dropdown-header">Wydanie zewnętrzne</li>
-                                <li><a href="{{ base_url() }}admin/order/wz"">Tworzenie</a></li>
-                                <li><a href="">Lista WZ</a></li>
+                                <li><a href="{{ base_url() }}admin/order/cwz"">Tworzenie</a></li>
+                                <li><a href="{{ base_url() }}admin/order/wz">Lista WZ</a></li>
 
 
                             </ul>
@@ -124,6 +124,7 @@
                     {% endif %}
 
                 </ul>
+                {% if check_group({'moderator':'admin'}) %}
                 <ul class="nav navbar-nav navbar-right">
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Uzytkownicy | Grupy <span class="caret"></span></a>
@@ -136,6 +137,7 @@
                     </li>
                     <li><a href="">Moje konto</a></li>
                 </ul>
+                {% endif %}
 
                 -->
         </div><!--/.nav-collapse -->

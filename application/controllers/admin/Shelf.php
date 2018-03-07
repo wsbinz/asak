@@ -23,12 +23,25 @@ class Shelf extends Admin_Controller
     public function index()
     {
 
+        if(!check_group(array('moderator','admin','uzytkownik')))
+        {
+            $this->session->set_flashdata('alert',"Nie masz dostępu do tej częsci serwisu!");
+            redirect('account');
+        }
+
         $this->twig->display('admin/magazine/magazine_geography');
 
     }
 
     public function add_shelf() //dodanie półek
     {
+
+        if(!check_group(array('moderator','admin')))
+        {
+            $this->session->set_flashdata('alert',"Nie masz dostępu do tej częsci serwisu!");
+            redirect('account');
+        }
+
         if(!empty($_POST))
         {
             $count = $this->input->post('count',true);
@@ -190,6 +203,12 @@ class Shelf extends Admin_Controller
 
     public function view_shelf()         //wyświetlenie i edycja wszystkich dostępnych magazynów
     {
+        if(!check_group(array('moderator','admin','uzytkownik')))
+        {
+            $this->session->set_flashdata('alert',"Nie masz dostępu do tej częsci serwisu!");
+            redirect('account');
+        }
+
         set_time_limit(120);
 
         $total_rows = $this->Admin_model->num_rows("STOR_SIZE");

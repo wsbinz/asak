@@ -19,17 +19,35 @@ class Magazine extends Admin_Controller
         $this->load->model('admin/Admin_model');
         $this->load->helper('My');
         $this->load->library('pagination');
+        if(!check_group(array('moderator','admin','uzytkownik')))
+        {
+            $this->session->set_flashdata('alert',"Nie masz dostępu do tej częsci serwisu!");
+            redirect('account');
+        }
     }
 
 
     public function index()
     {
+
+        if(!check_group(array('moderator','admin','uzytkownik')))
+        {
+            $this->session->set_flashdata('alert',"Nie masz dostępu do tej częsci serwisu!");
+            redirect('account');
+        }
+
         $this->twig->display('admin/magazine/magazine_geography');
 
     }
 
     public function add_magazine() //dodanie magazynu
     {
+        if(!check_group(array('moderator','admin')))
+        {
+            $this->session->set_flashdata('alert',"Nie masz dostępu do tej częsci serwisu!");
+            redirect('account');
+        }
+
         if(!empty($_POST))
         {
 
@@ -142,6 +160,8 @@ class Magazine extends Admin_Controller
 
                         $this->Admin_model->create("STORAGE", $data);
                         $this->session->set_flashdata('alert', "Magazyn został dodany!");
+                        fileLog("Pomyslnie dodano magazyn o nazwie:" . $NameOfMagazin,'Success');
+
                         }
 
                     } else {
@@ -177,6 +197,12 @@ class Magazine extends Admin_Controller
 
     public function view_magazine()         //wyświetlenie i edycja wszystkich dostępnych magazynów
     {
+        if(!check_group(array('moderator','admin','uzytkownik')))
+        {
+            $this->session->set_flashdata('alert',"Nie masz dostępu do tej częsci serwisu!");
+            redirect('account');
+        }
+
         set_time_limit(120);
 
         $total_rows = $this->Admin_model->num_rows("STORAGE");
@@ -224,6 +250,12 @@ class Magazine extends Admin_Controller
 
     public function edit_magazine($id)             //edycja magazynu o określonym ID
     {
+        if(!check_group(array('moderator','admin')))
+        {
+            $this->session->set_flashdata('alert',"Nie masz dostępu do tej częsci serwisu!");
+            redirect('account');
+        }
+
         if(is_numeric($id)) {
 
             $where = array('id_storage' => $id);
@@ -245,17 +277,31 @@ class Magazine extends Admin_Controller
 
     public function save_magazine($id)             //edycja magazynu o określonym ID
     {
+
+        if(!check_group(array('moderator','admin')))
+        {
+            $this->session->set_flashdata('alert',"Nie masz dostępu do tej częsci serwisu!");
+            redirect('account');
+        }
+
         $where = array('id_storage' => $id);
         $data['load_group']= $this->input->post('magazine',true);
         $data['load_group_descr']= $this->input->post('NameOfMagazin',true);
         $data['storage'] = $this->Admin_model->update("STORAGE",$data,$where);
         $this->session->set_flashdata('alert', "Magazyn edytowany pomyślnie !");
+        fileLog("Pomyslnie edytowano magazyn o nazwie:" . $this->input->post('NameOfMagazin',true),'Success');
+
         redirect(base_url("admin/magazine/view_magazine"));
 
     }
 
     public function delete_magazine($id)             //Usunięcie magazynu o określonym ID
     {
+        if(!check_group(array('admin')))
+        {
+            $this->session->set_flashdata('alert',"Nie masz dostępu do tej częsci serwisu!");
+            redirect('account');
+        }
 
         $where = array('id_storage' => $id);
 
@@ -275,6 +321,12 @@ class Magazine extends Admin_Controller
 
     public function pernament_delete($id)
     {
+        if(!check_group(array('admin')))
+        {
+            $this->session->set_flashdata('alert',"Nie masz dostępu do tej częsci serwisu!");
+            redirect('account');
+        }
+
         $where = array('id_storage' => $id);
         $data['storage'] = $this->Admin_model->get_single("STORAGE",$where);
 
