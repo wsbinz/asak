@@ -108,10 +108,7 @@ function fileLog($wiadomosc='',$status='')
     fwrite($file,$result);
     fclose($file);
 
-/*    if(!fopen(BASEPATH.'../asset/log/log1.txt',$result,'a'))
-    {
-        if(fopen(BASEPATH.'../asset/log/log1.txt',date('d.m.Y H:i:s')." => Nie udało się zapisać logu",'a+'));
-    };*/
+
 
 
 

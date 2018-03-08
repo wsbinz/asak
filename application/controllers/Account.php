@@ -10,8 +10,6 @@ class Account extends My_Controller {
         $this->load->model('site/Site_model');
         $this->load->model('site/Calendar_model');
         $this->load->library('form_validation');
-
-
     }
 
     public function index()
