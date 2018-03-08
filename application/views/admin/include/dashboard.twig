@@ -13,26 +13,23 @@
     {% endautoescape %}
     <div class="row">
         <div class="col-lg-4">
-            {% block calendar %}
+            <script type="text/javascript">
+                $(document).ready(function() {
 
-                    <script type="text/javascript">
-                        $(document).ready(function() {
+                    $('#calendar').fullCalendar({
 
-                            $('#calendar').fullCalendar({
+                    });
 
-                            });
+                });
 
-                        });
-
-                    </script>
-                    <div id="calendar">
-                    </div>
-            {% endblock %}
+            </script>
+            <div id="calendar">
+            </div>
         </div>
         <div class="col-lg-4">
             <h2>Log</h2>
-            {% for logs in log %}
-            <p>{{ logs.Log }} w dniu: {{ logs.Data }}</p>
+            {% for files in file %}
+                <p>{{ files.status }}</p>
             {% endfor %}
             {#<p>Użytkownik: adrian wprowadził zmianę na produkcie numer 64 w dniu 22-11-2017</p>
             <p>Użytkownik: adam wycofał produkt numer  02 w dniu 01-12-2017</p>
