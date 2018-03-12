@@ -19,12 +19,12 @@ class Account extends My_Controller {
             redirect('account/login');
         }
 
-        $fileLog = json_decode(file_get_contents(base_url('asset/log/log1.txt')),true);
+        $fileLog = json_decode(file_get_contents(base_url('asset/log/log1.json')),true);
 
 
         $data['file'] = $fileLog;
         $data['validation'] = $this->session->flashdata('alert');
-        print_r($fileLog);
+       // print_r($fileLog);
         $this->twig->display('admin/include/dashboard',$data);
     }
 
